@@ -7,14 +7,15 @@ const validateReq = require('../services/validateESVRequest.service')
 // Gibt eine Liste aller Länder zurück gefiltert nach Kontinent
 router.get('/getCountryList/:filter', passport.authenticate('jwt', { session: false }), validateReq.getCountryListReq, (req, res, next) => {
     var { filter } = req.params;
-    
-    Country.getCountryList(filter, (err, countries) => {
-        if (err) {
-            console.log("Datenbankfehler: " + err);                                                                                                                               /* CONSOLE LOG */
-            res.json({ success: false, msg: 'Datenbankfehler' });
-        }
-        return res.json({ success: true, countryList: countries });
-    });
+
+    Country.getCountryList(filter)
+        .then((countries) => {
+            return res.json({ success: true, countryList: countries });
+        })
+        .catch((err) => {
+            console.log(err);
+            return res.json({ success: false, msg: 'Datenbankfehler: \n' + err })
+        })
 });
 
 // Fügt ein neues Land in die Liste ein
@@ -28,48 +29,51 @@ router.post('/addCountry', passport.authenticate('jwt', { session: false }), val
     }
 
     // Prüfen ob ein Land mit dem selben Namen schon vorhanden ist
-    Country.getCountryByName(newCountry.name, (err, country) => {
-        if(err){
-            console.log("Datenbankfehler: " + err);                                                                                                                               /* CONSOLE LOG */
-            res.json({ success: false, msg: 'Datenbankfehler' });
-        }
-        if(country){
-            res.json({ success: false, msg: 'Das Land mit dem Namen '+ newCountry.name +' ist bereits vorhanden' });
-        }else{
-            // Prüfen ob ein Land mit der selben countryID schon vorhanden ist
-            Country.getCountryById(newCountry.countryID, (err, country) => {
-                if(err){
-                    console.log("Datenbankfehler: " + err);                                                                                                                       /* CONSOLE LOG */
-                    res.json({ success: false, msg: 'Datenbankfehler' });
-                }
-                if(country){
-                    res.json({ success: false, msg: 'Das Land mit der ID '+ newCountry.countryID +' ist bereits vorhanden' });
-                }else{
-                    // Land hinzufügen
-                    Country.addCountry(newCountry, (err) => {
-                        if (err) {
-                            console.log("Datenbankfehler: " + err);                                                                                                               /* CONSOLE LOG */
-                            res.json({ success: false, msg: 'Datenbankfehler' });
+    Country.getCountryByName(newCountry.name)
+        .then((country) => {
+            if (country) {
+                return res.json({ success: false, msg: 'Das Land mit dem Namen ' + newCountry.name + ' ist bereits vorhanden' });
+            } else {
+                // Prüfen ob ein Land mit der selben countryID schon vorhanden ist
+                Country.getCountryById(newCountry.countryID)
+                    .then((country) => {
+                        if (country) {
+                            return res.json({ success: false, msg: 'Das Land mit der ID ' + newCountry.countryID + ' ist bereits vorhanden' });
                         } else {
-                            return res.json({ success: true, msg: 'Das Land wurde hinzugefügt' });
+                            // Land hinzufügen
+                            Country.addCountry(newCountry)
+                                .then(() => {
+                                    return res.json({ success: true, msg: 'Das Land wurde hinzugefügt' });
+                                })
+                                .catch((err) => {
+                                    console.log(err);
+                                    return res.json({ success: false, msg: 'Datenbankfehler: \n' + err })
+                                })
                         }
-                    });
-                }
-            })
-        }
-    })
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        return res.json({ success: false, msg: 'Datenbankfehler: \n' + err })
+                    })
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+            return res.json({ success: false, msg: 'Datenbankfehler: \n' + err })
+        })
 });
 
 // Löscht ein Land anhand seiner ID aus der Liste
 router.delete('/deleteCountry/:countryID', passport.authenticate('jwt', { session: false }), validateReq.deleteCountryReq, (req, res, next) => {
     const countryToDelete = req.params.countryID;
-    Country.deleteCountry(countryToDelete, (err) => {
-        if (err) {
-            res.json({ success: false, msg: 'Beim Löschen des Landes ist ein Fehler aufgetreten' });
-        } else {
-            return res.json({ success: true });
-        }
-    })
+    Country.deleteCountry(countryToDelete)
+        .then(() => {
+            return res.json({ success: true, msg: 'Das Land wurde gelöscht' });
+        })
+        .catch((err) => {
+            console.log(err);
+            return res.json({ success: false, msg: 'Datenbankfehler: \n' + err })
+        })
 });
 
 /* Bearbeitet die Zugehörigkeit eines Landes (wird nicht verwendet)
@@ -83,12 +87,20 @@ router.post('/updateCountry', passport.authenticate('jwt', { session: false }), 
     if (countryData.isEU && countryData.isEFTA) {
         return res.json({ success: false, msg: 'Ein Land darf nicht gleichzeitig zu EFTA und EU gehören' });
     }
-    Country.updateCoutry(countryData.countryID, countryData, (err) => {
-        if (err) {
-            res.json({ success: false, msg: 'Beim aktualisieren der Länder ist ein Fehler aufgetreten' });
-        }
-        return res.json({ success: true, msg: 'Das Land wurde aktualisiert' });
-    });
+    Country.updateCoutry(countryData.countryID)
+        .then((result) => {
+            if (result.matchedCount == 0) {
+                return res.json({ success: false, msg: 'Das Land wurde nicht gefunden' });
+            } else if (result.modifiedCount == 0) {
+                return res.json({ success: false, msg: 'Das Land wurde nicht aktualisiert' });
+            } else {
+                return res.json({ success: true, msg: 'Das Land wurde aktualisiert' });
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+            return res.json({ success: false, msg: 'Datenbankfehler: \n' + err })
+        })
 });*/
 
 module.exports = router;

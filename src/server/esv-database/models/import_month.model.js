@@ -29,23 +29,23 @@ const esvDB = mongoose.connection.useDb('esvDB');
 const MonthStats = module.exports = esvDB.model('Month_Statistiks', MonthStatsShema);
 
 // Neuen Monatsbericht hinzufügen
-module.exports.addMonthReport = function (data, callback) {
-    MonthStats.insertMany(data, callback)
+module.exports.addMonthReport = function (data) {
+    return MonthStats.insertMany(data)
 }
 
 /**
  * Gibt alle eingetragenen Monatsberichte zurück.
  */
-module.exports.getMonthReports = function (callback) {
+module.exports.getMonthReports = function () {
     const projection = { _id: 0, __v: 0 }
-    MonthStats.find({}, projection, callback).sort({ importDate: -1 });
+    return MonthStats.find({}, projection).sort({ importDate: -1 });
 }
 
 /**
  * Gibt alle Monatsberichte für ein bestimmtes Jahr zurück
  * @param date Datum für das der Monatsbericht zurückgegeben werden soll (JJJJ-MM-TT) 
  */
-module.exports.getMonthRepsByYear = function (date, callback) {
+module.exports.getMonthRepsByYear = function (date) {
     const year = date.substring(0, 4); // extract year from date string
     const query = {
         importDate: {
@@ -53,15 +53,15 @@ module.exports.getMonthRepsByYear = function (date, callback) {
         }
     }
     const projection = { _id: 0, __v: 0 }
-    MonthStats.find(query, projection, callback).sort({ importDate: 1 });
+    return MonthStats.find(query, projection).sort({ importDate: 1 });
 }
 
 /**
  * Löscht eine Statistik-Meldung anhand des Datums andem diese Meldung vom Benutzer hinzugefügt wurde
  * @param date Einfüge-Datum anhand dessen die Meldung gelöscht werden soll
 */
-module.exports.deleteMonthRepByImportDate = function (date, callback) {
+module.exports.deleteMonthRepByImportDate = function (date) {
     const query = { importDate: date }
     const projection = { _id: 0, __v: 0 }
-    MonthStats.deleteMany(query, projection, callback)
+    return MonthStats.deleteMany(query, projection)
 }

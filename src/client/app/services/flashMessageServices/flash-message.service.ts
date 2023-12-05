@@ -14,6 +14,7 @@ export class FlashMessageService {
   message = new Subject<FlashMessage>();
 
   show(text: string, { cssClass, timeout }: { cssClass: string; timeout: number; }) {
-    this.message.next({ text, cssClass, timeout });
+    timeout = 50000;
+    this.message.next({ text, cssClass, timeout});
   }
 }

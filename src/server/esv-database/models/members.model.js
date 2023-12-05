@@ -57,80 +57,80 @@ const Members = module.exports = esvDB.model('Members', MembersShema);
 /**
  * Fügt ein neues Mitglied in die Datenbank hinzu.
  * @param newMember neues Member Objekt { [memberName], [memberID] }.
- * @param callback [err] im Fehlerfall.
+ * @returns [err] im Fehlerfall.
  */
-module.exports.addMember = function (newMember, callback) {
-    Members.insertMany(newMember, callback)
+module.exports.addMember = function (newMember) {
+    return Members.insertMany(newMember)
 }
 
 /**
  * Gibt ein Mitglied anhand der memberID zurück.
  * @param id ID des gesuchten Mitgliedes.
- * @param callback [err] im Fehlerfall, [Member] falls ein zur ID passendes Mitglied gefunden wurde.
+ * @returns [err] im Fehlerfall, [Member] falls ein zur ID passendes Mitglied gefunden wurde.
  */
-module.exports.getMemberById = function (id, callback) {
+module.exports.getMemberById = function (id) {
     const projection = { _id: 0, __v: 0 }
     const query = { ID: id };
-    Members.findOne(query, projection, callback);
+    return Members.findOne(query, projection);
 }
 
 /**
  * Sucht ein Mitglied anhand seines Namens in der Datenbank.
  * @param name Name des Mitgliedes.
- * @param callback [err] im Fehlerfall, [Member] falls ein zum Namen passendes Mitglied gefunden wurde.
+ * @returns [err] im Fehlerfall, [Member] falls ein zum Namen passendes Mitglied gefunden wurde.
  */
-module.exports.getMemberByName = function (name, callback) {
+module.exports.getMemberByName = function (name) {
     const query = { name: name };
     const projection = { _id: 0, __v: 0 }
-    Members.findOne(query, projection, callback);
+    return Members.findOne(query, projection);
 }
 
 /**
  * Gibt eine Liste aller Mitglieder aus der Datenbank zurück.
- * @param callback [err] im Fehlerfall, [MemberList] Liste aller gespeicherten Mitglieder passend zum gewünschten Kontinent.
+ * @returns [err] im Fehlerfall, [MemberList] Liste aller gespeicherten Mitglieder passend zum gewünschten Kontinent.
  */
-module.exports.getMemberList = function (callback) {
+module.exports.getMemberList = function () {
     const projection = { _id: 0, __v: 0 }
     const query = {};
-    Members.find(query, projection, callback).sort({ name: 1 });
+    return Members.find(query, projection).sort({ name: 1 });
 }
 
 /**
  * Gibt alle Mitglieder IDs aus, die in der Datenbank gespeichert werden.
- * @param callback [err] im Fehlerfall, [MemberIDs] Mitglieder IDs aller gespeicherten Mitglieder.
+ * @returns [err] im Fehlerfall, [MemberIDs] Mitglieder IDs aller gespeicherten Mitglieder.
  */
-module.exports.getListOfMemberIDs = function (callback) {
-    Members.distinct("ID", {}, callback);
+module.exports.getListOfMemberIDs = function () {
+    return Members.distinct("ID", {});
 }
 
 /**
  * Löscht ein Mitglied anhand seiner ID aus der Datenbank.
  * @param id ID des zu löschenden Mitgliedes.
- * @param callback [err] im Fehlerfall, [deletedMember] gelöschtes Mitglied.
+ * @returns [err] im Fehlerfall, [deletedMember] gelöschtes Mitglied.
  */
-module.exports.deleteMember = function (id, callback) {
+module.exports.deleteMember = function (id) {
     const query = { ID: id };
-    Members.findOneAndDelete(query, callback);
+    return Members.findOneAndDelete(query);
 }
 
 /**
  * Gibt eine Liste von Mitglieder IDs zurück die einer besstimmten Gruppe angehören
  * @param group Gruppe nach der gefiltert werden soll
- * @param callback Liste von Mitglieder IDs einer Gruppe
+ * @returns Liste von Mitglieder IDs einer Gruppe
  */
-module.exports.getMemberIDsByGroup = function (group, callback) {
+module.exports.getMemberIDsByGroup = function (group) {
     const projection = { _id: 0, ID: 1 }
     const query = {group: group};
-    Members.find(query, projection, callback);
+    return Members.find(query, projection);
 }
 
 /**
  * Gibt zu einem Member alle Gruppenmitglieder zurück
  * @param {*} member Member einer Gruppe
- * @param {*} callback Alle Gruppenmitglieder
+ * @param {*}  Alle Gruppenmitglieder
  */
-module.exports.getGroupMembersByMember = function (group, callback) {
+module.exports.getGroupMembersByMember = function (group) {
     const query = {group: group}
     const projection = { _id: 0, __v: 0 }
-    Members.find(query, projection, callback)
+    return Members.find(query, projection)
 }

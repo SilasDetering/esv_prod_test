@@ -53,53 +53,53 @@ const IronReports = module.exports = esvDB.model('IronReports', IronReportShema)
 /**
  * Fügt einen neuen Bericht von inland und ausland vertrieben von Eisenprodukten eines Mitgliedes hinzu.
  * @param newIronReport neuer Bericht, der hinzugefügt werden soll
- * @param callback [err] im Fehlerfall.
+ * @returns [err] im Fehlerfall.
  */
-module.exports.addIronReport = function (newIronReport, callback) {
-    IronReports.insertMany(newIronReport, callback)
+module.exports.addIronReport = function (newIronReport) {
+    return IronReports.insertMany(newIronReport)
 }
 
 /**
  * Gibt einen Bericht anhand der companyID und dem Bericht-Datum zurück.
  * @param id ID des Mitgliedes von dem ein Bericht gesucht wird
  * @param date Datum des Berichtes.
- * @param callback [err] im Fehlerfall, [report] falls ein zur companyID und reportDate passender Bericht gefunden wurde.
+ * @returns [err] im Fehlerfall, [report] falls ein zur companyID und reportDate passender Bericht gefunden wurde.
  */
-module.exports.getIronReport = function (id, date, callback) {
+module.exports.getIronReport = function (id, date) {
     const projection = { _id: 0, __v: 0 }
     const query = { companyID: id, reportDate: date };
-    IronReports.findOne(query, projection, callback);
+    return IronReports.findOne(query, projection);
 }
 
 /**
  * Gibt eine Liste aller Meldungen der Mitglieder aus der Datenbank zurück.
- * @param callback [err] im Fehlerfall, [reportList] Liste von Meldungen der Mitglieder.
+ * @returns [err] im Fehlerfall, [reportList] Liste von Meldungen der Mitglieder.
  */
-module.exports.getIronReportList = function (callback) {
+module.exports.getIronReportList = function () {
     const projection = { _id: 0, __v: 0 }
     const query = {};
-    IronReports.find(query, projection, callback).sort({ reportDate: 1 });
+    return IronReports.find(query, projection).sort({ reportDate: 1 });
 }
 
 /**
  * Gibt eine gefilterte Liste aller Meldungen der Mitglieder aus der Datenbank zurück.
- * @param callback [err] im Fehlerfall, [reportList] Liste von Meldungen der Mitglieder.
+ * @returns [err] im Fehlerfall, [reportList] Liste von Meldungen der Mitglieder.
  */
-module.exports.getFilteredIronReportList = function (ids, dates, callback) {
+module.exports.getFilteredIronReportList = function (ids, dates) {
     const projection = { _id: 0, __v: 0, country_exports: 0 };
     const query = {
         companyID: { $in: ids },
         reportDate: { $in: dates }
     };
-    IronReports.find(query, projection, callback).sort({ reportDate: 1 });
+    return IronReports.find(query, projection).sort({ reportDate: 1 });
 }
 
 /**
  * Gibt alle Meldungen eines Jahres und des vorherigen Jahres zurück
  * @param date Datum für welches alle Meldungen zurückgegeben werden sollen
- * @param callback [err] im Fehlerfall, [list] falls ein zum Namen passendes Mitglied gefunden wurde.
+ * @returns [err] im Fehlerfall, [list] falls ein zum Namen passendes Mitglied gefunden wurde.
  */
-module.exports.getIronReportsUntilDate = function (date, callback) {
+module.exports.getIronReportsUntilDate = function (date) {
     const year = date.substring(0, 4); // extract year from date string
     const previousYear = parseInt(year) - 1; // calculate the previous year
     
@@ -109,60 +109,59 @@ module.exports.getIronReportsUntilDate = function (date, callback) {
         }
     }
     const projection = { _id: 0, __v: 0, country_exports: 0};
-    IronReports.find(query, projection, callback).sort({ reportDate: 1 });
+    return IronReports.find(query, projection).sort({ reportDate: 1 });
 }
 
 /**
  * Gibt eine Liste aller Daten aus der Datenbank zurück.
- * @param callback [err] im Fehlerfall, [dateList] Liste von Daten.
+ * @returns [err] im Fehlerfall, [dateList] Liste von Daten.
  */
-module.exports.getIronReportDates = function (callback) {
+module.exports.getIronReportDates = function () {
     const projection = { _id: 0, __v: 0 }
     const query = {};
-    IronReports.find(query, 'reportDate', projection, callback).sort({ reportDate: 1 });
+    return IronReports.find(query, 'reportDate', projection).sort({ reportDate: 1 });
 }
 
 /**
  * Gibt alle Meldungen eines Jahres zurück
  * @param date Datum für welches alle Meldungen zurückgegeben werden sollen
- * @param callback [err] im Fehlerfall, [list] falls ein zum Namen passendes Mitglied gefunden wurde.
+ * @returns [err] im Fehlerfall, [list] falls ein zum Namen passendes Mitglied gefunden wurde.
  */
-module.exports.getIronReportsByYear = function (year, callback) { 
+module.exports.getIronReportsByYear = function (year) { 
     const query = {
         reportDate: {
             $regex: new RegExp(`^(${year})`)
         }
     }
     const projection = { _id: 0, __v: 0};
-    IronReports.find(query, projection, callback).sort({ reportDate: 1 });
+    return IronReports.find(query, projection).sort({ reportDate: 1 });
 }
 
 /**
  * Löscht eine Meldung anhand ihrer ID aus der Datenbank.
  * @param id ID der zu löschenden Meldung.
- * @param callback [err] im Fehlerfall, [deletedMember] gelöschte Meldung.
+ * @returns [err] im Fehlerfall, [deletedMember] gelöschte Meldung.
  */
-module.exports.deleteIronReport = function (id, date, callback) {
+module.exports.deleteIronReport = function (id, date) {
     const filter = { companyID: id, reportDate: date }
-    IronReports.findOneAndDelete(filter, callback);
+    return IronReports.findOneAndDelete(filter);
 }
 
 /**
  * Gibt alle Meldungen eines bestimmten Monats zurück
  * @param date Datum für welches alle Meldungen zurückgegeben werden sollen
- * @param callback callback [err] im Fehlerfall, [list] Liste aller zum Datum passenden Meldungen.
+ * @returns  [err] im Fehlerfall, [list] Liste aller zum Datum passenden Meldungen.
  */
-module.exports.getIronReportsByDate = function (date, callback) {
+module.exports.getIronReportsByDate = function (date) {
     const query = { reportDate: date };
     const projection = { _id: 0, __v: 0};
-    IronReports.find(query, projection, callback);
+    return IronReports.find(query, projection);
 }
 
 /**
  * Gibt alle nötigen Daten für die Eisenmarktübersicht zurück
- * @param callback 
  */
-module.exports.getIronMarketData = function (callback) {
+module.exports.getIronMarketData = function () {
     const query = {};
     const projection = {
         _id: 0,
@@ -190,20 +189,20 @@ module.exports.getIronMarketData = function (callback) {
             ],
         },
     };
-    IronReports.aggregate([
+    return IronReports.aggregate([
         { $match: query },
         { $project: projection },
         { $sort: { reportDate: 1 } }
-    ], callback);
+    ]);
 };
 
 /**
  * Gibt eine Liste von Meldungen zurück, die zu einem bestimmten Jahr und zu bestimmten IDs gehören
  * @param date Datum für welches alle Meldungen zurückgegeben werden sollen
  * @param ids Liste von Member IDs
- * @param callback Liste von Meldungen
+ * @returns Liste von Meldungen
  */
-module.exports.getIronReportsByYearAndIDList = function (date, ids, callback) {
+module.exports.getIronReportsByYearAndIDList = function (date, ids) {
     const year = date.substring(0, 4);
     
     // Extracting the "ID" values from the objects in the `ids` array
@@ -218,16 +217,16 @@ module.exports.getIronReportsByYearAndIDList = function (date, ids, callback) {
         }
     };
     const projection = { _id: 0, __v: 0 };
-    IronReports.find(query, projection, callback);
+    return IronReports.find(query, projection);
 };
 
 /**
  * Gibt eine Liste von Meldungen zurück, die zu einem bestimmten Jahr und zu einer bestimmten ID gehören
  * @param date Datum aus welchem das Jahr extrahiert wird (JJJJ-MM-TT)
  * @param id ID des Mitgliedes für welches die Meldungen zurückgegeben werden sollen
- * @param callback Liste von Meldungen
+ * @returns Liste von Meldungen
  */
-module.exports.getIronReportsByYearAndID = function (date, id, callback) {
+module.exports.getIronReportsByYearAndID = function (date, id) {
     const year = date.substring(0, 4); 
     const query = {
         reportDate: {
@@ -236,5 +235,5 @@ module.exports.getIronReportsByYearAndID = function (date, id, callback) {
         companyID: id
     }
     const projection = { _id: 0, __v: 0};
-    IronReports.find(query, projection, callback);
+    return IronReports.find(query, projection);
 };

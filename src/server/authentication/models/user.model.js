@@ -16,7 +16,7 @@ const UserSchema = mongoose.Schema({
 })
 
 // Verbindung zur User Datenbank
-const userDB = mongoose.connection.useDb('userDB'); 
+const userDB = mongoose.connection.useDb('userDB');
 
 // User Shema exportieren
 const User = module.exports = userDB.model('User', UserSchema);
@@ -36,133 +36,113 @@ const defaultAdmin = new User({
 
 /**
  * Fügt einen Default User der Datenbank hinzu, falls kein Benutzer "admin" vorhanden ist
- * @param callback 
  * @throws err, if DB throws err
  */
-module.exports.initialConf = function (callback) {
+module.exports.initialConf = function () {
     User.countDocuments({})
-    .then((number) => {
-        if(number <= 0){
-            this.addUser(defaultAdmin, callback);
-        }
-    })
-    .catch((err) => {
-        throw err;
-    })
+        .then((number) => {
+            if (number <= 0) {
+                return this.addUser(defaultAdmin);
+            }
+        })
+        .catch((err) => {
+            throw err;
+        })
 }
 
 /**
  * Fügt einen neuen Benutzer in die Datenbank hinzu
  * @param newUser neuer Benutzer als JSON Objekt
- * @param callback callback Funktion, gibt [err] im Fehlerfall zurück
  */
-module.exports.addUser = function (newUser, callback) {
-    bcrypt.genSalt(10, (err, salt) => {
-        if(err) throw err;
-        // Überprüfen, ob newUser definiert und password vorhanden ist
-        if (newUser && newUser.password) {
-            // Passwort des Users peppern
-            newUser.password = newUser.password + pepper;
+module.exports.addUser = async function (newUser) {
 
-            // Passwort verschlüsseln
-            bcrypt.hash(newUser.password, salt, (err, hash) => {
-                if (err) throw err;
-                newUser.password = hash;
-                newUser.save({newUser})
-                .catch((err) => {
-                    callback(err);
-                })
-            });
+    try {
+        // Passwort verschlüsseln
+        newUser.password = newUser.password + pepper;
 
-        } else {
-            // Fehlerbehandlung, wenn newUser oder password fehlt
-            callback("Fehlende Benutzerdaten");
-        }
-    });
+        const salt = await bcrypt.genSalt(10);
+        const hash = await bcrypt.hash(newUser.password, salt);
+        newUser.password = hash;
+
+        //Benutzer speichern
+        return newUser.save({ newUser });
+
+    } catch (err) {
+        throw err;
+    }
 }
 
 /**
  * Gibt einen User anhand seiner ID zurück.
  * @param id ID des Users der zurückgegeben werden soll.
- * @param callback [err] im Fehlerfall, [User] falls ein zur ID passender User gefunden wurde.
  */
-module.exports.getUserById = function (id, callback) {
-    User.findById(id, callback);
+module.exports.getUserById = function (id) {
+    return User.findById(id);
 }
 
 /**
  * Gibt einen User anhand seines Usernames zurück
  * @param username Username 
- * @param callback [err] im Fehlerfall, [User] falls ein zum Username passender User gefunden wurde.
  */
-module.exports.getUserByUsername = function (username, callback) {
+module.exports.getUserByUsername = function (username) {
     const query = { username: username };
-    User.findOne(query, callback);
+    return User.findOne(query);
 }
 
 /**
  * Vergleicht ein übergebenes Passwort mit dem Hash eines anderen Passwort
  * @param candidatePassword zu testendes Passwort.
  * @param hash Passwort mit dem [candidatePasword] verglichen werden soll.
- * @param callback [err] im Fehlerfall, [isMatch] true falls beide Passwörter übereinstimmen, sonst false
  */
-module.exports.comparePassword = function (candidatePassword, hash, callback) {
+module.exports.comparePassword = function (candidatePassword, hash) {
     candidatePassword = candidatePassword + pepper;
-    bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
-        if (err) throw err;
-        callback(null, isMatch);
-    });
+    return bcrypt.compare(candidatePassword, hash)
 }
 
 /**
  * Überschreibt die Daten eines Users anhand seines früheren Benutzernamens.
  * @param username Benutzername anhand dessen das User-Objekt gefunden wird.
  * @param newUserInformation Neue Benutzerdaten mit denen die alten Benutzerdaten überschrieben werden sollen.
- * @param callback [err] im Fehlerfall.
  */
-module.exports.updateUser = function(username, newUserInformation, callback) {
+module.exports.updateUser = function (username, newUserInformation) {
     const query = { username: username };
-    User.updateOne(query, newUserInformation, callback);
+    return User.updateOne(query, newUserInformation);
 }
 
 /**
  * Löscht den Benutzer anhand seines Benutzernamens
  * @param username Benutzername anhand dessen das User-Objekt gefunden wird.
- * @param callback [err] im Fehlerfall, [User] gelöschtes Objekt
  */
-module.exports.deleteUser = function (username, callback) {
+module.exports.deleteUser = function (username) {
     const query = { username: username };
-    User.findOneAndDelete(query, callback);
+    return User.findOneAndDelete(query);
 }
 
 /**
  * Gibt eine Liste aller User in der Datenbank zurück
- * @param callback [err] im Fehlerfall, [Userlist] Liste aller Benutzer
  */
-module.exports.getUserList = function (callback) {
-    const projection = {__v: 0, password: 0}
-    User.find({}, projection, callback).sort({firstName: 1});
+module.exports.getUserList = function () {
+    const projection = { __v: 0, password: 0 }
+    return User.find({}, projection).sort({ firstName: 1 });
 }
 
 /**
  * Überschreibt das Password eines Benutzers 
  * @param username Benutzername anhand dessen das User-Objekt gefunden wird.
  * @param password neues Password
- * @param callback [err] im Fehlerfall, [modifiedCount] anzahl der überschriebenen Objekte, 
- *                 [matchedCount] anzahl der zum Benutzernamen passenden Dokumente
  */
-module.exports.changePassword = function (username, password, callback) {
+module.exports.changePassword = function (username, password) {
     // Password Peppern
     password = password + pepper
-    
+
     // Password Hashen
     bcrypt.genSalt(10, (err, salt) => {
-        if(err) throw err;
-        bcrypt.hash(password, salt, (err, hash)=>{
-            if(err) throw err;
-            const query = {username: username };
-            const update = {password: hash}
-            User.updateOne(query, update, callback);
+        if (err) throw err;
+        bcrypt.hash(password, salt, (err, hash) => {
+            if (err) throw err;
+            const query = { username: username };
+            const update = { password: hash }
+            return User.updateOne(query, update);
         })
     });
 }

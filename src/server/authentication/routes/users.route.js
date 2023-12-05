@@ -5,7 +5,7 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const tokenService = require('../services/tokenConroller.service');
-const validateReq = require('../services/validateUserRequestBody.service');
+const validateReq = require('../services/validateUserRequest.service');
 const User = require('../models/user.model');
 
 // Register
@@ -22,68 +22,70 @@ router.post('/register', passport.authenticate('jwt', { session: false }), valid
     })
 
     // Prüfen ob der Benutzername bereits vorhanden ist
-    User.getUserByUsername(newUser.username, (err, user) => {
-        if (err) {
-            console.log(err)                                                                                                /* CONSOLE LOG */
-            return res.json({ success: false, msg: 'Datenbankfehler' })
-        }
-        if (user) {
-            return res.json({ success: false, msg: 'Benutzername ist bereits vergeben' })
-        }
-
-        // Neuen User zur Datenbank hinzufügen.
-        User.addUser(newUser, (err) => {
-            //Prüfen ob der neue Benutzer erfolgreich hinzugefügt wurde:
-            if (err) {
-                console.log(err);                                                                                           /* CONSOLE LOG */
-                return res.json({ success: false, msg: 'Datenbankfehler' })
-            } else {
-                return res.json({ success: true, msg: 'Benutzer registriert' });
+    User.getUserByUsername(newUser.username)
+        .then((user) => {
+            if (user) {
+                return res.json({ success: false, msg: 'Der Benutzername ist bereits vergeben' })
             }
+            // Neuen User zur Datenbank hinzufügen.
+            User.addUser(newUser)
+                .then(() => {
+                    return res.json({ success: true, msg: 'Der Benutzer wurde erfolgreich registriert' });
+                })
+                .catch((err) => {
+                    console.log(err);                                                                                           /* CONSOLE LOG */
+                    return res.json({ success: false, msg: 'Datenbankfehler: \n' + err })
+                })
         })
-    })
+        .catch((err) => {
+            console.log(err);                                                                                                   /* CONSOLE LOG */
+            return res.json({ success: false, msg: 'Datenbankfehler: \n' + err })
+        })
 });
 
 // Authenticate
 router.post('/authenticate', validateReq.authReq, (req, res) => {
-    // Username und Passwort auslesen
     const username = req.body.username;
     let password = req.body.password;
 
     // Prüfen ob Benutzername vorhanden ist
-    User.getUserByUsername(username, (err, user) => {
-        if (err) {
-            console.log("ERROR in '/authenticate' (src/serve/authentication/routes/user.route: 67)\n" + err);                 // CONSOLE LOG
-            return res.json({ success: false, msg: 'Es ist ein Fehler aufgetreten' })
-        } else if (!user) {
-            return res.json({ success: false, msg: 'Der Benutzer wurde nicht gefunden' })
-        }
-        // Password auf Korrektheit prüfen. Bei richtigem Passwort Token erstellen und zurückgeben. Token läuft nach einer Woche ab! 
-        User.comparePassword(password, user.password, (err, isMatch) => {
-            if (err) {
-                console.log("ERROR in '/authenticate' (src/serve/authentication/routes/user.route: 75)\n" + err);             // CONSOLE LOG
-                return res.json({ success: false, msg: 'Es ist ein Fehler aufgetreten' })
+    User.getUserByUsername(username)
+        .then((user) => {
+            if (!user) {
+                return res.json({ success: false, msg: 'Benutzer nicht gefunden' });
             }
-            if (isMatch) {
-                const token = tokenService.createNewToken(user);
-                // Antword an den Client (Success, Token, User (als neues Objekt, da wir nicht kompletten User mit PW zurückgeben möchten) )
-                res.json({
-                    success: true,
-                    token: token,
-                    user: {
-                        id: user._id,
-                        firstName: user.firstName,
-                        lastname: user.lastName,
-                        username: user.username,
-                        email: user.email,
-                        isAdmin: user.isAdmin
+            
+            // Passwort des Users prüfen
+            User.comparePassword(password, user.password)
+                .then((isMatch) => {
+                    if (!isMatch) {
+                        return res.json({ success: false, msg: 'Falsches Password' });
                     }
+
+                    const token = tokenService.createNewToken(user);
+                    // Antword an den Client (Success, Token, User (als neues Objekt, da wir nicht kompletten User mit PW zurückgeben möchten) )
+                    res.json({
+                        success: true,
+                        token: token,
+                        user: {
+                            id: user._id,
+                            firstName: user.firstName,
+                            lastname: user.lastName,
+                            username: user.username,
+                            email: user.email,
+                            isAdmin: user.isAdmin
+                        }
+                    })
                 })
-            } else {
-                return res.json({ success: false, msg: 'Falsches Password' });
-            }
+            .catch((err) => {
+                console.log(err);                                                                                               /* CONSOLE LOG */
+                return res.json({ success: false, msg: 'Datenbankfehler: \n' + err })
+            })
         })
-    })
+        .catch((err) => {
+            console.log(err);                                                                                                   /* CONSOLE LOG */
+            return res.json({ success: false, msg: 'Datenbankfehler: \n' + err })
+        })
 });
 
 // Profile
@@ -106,27 +108,27 @@ router.put('/editUser', passport.authenticate('jwt', { session: false }), valida
     };
 
     // Prüfen ob der Benutzername schon vorhanden ist:
-    User.getUserByUsername(newUserInformation.username, (err, user) => {
-
-        if (err) {
-            console.log(err);                                                                                               /* CONSOLE LOG */
-            return res.json({ success: false, msg: 'Datenbankfehler' });
-        }
-        if (user) {
-            if (newUserInformation.username != oldUsername) {
-                return res.json({ success: false, msg: 'Der Benutzername wurde bereits vergeben' });
+    User.getUserByUsername(newUserInformation.username)
+        .then((user) => {
+            if (user) {
+                if (newUserInformation.username != oldUsername) {
+                    return res.json({ success: false, msg: 'Der Benutzername wurde bereits vergeben' });
+                }
             }
-        }
-        // Benutzerdaten updaten
-        User.updateUser(oldUsername, newUserInformation, (err) => {
-            if (err) {
-                console.log(err);                                                                                      /* CONSOLE LOG */
-                return res.json({ success: false, msg: 'Datenbankfehler' })
-            }
-            return res.json({ success: true, msg: 'Der Benutzer wurde gespeichert' });
+            // Benutzerdaten updaten
+            User.updateUser(oldUsername, newUserInformation)
+                .then(() => {
+                    return res.json({ success: true, msg: 'Der Benutzer wurde gespeichert' });
+                })
+                .catch((err) => {
+                    console.log(err);                                                                                      /* CONSOLE LOG */
+                    return res.json({ success: false, msg: 'Datenbankfehler \n' + err })
+                })
         })
-
-    });
+        .catch((err) => {
+            console.log(err);                                                                                               /* CONSOLE LOG */
+            return res.json({ success: false, msg: 'Datenbankfehler \n' + err })
+        })
 });
 
 // Change PW
@@ -135,64 +137,68 @@ router.put('/editPassword', passport.authenticate('jwt', { session: false }), va
     const username = req.body.username;
 
     // Benutzer heraussuchen
-    User.getUserByUsername(username, (err, user) => {
-        if (err) {
-            console.log(err);                                                                                                       /* CONSOLE LOG */
-            return res.json({ success: false, msg: 'Datenbankfehler' })
-        } else if (!user) {
-            return res.json({ success: false, msg: 'Zurücksetzen des Passwords fehlgeschlagen' });
-        } else {
-            // Password ändern
-            User.changePassword(username, newPassword, (err) => {
-                if (err) {
-                    console.log(err);                                                                                               /* CONSOLE LOG */
-                    return res.json({ success: false, msg: 'Datenbankfehler' })
-                }
-                return res.json({ success: true, msg: 'Das Password wurde gespeichert' });
-            })
-        }
-    })
+    User.getUserByUsername(username)
+        .then((user) => {
+            if (!user) {
+                return res.json({ success: false, msg: 'Der Benutzer konnte nicht gefunden werden' });
+            }
+            // Passwort ändern
+            User.changePassword(username, newPassword)
+                .then(() => {
+                    return res.json({ success: true, msg: 'Das Password wurde gespeichert' });
+                })
+                .catch((err) => {
+                    console.log(err);                                                                                      /* CONSOLE LOG */
+                    return res.json({ success: false, msg: 'Datenbankfehler \n' + err })
+                })
+        })
+        .catch((err) => {
+            console.log(err);                                                                                               /* CONSOLE LOG */
+            return res.json({ success: false, msg: 'Datenbankfehler \n' + err })
+        })
 });
 
 // Löscht einen User aus der Datenbank anhand seines Benutzernamens
 router.delete('/deleteUser/:username', passport.authenticate('jwt', { session: false }), validateReq.isAdmin, validateReq.deleteUserReq, (req, res) => {
     const { username } = req.params;
 
-    User.getUserByUsername(username, (err, user) => {
-        if (err) throw err;
-        if (user != null) {
-            if (user.isAdmin) return res.json({ success: false, msg: 'Administratoren können nicht auf diesem Weg entfernt werden' });
-        }
-    });
+    // Prüfen ob der zu löschende User ein Admin ist
+    User.getUserByUsername(username)
+        .then((user) => {
+            if (user != null) {
+                if (user.isAdmin) return res.json({ success: false, msg: 'Administratoren können nicht auf diesem Weg entfernt werden' });
+            }
+        })
+        .catch((err) => {
+            console.log(err);                                                                                               /* CONSOLE LOG */
+            return res.json({ success: false, msg: 'Datenbankfehler \n' + err })
+        })
 
-    User.deleteUser(username, (err, deletedUser) => {
-        if (err) throw err;
-        if (!deletedUser) {
-            return res.json({ success: false, msg: 'Der Benutzer mit dem Namen ' + username + ' konnte nicht entfernt werden' });
-        } else {
-            // Falls vorhanden Session vom zu löschenden User entfernen.
-            Session.getSessionByID(deletedUser._id, (err, session) => {
-                // console.log("Zu löschende Session: " + session)                                                          //CONSOLE LOG
-                if (err) throw err;
-                if (session) {
-                    Session.removeSession(session.sessionToken, (err) => {
-                        if (err) throw err;
-                    });
-                }
-            });
-            return res.json({ success: true, msg: 'Der Benutzer ' + deletedUser.username + ' wurde entfernt' });
-        }
-    });
+    // User löschen
+    User.deleteUser(username)
+        .then((deletedUser) => {
+            if (!deletedUser) {
+                return res.json({ success: false, msg: 'Der Benutzer mit dem Namen ' + username + ' konnte nicht entfernt werden' });
+            } else {
+                return res.json({ success: true, msg: 'Der Benutzer ' + deletedUser.username + ' wurde entfernt' });
+            }
+        })
+        .catch((err) => {
+            console.log(err);                                                                                               /* CONSOLE LOG */
+            return res.json({ success: false, msg: 'Datenbankfehler \n' + err })
+        })
 });
 
 // Gibt eine Liste mit allen Benutzern zurück
 router.get('/getUserList', passport.authenticate('jwt', { session: false }), validateReq.isAdmin, (req, res) => {
-    User.getUserList((err, users) => {
-        if (err) {
-            res.json({ success: false, msg: 'Beim laden der Benutzer ist ein Fehler aufgetreten' });
-        }
-        return res.json({ success: true, userList: users });
-    });
+    User.getUserList()
+        .then((users) => {
+            return res.json({ success: true, userList: users });
+        })
+        .catch((err) => {
+            console.log(err);                                                                                               /* CONSOLE LOG */
+            return res.json({ success: false, msg: 'Datenbankfehler \n' + err })
+        })
 });
 
 module.exports = router;

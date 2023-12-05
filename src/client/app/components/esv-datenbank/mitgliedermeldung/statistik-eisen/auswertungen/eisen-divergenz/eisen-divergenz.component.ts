@@ -39,7 +39,6 @@ export class EisenDivergenzComponent implements OnInit, OnDestroy {
     const subscription = this.reportService.getIronReportsUntilDate(this.helper.normDate(this.selectedDate)).subscribe(data => {
       if (!data.success) return this.flashMessage.show(data.msg, { cssClass: 'alert-danger', timeout: 5000 });
       else {
-        console.log(data.reportList)
         this.calculateStatistiks(data.reportList);
       }
     });
@@ -51,10 +50,6 @@ export class EisenDivergenzComponent implements OnInit, OnDestroy {
     this.ironReportMonthSum = this.divergenzService.calculateIronReportMonthSum(ironReports, this.selectedDate);
     this.ironReportYearSum = this.divergenzService.calculateIronReportYearSum(ironReports, this.selectedDate);
     this.ironReportQuarterSum = this.divergenzService.calculateIronReportQuarterSum(ironReports, this.selectedDate);
-
-    console.log(this.ironReportMonthSum)
-    console.log(this.ironReportYearSum)
-    console.log(this.ironReportQuarterSum)
   }
 
   setDate(event: Event) {

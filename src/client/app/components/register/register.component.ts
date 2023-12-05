@@ -79,6 +79,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
       document.getElementById("passwordForm")!.className = "form-control is-invalid";
       return false;
     }
+
+    // Namen validieren
+    if( user.firstName!.length > 20 || user.firstName!.length < 3 || user.lastName!.length > 20 || user.lastName!.length < 3){
+      this.flashMessage.show('Vor- und Nachname müssen zwischen 3-20 Zeichen lang sein', {cssClass: 'alert-danger', timeout:5000});
+      return false;
+    }
     
     // Register User (Gibt User_Daten an authService zur Registrierung weiter und meldet Status zurück)
     const subscription = this.authService.registerUser(user).subscribe( (data) => {

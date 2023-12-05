@@ -39,7 +39,6 @@ export class StahlDivergenzComponent implements OnInit, OnDestroy {
     const subscription = this.reportService.getSteelReportsUntilDate(this.helper.normDate(this.selectedDate)).subscribe(data => {
       if (!data.success) return this.flashMessage.show(data.msg, { cssClass: 'alert-danger', timeout: 5000 });
       else {
-        console.log(data.reportList)
         this.calculateStatistiks(data.reportList);
       }
     });

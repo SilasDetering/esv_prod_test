@@ -37,53 +37,53 @@ const SteelReports = module.exports = esvDB.model('SteelReports', SteelReportShe
 /**
  * Fügt einen neuen Bericht von inland und ausland vertrieben von Eisenprodukten eines Mitgliedes hinzu.
  * @param newSteelReport neuer Bericht, der hinzugefügt werden soll
- * @param callback [err] im Fehlerfall.
+ * @returns [err] im Fehlerfall.
  */
-module.exports.addSteelReport = function (newSteelReport, callback) {
-    SteelReports.insertMany(newSteelReport, callback)
+module.exports.addSteelReport = function (newSteelReport) {
+    return SteelReports.insertMany(newSteelReport)
 }
 
 /**
  * Gibt einen Bericht anhand der companyID und dem Bericht-Datum zurück.
  * @param id ID des Mitgliedes von dem ein Bericht gesucht wird
  * @param date Datum des Berichtes.
- * @param callback [err] im Fehlerfall, [report] falls ein zur companyID und reportDate passender Bericht gefunden wurde.
+ * @returns [err] im Fehlerfall, [report] falls ein zur companyID und reportDate passender Bericht gefunden wurde.
  */
-module.exports.getSteelReport = function (id, date, callback) {
+module.exports.getSteelReport = function (id, date) {
     const projection = { _id: 0, __v: 0 }
     const query = { companyID: id, reportDate: date };
-    SteelReports.findOne(query, projection, callback);
+    return SteelReports.findOne(query, projection);
 }
 
 /**
  * Gibt eine Liste aller Meldungen der Mitglieder aus der Datenbank zurück.
- * @param callback [err] im Fehlerfall, [reportList] Liste von Meldungen der Mitglieder.
+ * @returns [err] im Fehlerfall, [reportList] Liste von Meldungen der Mitglieder.
  */
-module.exports.getSteelReportList = function (callback) {
+module.exports.getSteelReportList = function () {
     const projection = { _id: 0, __v: 0 }
     const query = {};
-    SteelReports.find(query, projection, callback).sort({ reportDate: 1 });
+    return SteelReports.find(query, projection).sort({ reportDate: 1 });
 }
 
 /**
  * Gibt eine gefilterte Liste aller Meldungen der Mitglieder aus der Datenbank zurück.
- * @param callback [err] im Fehlerfall, [reportList] Liste von Meldungen der Mitglieder.
+ * @returns [err] im Fehlerfall, [reportList] Liste von Meldungen der Mitglieder.
  */
-module.exports.getFilteredSteelReportList = function (ids, dates, callback) {
+module.exports.getFilteredSteelReportList = function (ids, dates) {
     const projection = { _id: 0, __v: 0, country_exports: 0 };
     const query = {
         companyID: { $in: ids },
         reportDate: { $in: dates }
     };
-    SteelReports.find(query, projection, callback).sort({ reportDate: 1 });
+    return SteelReports.find(query, projection).sort({ reportDate: 1 });
 }
 
 /**
  * Gibt alle Meldungen eines Jahres und des vorherigen Jahres zurück
  * @param date Datum für welches alle Meldungen zurückgegeben werden sollen
- * @param callback [err] im Fehlerfall, [list] falls ein zum Namen passendes Mitglied gefunden wurde.
+ * @returns [err] im Fehlerfall, [list] falls ein zum Namen passendes Mitglied gefunden wurde.
  */
-module.exports.getSteelReportsUntilDate = function (date, callback) {
+module.exports.getSteelReportsUntilDate = function (date) {
     const year = date.substring(0, 4); // extract year from date string
     const previousYear = parseInt(year) - 1; // calculate the previous year
     
@@ -93,60 +93,60 @@ module.exports.getSteelReportsUntilDate = function (date, callback) {
         }
     }
     const projection = { _id: 0, __v: 0, country_exports: 0};
-    SteelReports.find(query, projection, callback).sort({ reportDate: 1 });
+    return SteelReports.find(query, projection).sort({ reportDate: 1 });
 }
 
 /**
  * Gibt eine Liste aller Daten aus der Datenbank zurück.
- * @param callback [err] im Fehlerfall, [dateList] Liste von Daten.
+ * @returns [err] im Fehlerfall, [dateList] Liste von Daten.
  */
-module.exports.getSteelReportDates = function (callback) {
+module.exports.getSteelReportDates = function () {
     const projection = { _id: 0, __v: 0 }
     const query = {};
-    SteelReports.find(query, 'reportDate', projection, callback).sort({ reportDate: 1 });
+    return SteelReports.find(query, 'reportDate', projection).sort({ reportDate: 1 });
 }
 
 /**
  * Gibt alle Meldungen eines Jahres zurück
  * @param date Datum für welches alle Meldungen zurückgegeben werden sollen
- * @param callback [err] im Fehlerfall, [list] falls ein zum Namen passendes Mitglied gefunden wurde.
+ * @returns [err] im Fehlerfall, [list] falls ein zum Namen passendes Mitglied gefunden wurde.
  */
-module.exports.getSteelReportsByYear = function (year, callback) { 
+module.exports.getSteelReportsByYear = function (year) { 
     const query = {
         reportDate: {
             $regex: new RegExp(`^(${year})`)
         }
     }
     const projection = { _id: 0, __v: 0};
-    SteelReports.find(query, projection, callback).sort({ reportDate: 1 });
+    return SteelReports.find(query, projection).sort({ reportDate: 1 });
 }
 
 /**
  * Löscht eine Meldung anhand ihrer ID aus der Datenbank.
  * @param id ID der zu löschenden Meldung.
- * @param callback [err] im Fehlerfall, [deletedMember] gelöschte Meldung.
+ * @returns [err] im Fehlerfall, [deletedMember] gelöschte Meldung.
  */
-module.exports.deleteSteelReport = function (id, date, callback) {
+module.exports.deleteSteelReport = function (id, date) {
     const filter = { companyID: id, reportDate: date }
-    SteelReports.findOneAndDelete(filter, callback);
+    return SteelReports.findOneAndDelete(filter);
 }
 
 /**
  * Gibt alle Meldungen eines bestimmten Datums zurück
  * @param date Datum für welches alle Meldungen zurückgegeben werden sollen
- * @param callback callback [err] im Fehlerfall, [list] Liste aller zum Datum passenden Meldungen.
+ * @returns  [err] im Fehlerfall, [list] Liste aller zum Datum passenden Meldungen.
  */
-module.exports.getSteelReportsByDate = function (date, callback) {
+module.exports.getSteelReportsByDate = function (date) {
     const query = { reportDate: date };
     const projection = { _id: 0, __v: 0};
-    SteelReports.find(query, projection, callback);
+    return SteelReports.find(query, projection);
 }
 
 /**
  * Gibt alle nötigen Daten für die Stahlmarktübersicht zurück
- * @param callback 
+ * @returns 
  */
-module.exports.getSteelMarketData = function (callback) {
+module.exports.getSteelMarketData = function () {
     const query = {};
     const projection = {
         _id: 0,
@@ -163,20 +163,20 @@ module.exports.getSteelMarketData = function (callback) {
         },
     };
 
-    SteelReports.aggregate([
+    return SteelReports.aggregate([
         { $match: query },
         { $project: projection },
         { $sort: { reportDate: 1 } }
-    ], callback);
+    ]);
 };
 
 /**
  * Gibt eine Liste von Meldungen zurück, die zu einem bestimmten Jahr und zu bestimmten IDs gehören
  * @param date Datum für welches alle Meldungen zurückgegeben werden sollen
  * @param ids Liste von Member IDs
- * @param callback Liste von Meldungen
+ * @returns Liste von Meldungen
  */
-module.exports.getSteelReportsByYearAndIDList = function (date, ids, callback) {
+module.exports.getSteelReportsByYearAndIDList = function (date, ids) {
     const year = date.substring(0, 4);
     
     // Extracting the "ID" values from the objects in the `ids` array
@@ -191,16 +191,16 @@ module.exports.getSteelReportsByYearAndIDList = function (date, ids, callback) {
         }
     };
     const projection = { _id: 0, __v: 0 };
-    SteelReports.find(query, projection, callback);
+    return SteelReports.find(query, projection);
 };
 
 /**
  * Gibt eine Liste von Meldungen zurück, die zu einem bestimmten Jahr und zu einer bestimmten ID gehören
  * @param date Datum aus welchem das Jahr extrahiert wird (JJJJ-MM-TT)
  * @param id ID des Mitgliedes für welches die Meldungen zurückgegeben werden sollen
- * @param callback Liste von Meldungen
+ * @returns Liste von Meldungen
  */
-module.exports.getSteelReportsByYearAndID = function (date, id, callback) {
+module.exports.getSteelReportsByYearAndID = function (date, id) {
     const year = date.substring(0, 4); 
     const query = {
         reportDate: {
@@ -209,5 +209,5 @@ module.exports.getSteelReportsByYearAndID = function (date, id, callback) {
         companyID: id
     }
     const projection = { _id: 0, __v: 0};
-    SteelReports.find(query, projection, callback);
+    return SteelReports.find(query, projection);
 };

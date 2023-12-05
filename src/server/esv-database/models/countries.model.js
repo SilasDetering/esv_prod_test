@@ -23,78 +23,74 @@ const Countries = module.exports = esvDB.model('countries', CountriesShema);
 /**
  * Fügt ein neues Land in die Datenbank hinzu.
  * @param newCountry neues Country Objekt { [name], [countryID], [kontinent], [isEu]?, [isEFTA]? }.
- * @param callback [err] im Fehlerfall.
+ * @returns [err] im Fehlerfall.
  */
-module.exports.addCountry = function (newCountry, callback) {
-    Countries.insertMany({newCountry})
-    .cache((err) => {
-        callback(err);
-    })
+module.exports.addCountry = function (newCountry) {
+    return Countries.insertMany(newCountry)
 }
 
 /**
  * Gibt ein Land anhand der countryID zurück.
  * @param id ID des gesuchten Landes.
- * @param callback [err] im Fehlerfall, [country] falls ein zur ID passendes Land gefunden wurde.
+ * @returns [err] im Fehlerfall, [country] falls ein zur ID passendes Land gefunden wurde.
  */
-module.exports.getCountryById = function (id, callback) {
+module.exports.getCountryById = function (id) {
     const projection = { _id: 0, __v: 0}
     const query = { countryID: id };
-    Countries.findOne(query, projection, callback);
+    return Countries.findOne(query, projection);
 }
 
 /**
  * Sucht ein Land anhand seines Namens in der Datenbank.
  * @param name Name des Landes.
- * @param callback [err] im Fehlerfall, [country] falls ein zum Namen passendes Land gefunden wurde.
+ * @returns [err] im Fehlerfall, [country] falls ein zum Namen passendes Land gefunden wurde.
  */
-module.exports.getCountryByName = function (name, callback) {
+module.exports.getCountryByName = function (name) {
     const query = { name: name };
     const projection = { _id: 0, __v: 0}
-    Countries.findOne(query, projection, callback);
+    return Countries.findOne(query, projection);
 }
 
 /**
  * Gibt eine Liste aller Länder aus der Datenbank zurück.
  * @param filter Kontinent nach denen die Länder gefiltert werden sollen. 
  *               "all" falls die Länder aller Kontinente zurückgegeben werden sollen.
- * @param callback [err] im Fehlerfall, [countryList] Liste aller gespeicherten Länder passend zum gewünschten Kontinent.
+ * @returns [err] im Fehlerfall, [countryList] Liste aller gespeicherten Länder passend zum gewünschten Kontinent.
  */
-module.exports.getCountryList = function (filter, callback) {
+module.exports.getCountryList = function (filter) {
     if( filter == "all"){
         filter = {$in:["Europa","Asien","Nordamerika","Südamerika","Ozeanien","Antarktis","Afrika"]};
     }
     const query = { continent: filter }
     const projection = { _id: 0, __v: 0}
-    Countries.find(query, projection, callback).sort({ name: 1 });
+    return Countries.find(query, projection,).sort({ name: 1 });
 }
 
 /**
  * Gibt alle Länder IDs aus, die in der Datenbank gespeichert werden.
- * @param callback [err] im Fehlerfall, [countryIDs] Länder IDs aller gespeicherten Länder.
+ * @returns [err] im Fehlerfall, [countryIDs] Länder IDs aller gespeicherten Länder.
  */
-module.exports.getListOfCountryIDs = function (callback) {
-    Countries.distinct("countryID", {}, callback);
+module.exports.getListOfCountryIDs = function() {
+    return Countries.distinct("countryID", {});
 }
 
 /**
  * Überschreibt die Daten eines gespeicherten Landes.
  * @param countryID Länder ID anhand dessen das zu überschreibende Land gesucht wird.
  * @param newInformation Neue Länderdaten 
- * @param callback [err] im Fehlerfall, [modifiedCount] anzahl der überschriebenen Objekte, 
- *                 [matchedCount] anzahl der zum Benutzernamen passenden Dokumente
+ * @returns [err] im Fehlerfall, [modifiedCount] anzahl der überschriebenen Objekte, [matchedCount] anzahl der zum Benutzernamen passenden Dokumente
  */
-module.exports.updateCoutry = function (countryID, newInformation, callback) {
+module.exports.updateCoutry = function (countryID, newInformation) {
     const query = { countryID: countryID };
-    Countries.updateOne(query, newInformation, callback);
+    return Countries.updateOne(query, newInformation);
 }
 
 /**
  * Löscht ein Land anhand seiner ID aus der Datenbank.
  * @param id ID des zu löschenden Landes.
- * @param callback [err] im Fehlerfall, [deletedCountry] gelöschtes Land.
+ * @returns [err] im Fehlerfall, [deletedCountry] gelöschtes Land.
  */
-module.exports.deleteCountry = function (id, callback) {
+module.exports.deleteCountry = function (id) {
     const query = { countryID: id };
-    Countries.findOneAndDelete(query, callback);
+    return Countries.findOneAndDelete(query);
 }

@@ -2,14 +2,11 @@
  * Stellt funktionen zur validierung der Req-Bodys für Usermanagement bereit.
 */
 
-/** 
- * @todo Nochmal prüfen ob sicher. Ist User in der Lage isAdmin selber zu setzen und passport.js zu umgehen?
- * 
+/**  
  * Prüft ob der Benutzer Administratorrechte besitzt. 
  * @err Status 403: Sie besitzen nicht die benötigten Berechtigungen.
  */
 module.exports.isAdmin = function(req, res, next) {
-  
   if (!req.user.isAdmin) {
     return res.status(403).json({ success: false, error: "Sie besitzen nicht die benötigten Berechtigungen" });
   }
@@ -25,11 +22,11 @@ module.exports.registerReq = function(req, res, next) {
   const { username, password, firstName, lastName, email, isAdmin } = req.body;
 
   if (
-    typeof username !== "string" || username.trim().length === 0 ||
-    typeof password !== "string" || password.trim().length === 0 ||
-    typeof firstName !== "string" || firstName.trim().length === 0 ||
-    typeof lastName !== "string" || lastName.trim().length === 0 ||
-    typeof email !== "string" || email.trim().length === 0 ||
+    validateEmail(email) === null ||
+    validatePassword(password) === null ||
+    validateName(firstName) === null ||
+    validateName(lastName) === null ||
+    validateName(username) === null ||
     typeof isAdmin !== "boolean"
   ) {
     return res.status(400).json({ success: false, msg: "Ungültiger Request Body" });
@@ -47,8 +44,8 @@ module.exports.authReq = function(req, res, next) {
   const password = req.body.password;
 
   if (
-    typeof username !== "string" || username.trim().length === 0 ||
-    typeof password !== "string" || password.trim().length === 0
+    validateName(username) === null ||
+    validatePassword(password) === null
   ) {
     return res.status(400).json({ success: false, error: "Ungültiger Request Body" });
   }
@@ -64,11 +61,11 @@ module.exports.editUserReq = function(req, res, next) {
   const { oldUsername, username, firstName, lastName, email, isAdmin } = req.body;
 
   if (
-    typeof oldUsername !== "string" || oldUsername.trim().length === 0 ||
-    typeof username !== "string" || username.trim().length === 0 ||
-    typeof firstName !== "string" || firstName.trim().length === 0 ||
-    typeof lastName !== "string" || lastName.trim().length === 0 ||
-    typeof email !== "string" || email.trim().length === 0 ||
+    validateName(oldUsername) === null ||
+    validateName(username) === null ||
+    validateName(firstName) === null ||
+    validateName(lastName) === null ||
+    validateEmail(email) === null ||
     typeof isAdmin !== "boolean"
   ) {
     return res.status(400).json({ success: false, msg: "Ungültiger Request Body" });
@@ -86,8 +83,8 @@ module.exports.editPasswordReq = function(req, res, next) {
   const username = req.body.username; 
 
   if (
-    typeof newPassword !== "string" || newPassword.trim().length === 0 ||
-    typeof username !== "string" || username.trim().length === 0
+    validatePassword(newPassword) === null ||
+    validateName(username) === null
   ) {
     return res.status(400).json({ success: false, msg: "Ungültiger Request Body" });
   }
@@ -100,15 +97,32 @@ module.exports.editPasswordReq = function(req, res, next) {
  */
 module.exports.deleteUserReq = function(req, res, next) {
   const {username} = req.params;
-
-  console.log(username)
-
-
   if (
-    typeof username !== "string" || username.trim().length === 0
+    validateName(username) === null
   ) {
     return res.status(400).json({ success: false, msg: "Ungültiger Request Body" });
   }
   next();
 }
 
+
+function validateEmail(email) {
+  if(email == undefined) return false;
+  const re = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  return re.test(email);
+}
+
+function validatePassword(password) {
+  if(password == undefined) return false;
+  console.log(password)
+  var requirement = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,20}$/;
+  console.log(password.match(requirement))
+  return password.match(requirement);
+}
+
+function validateName(name) {
+  if(name == undefined) return false;
+  if(typeof name !== "string") return false;
+  if(name.trim().length <= 3) return false;
+  return true
+}

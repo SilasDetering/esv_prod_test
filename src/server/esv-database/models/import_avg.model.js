@@ -31,40 +31,40 @@ const YearStats = module.exports = esvDB.model('Year_Statistiks', YearStatsSchem
 /**
  * Fügt eine neue Jahresstatistik in die Datenbank hinzu
  * @param data Datensatz der neuen Jahresstatistik
- * @param callback [err] im Fehlerfall
+ * @returns [err] im Fehlerfall
  */
-module.exports.addYearStat = function (data, callback) {
+module.exports.addYearStat = function (data) {
     const projection = { _id: 0, __v: 0}
-    YearStats.insertMany(data, projection, callback)
+    return YearStats.insertMany(data, projection)
 }
 
 /**
  * Löscht eine Jahresstatistik aus der Datenbank
  * @param year Das Jahr der zu löschenden Statistik
- * @param callback [err] im Fehlerfall, [deletedCount] Anzahl der gelöschten Dokumente
+ * @returns [err] im Fehlerfall, [deletedCount] Anzahl der gelöschten Dokumente
  */
-module.exports.removeYearStat = function (year, callback) {
+module.exports.removeYearStat = function (year) {
     const query = { importYear: year }
     const projection = { _id: 0, __v: 0}
-    YearStats.deleteMany(query, projection, callback)
+    return YearStats.deleteMany(query, projection)
 }
 
 /**
  * Gibt eine Liste aller gepeicherten Jahressummen aus
- * @param callback [err] im Fehlerfall, [yearStats] Liste aller gespeicherten Jahressummen
+ * @returns [err] im Fehlerfall, [yearStats] Liste aller gespeicherten Jahressummen
  */
-module.exports.getAllYearSums = function (callback) {
+module.exports.getAllYearSums = function () {
     const projection = { _id: 0, __v: 0}
-    YearStats.find({}, projection, callback).sort({importYear: -1});
+    return YearStats.find({}, projection).sort({importYear: -1});
 }
 
 /**
  * Gibt eine bestimmte Jahressumme anhand des Jahres zurück.
- * @param {*} year Das gewünschte Jahr.
- * @param {*} callback [err] im Fehlerfall, [yearStat] zum übergebenen Jahr passende Jahressumme
+ * @param year Das gewünschte Jahr.
+ * @returns [err] im Fehlerfall, [yearStat] zum übergebenen Jahr passende Jahressumme
  */
-module.exports.getSpecificYearSum = function (year, callback) {
+module.exports.getSpecificYearSum = function (year) {
     const query = {importYear: year}
     const projection = { _id: 0, __v: 0}
-    YearStats.find(query, projection, callback).sort({importYear: -1});
+    return YearStats.find(query, projection).sort({importYear: -1});
 }

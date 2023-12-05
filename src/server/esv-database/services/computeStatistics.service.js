@@ -11,101 +11,103 @@ const { getCurrentDateString, getYearFromDate } = require('./dateUtils.service')
 /** 
  * Berechnet die Menge aller Produkte die in einem Monat importiert wurden anhand der Produktkategorieren. Es wird nur dann die Monatsmenge berechnet, wenn das Land in der Datenbank gespeichert wurde.
  * @param date Datum des Monats von dem die Import Menge berechnet werden soll. (String im Format JJJJ-MM-TT)
- * @throws Wirft einen Fehler falls der Datenbankzugriff fehlgelaufen ist, Keine Einträge für das Datum gefunden wurden, Eine unbekannte Produkt-ID gefunden wurde
+ * @throws {err} Wirft einen Fehler falls der Datenbankzugriff fehlgelaufen ist, Keine Einträge für das Datum gefunden wurden, Eine unbekannte Produkt-ID gefunden wurde
  */
 function calculateMonthSum(date) {
     // Alten Monatseintrag löschen falls vorhanden
-    MonthReport.deleteMonthRepByImportDate(date, (err) => {
-        if (err) throw Error(err)
-
-        // Alle Importe vom Datum [date] aus der Datenbank laden
-        Report.findImportDataByImportDate(date, (err, data) => {
-            if (err) {
-                throw new Error(err);
-            } if (!data) {
-                throw new Error("Es konten keine Einträge für das Datum '" + date + "' in der Datenbank gefunden werden")
-            } else {
-                var newMonthEntry = {
-                    importDate: date,
-                    insertDate: getCurrentDateString(),
-                    eisendraht_blank: 0,
-                    eisendraht_verzinkt: 0,
-                    eisendraht_sonstiger: 0,
-                    eisendraht_kunststoffummantelt: 0,
-                    stahldraht_weniger_blank: 0,
-                    stahldraht_weniger_verzinkt: 0,
-                    stahldraht_weniger_sonstiger: 0,
-                    stahldraht_mehr_blank: 0,
-                    stahldraht_mehr_verzinkt: 0,
-                    stahldraht_mehr_sonstiger: 0,
-                }
-
-                // Alle ImportDaten anhand der Produktkategorie aufsummieren, falls das Land in der Datenbank gespeichert wurde
-                Countries.getListOfCountryIDs((err, countryIDs) => {
-                    if (err) throw new Error(err)
-                    if (!countryIDs) throw new Error("Keine LänderIDs gefunden")
-
-                    data.forEach(element => {
-                        if (countryIDs.includes(element.originID)) {
-                            switch (element.productID) {
-                                case "WA72171010, WA72171039":
-                                    newMonthEntry.eisendraht_blank += element.data;
-                                    break;
-                                case "WA72172010, WA72172030":
-                                    newMonthEntry.eisendraht_verzinkt += element.data;
-                                    break;
-                                case "WA72173041, WA72173049":
-                                    newMonthEntry.eisendraht_sonstiger += element.data;
-                                    break;
-                                case "WA72179020":
-                                    newMonthEntry.eisendraht_kunststoffummantelt += element.data;
-                                    break;
-                                case "WA72171050":
-                                    newMonthEntry.stahldraht_weniger_blank += element.data;
-                                    break;
-                                case "WA72172050":
-                                    newMonthEntry.stahldraht_weniger_verzinkt += element.data;
-                                    break;
-                                case "WA72179050":
-                                    newMonthEntry.stahldraht_weniger_sonstiger += element.data;
-                                    break;
-                                case "WA72171090":
-                                    newMonthEntry.stahldraht_mehr_blank += element.data;
-                                    break;
-                                case "WA72172090":
-                                    newMonthEntry.stahldraht_mehr_verzinkt += element.data;
-                                    break;
-                                case "WA72173090, WA72179090":
-                                    newMonthEntry.stahldraht_mehr_sonstiger += element.data;
-                                    break;
-                                default:
-                                    throw new Error("Die ProduktID '" + element.productID + "' ist nicht bekannt!");
-                            }
+    MonthReport.deleteMonthRepByImportDate(date)
+        .then(() => {
+            // Alle Importe vom Datum [date] aus der Datenbank laden
+            Report.findImportDataByImportDate(date)
+                .then((data) => {
+                    if (!data) {
+                        throw new Error("Es konten keine Einträge für das Datum '" + date + "' in der Datenbank gefunden werden")
+                    } else {
+                        var newMonthEntry = {
+                            importDate: date,
+                            insertDate: getCurrentDateString(),
+                            eisendraht_blank: 0,
+                            eisendraht_verzinkt: 0,
+                            eisendraht_sonstiger: 0,
+                            eisendraht_kunststoffummantelt: 0,
+                            stahldraht_weniger_blank: 0,
+                            stahldraht_weniger_verzinkt: 0,
+                            stahldraht_weniger_sonstiger: 0,
+                            stahldraht_mehr_blank: 0,
+                            stahldraht_mehr_verzinkt: 0,
+                            stahldraht_mehr_sonstiger: 0,
                         }
-                    })
 
-                    // Werte kaufmännisch Runden, da Javaskript nicht rechnen kann
-                    newMonthEntry.eisendraht_blank = round(newMonthEntry.eisendraht_blank);
-                    newMonthEntry.eisendraht_verzinkt = round(newMonthEntry.eisendraht_verzinkt);
-                    newMonthEntry.eisendraht_sonstiger = round(newMonthEntry.eisendraht_sonstiger);
-                    newMonthEntry.eisendraht_kunststoffummantelt = round(newMonthEntry.eisendraht_kunststoffummantelt);
-                    newMonthEntry.stahldraht_weniger_blank = round(newMonthEntry.stahldraht_weniger_blank);
-                    newMonthEntry.stahldraht_weniger_verzinkt = round(newMonthEntry.stahldraht_weniger_verzinkt);
-                    newMonthEntry.stahldraht_weniger_sonstiger = round(newMonthEntry.stahldraht_weniger_sonstiger);
-                    newMonthEntry.stahldraht_mehr_blank = round(newMonthEntry.stahldraht_mehr_blank);
-                    newMonthEntry.stahldraht_mehr_verzinkt = round(newMonthEntry.stahldraht_mehr_verzinkt);
-                    newMonthEntry.stahldraht_mehr_sonstiger = round(newMonthEntry.stahldraht_mehr_sonstiger);
+                        // Alle ImportDaten anhand der Produktkategorie aufsummieren, falls das Land in der Datenbank gespeichert wurde
+                        Countries.getListOfCountryIDs()
+                            .then((countryIDs) => {
+                                if (!countryIDs) throw new Error("Keine LänderIDs gefunden")
 
-                    // Neue Monatsstatistik speichern
-                    MonthReport.addMonthReport(newMonthEntry, (err) => {
-                        if (err) throw new Error(err)
-                        // Jahresstatistik aktualisieren
-                        else { calculateYearStats(date) }
-                    })
+                                data.forEach(element => {
+                                    if (countryIDs.includes(element.originID)) {
+                                        switch (element.productID) {
+                                            case "WA72171010, WA72171039":
+                                                newMonthEntry.eisendraht_blank += element.data;
+                                                break;
+                                            case "WA72172010, WA72172030":
+                                                newMonthEntry.eisendraht_verzinkt += element.data;
+                                                break;
+                                            case "WA72173041, WA72173049":
+                                                newMonthEntry.eisendraht_sonstiger += element.data;
+                                                break;
+                                            case "WA72179020":
+                                                newMonthEntry.eisendraht_kunststoffummantelt += element.data;
+                                                break;
+                                            case "WA72171050":
+                                                newMonthEntry.stahldraht_weniger_blank += element.data;
+                                                break;
+                                            case "WA72172050":
+                                                newMonthEntry.stahldraht_weniger_verzinkt += element.data;
+                                                break;
+                                            case "WA72179050":
+                                                newMonthEntry.stahldraht_weniger_sonstiger += element.data;
+                                                break;
+                                            case "WA72171090":
+                                                newMonthEntry.stahldraht_mehr_blank += element.data;
+                                                break;
+                                            case "WA72172090":
+                                                newMonthEntry.stahldraht_mehr_verzinkt += element.data;
+                                                break;
+                                            case "WA72173090, WA72179090":
+                                                newMonthEntry.stahldraht_mehr_sonstiger += element.data;
+                                                break;
+                                            default:
+                                                throw new Error("Die ProduktID '" + element.productID + "' ist nicht bekannt!");
+                                        }
+                                    }
+                                })
+
+                                // Werte kaufmännisch Runden, da Javaskript nicht rechnen kann
+                                newMonthEntry.eisendraht_blank = round(newMonthEntry.eisendraht_blank);
+                                newMonthEntry.eisendraht_verzinkt = round(newMonthEntry.eisendraht_verzinkt);
+                                newMonthEntry.eisendraht_sonstiger = round(newMonthEntry.eisendraht_sonstiger);
+                                newMonthEntry.eisendraht_kunststoffummantelt = round(newMonthEntry.eisendraht_kunststoffummantelt);
+                                newMonthEntry.stahldraht_weniger_blank = round(newMonthEntry.stahldraht_weniger_blank);
+                                newMonthEntry.stahldraht_weniger_verzinkt = round(newMonthEntry.stahldraht_weniger_verzinkt);
+                                newMonthEntry.stahldraht_weniger_sonstiger = round(newMonthEntry.stahldraht_weniger_sonstiger);
+                                newMonthEntry.stahldraht_mehr_blank = round(newMonthEntry.stahldraht_mehr_blank);
+                                newMonthEntry.stahldraht_mehr_verzinkt = round(newMonthEntry.stahldraht_mehr_verzinkt);
+                                newMonthEntry.stahldraht_mehr_sonstiger = round(newMonthEntry.stahldraht_mehr_sonstiger);
+
+                                // Neue Monatsstatistik speichern
+                                MonthReport.addMonthReport(newMonthEntry)
+                                    .then(() => {
+                                        // Jahresstatistik aktualisieren
+                                        calculateYearStats(date)
+                                    })
+                                    .catch((err) => { throw new Error(err) })
+                            })
+                            .catch((err) => { throw new Error(err) })
+                    }
                 })
-            }
-        });
-    })
+                .catch((err) => { throw new Error(err) })
+        })
+        .catch((err) => { throw new Error(err) })
 }
 
 /**
@@ -117,62 +119,65 @@ function calculateYearStats(date) {
     year = getYearFromDate(date)
 
     // Löscht veraltete Statistik des Jahres falls vorhanden
-    YearStats.removeYearStat(year, (err) => {
-        if (err) throw Error(err)
+    YearStats.removeYearStat(year)
+        .then(() => {
+            // Summiert die Produktmengen der einzelnen Monate auf
+            MonthReport.getMonthRepsByYear(date)
+                .then((monthStats) => {
+                    if (!monthStats) throw new Error("Keine Monatsstatistiken für das Jahr '" + year + "' gefunden")
+                    
+                    // Zähle anzahl Monatsstatistiken passend zum Jahr (.length funktioniert nicht weil javaSc scheiße ist)
+                    countReturns = 0
+                    monthStats.forEach(() => countReturns++)
 
-        // Summiert die Produktmengen der einzelnen Monate auf
-        MonthReport.getMonthRepsByYear(date, (err, monthStats) => {
-            if (err) throw new Error(err)
+                    var newYearStatsEntry = {
+                        importYear: year,
+                        numberOfMonths: countReturns,
+                        eisendraht_blank_sum: 0,
+                        eisendraht_verzinkt_sum: 0,
+                        eisendraht_sonstiger_sum: 0,
+                        eisendraht_kunststoffummantelt_sum: 0,
+                        stahldraht_weniger_blank_sum: 0,
+                        stahldraht_weniger_verzinkt_sum: 0,
+                        stahldraht_weniger_sonstiger_sum: 0,
+                        stahldraht_mehr_blank_sum: 0,
+                        stahldraht_mehr_verzinkt_sum: 0,
+                        stahldraht_mehr_sonstiger_sum: 0,
+                    }
+                    
+                    // Werte aufsummieren
+                    monthStats.forEach(element => {
+                        newYearStatsEntry.eisendraht_blank_sum += element.eisendraht_blank;
+                        newYearStatsEntry.eisendraht_verzinkt_sum += element.eisendraht_verzinkt;
+                        newYearStatsEntry.eisendraht_sonstiger_sum += element.eisendraht_sonstiger;
+                        newYearStatsEntry.eisendraht_kunststoffummantelt_sum += element.eisendraht_kunststoffummantelt;
+                        newYearStatsEntry.stahldraht_weniger_blank_sum += element.stahldraht_weniger_blank;
+                        newYearStatsEntry.stahldraht_weniger_verzinkt_sum += element.stahldraht_weniger_verzinkt;
+                        newYearStatsEntry.stahldraht_weniger_sonstiger_sum += element.stahldraht_weniger_sonstiger;
+                        newYearStatsEntry.stahldraht_mehr_blank_sum += element.stahldraht_mehr_blank;
+                        newYearStatsEntry.stahldraht_mehr_verzinkt_sum += element.stahldraht_mehr_verzinkt;
+                        newYearStatsEntry.stahldraht_mehr_sonstiger_sum += element.stahldraht_mehr_sonstiger;
+                    })
 
-            // Zähle anzahl Monatsstatistiken passend zum Jahr (.length funktioniert nicht weil javaSc scheiße ist)
-            countReturns = 0
-            monthStats.forEach(() => countReturns++)
+                    // Werte runden
+                    newYearStatsEntry.eisendraht_blank_sum = round(newYearStatsEntry.eisendraht_blank_sum);
+                    newYearStatsEntry.eisendraht_verzinkt_sum = round(newYearStatsEntry.eisendraht_verzinkt_sum);
+                    newYearStatsEntry.eisendraht_sonstiger_sum = round(newYearStatsEntry.eisendraht_sonstiger_sum);
+                    newYearStatsEntry.eisendraht_kunststoffummantelt_sum = round(newYearStatsEntry.eisendraht_kunststoffummantelt_sum);
+                    newYearStatsEntry.stahldraht_weniger_blank_sum = round(newYearStatsEntry.stahldraht_weniger_blank_sum);
+                    newYearStatsEntry.stahldraht_weniger_verzinkt_sum = round(newYearStatsEntry.stahldraht_weniger_verzinkt_sum);
+                    newYearStatsEntry.stahldraht_weniger_sonstiger_sum = round(newYearStatsEntry.stahldraht_weniger_sonstiger_sum);
+                    newYearStatsEntry.stahldraht_mehr_blank_sum = round(newYearStatsEntry.stahldraht_mehr_blank_sum);
+                    newYearStatsEntry.stahldraht_mehr_verzinkt_sum = round(newYearStatsEntry.stahldraht_mehr_verzinkt_sum);
+                    newYearStatsEntry.stahldraht_mehr_sonstiger_sum = round(newYearStatsEntry.stahldraht_mehr_sonstiger_sum);
 
-            var newYearStatsEntry = {
-                importYear: year,
-                numberOfMonths: countReturns,
-                eisendraht_blank_sum: 0,
-                eisendraht_verzinkt_sum: 0,
-                eisendraht_sonstiger_sum: 0,
-                eisendraht_kunststoffummantelt_sum: 0,
-                stahldraht_weniger_blank_sum: 0,
-                stahldraht_weniger_verzinkt_sum: 0,
-                stahldraht_weniger_sonstiger_sum: 0,
-                stahldraht_mehr_blank_sum: 0,
-                stahldraht_mehr_verzinkt_sum: 0,
-                stahldraht_mehr_sonstiger_sum: 0,
-            }
+                    // Fügt neue Jahresstatistik in die Datenbank ein
+                    YearStats.addYearStat(newYearStatsEntry)
 
-            // Werte aufsummieren
-            monthStats.forEach(element => {
-                newYearStatsEntry.eisendraht_blank_sum += element.eisendraht_blank;
-                newYearStatsEntry.eisendraht_verzinkt_sum += element.eisendraht_verzinkt;
-                newYearStatsEntry.eisendraht_sonstiger_sum += element.eisendraht_sonstiger;
-                newYearStatsEntry.eisendraht_kunststoffummantelt_sum += element.eisendraht_kunststoffummantelt;
-                newYearStatsEntry.stahldraht_weniger_blank_sum += element.stahldraht_weniger_blank;
-                newYearStatsEntry.stahldraht_weniger_verzinkt_sum += element.stahldraht_weniger_verzinkt;
-                newYearStatsEntry.stahldraht_weniger_sonstiger_sum += element.stahldraht_weniger_sonstiger;
-                newYearStatsEntry.stahldraht_mehr_blank_sum += element.stahldraht_mehr_blank;
-                newYearStatsEntry.stahldraht_mehr_verzinkt_sum += element.stahldraht_mehr_verzinkt;
-                newYearStatsEntry.stahldraht_mehr_sonstiger_sum += element.stahldraht_mehr_sonstiger;
-            })
-
-            // Werte runden
-            newYearStatsEntry.eisendraht_blank_sum = round(newYearStatsEntry.eisendraht_blank_sum);
-            newYearStatsEntry.eisendraht_verzinkt_sum = round(newYearStatsEntry.eisendraht_verzinkt_sum);
-            newYearStatsEntry.eisendraht_sonstiger_sum = round(newYearStatsEntry.eisendraht_sonstiger_sum);
-            newYearStatsEntry.eisendraht_kunststoffummantelt_sum = round(newYearStatsEntry.eisendraht_kunststoffummantelt_sum);
-            newYearStatsEntry.stahldraht_weniger_blank_sum = round(newYearStatsEntry.stahldraht_weniger_blank_sum);
-            newYearStatsEntry.stahldraht_weniger_verzinkt_sum = round(newYearStatsEntry.stahldraht_weniger_verzinkt_sum);
-            newYearStatsEntry.stahldraht_weniger_sonstiger_sum = round(newYearStatsEntry.stahldraht_weniger_sonstiger_sum);
-            newYearStatsEntry.stahldraht_mehr_blank_sum = round(newYearStatsEntry.stahldraht_mehr_blank_sum);
-            newYearStatsEntry.stahldraht_mehr_verzinkt_sum = round(newYearStatsEntry.stahldraht_mehr_verzinkt_sum);
-            newYearStatsEntry.stahldraht_mehr_sonstiger_sum = round(newYearStatsEntry.stahldraht_mehr_sonstiger_sum);
-
-            // Fügt neue Jahresstatistik in die Datenbank ein
-            YearStats.addYearStat(newYearStatsEntry, (err) => { if (err) throw new Error(err) })
+                })
+                .catch((err) => { throw new Error(err) })
         })
-    })
+        .catch((err) => { throw new Error(err) })
 }
 
 /**

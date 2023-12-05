@@ -43,6 +43,11 @@ export class UseradministrationComponent implements OnInit, OnDestroy{
   // Löscht einen Benutzer anhand seiner E-Mail Adresse
   deleteUser(username: String){
     this.abortConfirm();
+
+    if(this.authService.getUser().username == username){
+      return this.flashMessage.show("Sie können sich nicht selber löschen!", {cssClass: 'alert-danger', timeout: 5000});
+    }
+
     const subscription = this.authService.sendUserDeleteReq(username).subscribe(data => {
       if(data.success){
         this.loadUserList();
@@ -62,11 +67,6 @@ export class UseradministrationComponent implements OnInit, OnDestroy{
       }
     });
     this.subscriptions.push(subscription);
-  }
-
-  // Prüft ob ein User der angemeldete User ist, damit dieser sich nicht selber löschen kann
-  doesUserEqualsCurrentUser(userID: string){
-    return false; 
   }
 
   // Leitet weiter zu "Edit-User" zusammen mit dem gewählten User Objekt

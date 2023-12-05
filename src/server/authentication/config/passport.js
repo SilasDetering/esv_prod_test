@@ -15,18 +15,18 @@ const options = {
 
 const strategy = new JwtStrategy(options, (jwt_payload, done) => {
 
-    User.getUserById(jwt_payload._id, (err, user) => {
-        if(err){
+    User.getUserById(jwt_payload._id)
+        .then((user) => {
+            if(user){
+                return done(null, user);
+            } else {
+                return done(null, false);
+            }
+        })
+        .catch((err) => {
             return done(err, false);
-        }
-
-        if(user){
-            return done(null, user);
-        } else {
-            return done(null, false);
-        }
-    })
-})
+        })
+});
 
 module.exports = (passport) => {
     passport.use(strategy);
