@@ -20,7 +20,6 @@ export class RechnungAStahlComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
-    console.log(this.reportInvoice);
   }
 
   convertToSteelReport(report: IronReport | SteelReport | undefined): SteelReport {
