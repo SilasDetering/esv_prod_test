@@ -22,9 +22,9 @@ const esvReportRoutesSteel = require('./esv-database/routes/esvReportSteel.route
 // MONGO DB =================================================================================
 
 // Connect To Database
-console.log("Connecting to database URL: " + dbconfig.database); // process.env.MONGO_URL || 
+console.log("Connecting to database URL: " + process.env.MONGO_URL +  " or " + dbconfig.database);
 
-mongoose.connect(dbconfig.database); // process.env.MONGO_URL ||
+mongoose.connect(process.env.MONGO_URL || dbconfig.database);
 const userDB = mongoose.connection;
 
 mongoose.set('strictQuery', false);
@@ -47,9 +47,9 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 
 // Set Port Number
-const httpPort = 3000; // process.env.BACKEND_PORT || 
+const httpPort = process.env.BACKEND_PORT || 3000;
 
-console.log("Server PORT: " + 3000); // process.env.BACKEND_PORT
+console.log("Server PORT: " + process.env.BACKEND_PORT + " or " + 3000);
 
 // CORS Middleware (With the Cors Module any domain can access the app)
 app.use(cors());
@@ -60,7 +60,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // BodyParser Middleware (BodyParser parses incomming request bodies so you can grab the data)
 app.use(bodyParser.json());
 
-console.log("EXPRESS_SECRET: " + process.env.EXPRESS_SESSION_SECRET);
+console.log("EXPRESS_SECRET: " + process.env.EXPRESS_SESSION_SECRET + " or " + "85771ABF68E41E3220F3BCC0D3570651");
 
 // Express Session Middleware
 app.use(session({
