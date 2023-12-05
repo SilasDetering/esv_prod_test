@@ -1,0 +1,13 @@
+<h1 style="text-align: center; margin-top: 50px;">Hallo,  {{currentUser.firstName}}! </h1>
+<hr style="max-width: 50%; margin: 0 auto">
+<div style="text-align: center;">
+    <div class="d-grid gap-2 menueButton">
+        <button class="btn btn-lg btn-primary" type="button" [routerLink]="['/esv-import']">ESV - Importe</button>
+    </div>
+    <div class="d-grid gap-2 menueButton">
+        <button class="btn btn-lg btn-primary" type="button" [routerLink]="['/esv-statistik']">ESV - Mitglieder Statistik</button>
+    </div>
+    <div class="d-grid gap-2 menueButton" *ngIf="userIsAdmin()">
+        <button class="btn btn-lg btn-outline-primary" type="button" [routerLink]="['/useradministration']">Benutzerverwaltung</button>
+    </div>
+</div>

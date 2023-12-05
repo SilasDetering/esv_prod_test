@@ -1,0 +1,12 @@
+.menueButton{
+    max-width: 40%; 
+    display: inline-block; 
+    margin: 0 auto; 
+    margin-top: 30px;
+}
+
+.backButton{
+    max-width: 10%; 
+    margin: 0 auto; 
+    margin-top: 30px;
+}

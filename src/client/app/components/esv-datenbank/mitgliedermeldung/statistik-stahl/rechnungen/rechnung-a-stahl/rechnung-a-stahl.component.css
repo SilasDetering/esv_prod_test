@@ -1,0 +1,107 @@
+table {
+    width: 100%;
+    border: 1px solid black;
+}
+
+td {
+    border: 1px solid black;
+}
+
+th {
+    text-align: center;
+    border: 1px solid black;
+}
+
+.invoice-header {
+    width: 100%;
+    border: 0px;
+}
+
+.invoice-header td {
+    border: 0px;
+}
+
+.invoice-header .company-id {
+    font-weight: bold;
+    border: 2px solid black;
+    text-align: center;
+}
+
+.invoice-date {
+    font-weight: bold;
+    text-align: center;
+}
+
+.invoice-list .note{
+    text-align: center;
+}
+
+.invoice-list .list-sum {
+    text-align: left;
+}
+
+.invoice-list .value {
+    text-align: right;
+}
+
+.footnote {
+    border: 0px;
+}
+
+.footnote td {
+    border: 0px;
+}
+
+.footnote th {
+    border: 0px;
+    text-align: center;
+}
+
+.footnote .left {
+    text-align: right;
+    border: 1px solid black;
+}
+
+.invoice-calc {
+    border: 2px solid black;
+    background-color: rgb(255, 255, 200);
+}
+
+.invoice-calc td {
+    border: 0px ;
+}
+
+.invoice-calc th {
+    border-left: 0px;
+    border-right: 0px;
+    text-align: right;
+}
+
+.invoice-foot {
+    width: 100%;
+    border: 0px;
+    text-align: center;
+}
+
+.invoice-foot td {
+    border: 0px;
+}
+
+.invoice-foot .low {
+    border-top: 1px solid black;
+    font-weight: bold;
+}
+
+input {
+    border: 0px;
+    background-color: transparent;
+    text-align: right;
+}
+
+.accordion-button{
+    background-color: #f39d12c9; 
+}
+
+.accordion-body{
+    background-color: #f39d1269; 
+}

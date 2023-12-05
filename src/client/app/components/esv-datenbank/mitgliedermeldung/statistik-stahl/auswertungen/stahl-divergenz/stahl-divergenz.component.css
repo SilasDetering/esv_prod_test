@@ -1,0 +1,37 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 3px solid black;
+}
+
+th {
+    padding: 5px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+td {
+    padding: 5px;
+    border: 1px solid black;
+    text-align: right;
+}
+
+.sum {
+    border-bottom: 3px solid black;
+    border-top: 3px solid black;
+    border-top-style: double;
+    font-weight: bold;
+    text-align: left;
+}
+
+.top_lable {
+    text-align: center;
+}
+
+.left_lable {
+    text-align: left;
+}
+
+.value {
+    text-align: right;
+}

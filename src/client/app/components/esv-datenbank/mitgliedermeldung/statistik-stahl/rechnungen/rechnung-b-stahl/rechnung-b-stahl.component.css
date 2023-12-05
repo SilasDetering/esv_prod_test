@@ -1,0 +1,57 @@
+h4 {
+    font-weight: bold;
+}
+
+h5 {
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+}
+
+.invoice th {
+    text-align: right;
+}
+
+.adress_sender{
+    text-align: right;
+}
+
+.adress_reciever{
+    text-align: left;
+    font-weight: bold;
+}
+
+.date{
+    text-align: right;
+}
+
+input {
+    border: 0px;
+    background-color: transparent;
+    text-align: left;
+    width: 100%;
+}
+
+.small{
+    width:min-content;
+}
+
+.error{
+    bottom: 1px solid red;
+}
+
+.grundbeitrag{
+    text-align: right;
+    border: 0px;
+    background-color: white;
+}
+
+.accordion-button{
+    background-color: #f39d12c9; 
+}
+
+.accordion-body{
+    background-color: #f39d1269; 
+}

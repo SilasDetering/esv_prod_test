@@ -1,0 +1,298 @@
+<div id="printSteelmarketRep">
+
+    <!-- ========================================================= MARKTVERSORGUNG Stahldraht ========================================================= -->
+
+    <div>
+        <h6>Statistik {{getWrittenYear(this.selectedDate)}}</h6>
+        <h5><b>Marktversorgung Stahldraht</b></h5>
+        <table>
+            <thead>
+                <tr>
+                    <th> Monat <br> bzw. <br> Monats-Ø </th>
+                    <th colspan="2">Inland-Versand</th>
+                    <th colspan="2">Importe</th>
+                    <th colspan="2">Marktversorgung</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="unit"></td>
+                    <td class="unit">t</td>
+                    <td class="unit">%</td>
+                    <td class="unit">t</td>
+                    <td class="unit">%</td>
+                    <td class="unit">t</td>
+                    <td class="unit">%</td>
+                </tr>
+
+                <!-- Zusammenfassung der letzten 10 Jahre -->
+                <tr *ngFor="let year of lastTenYears">
+                    <td *ngIf="steelMarketReport.get_Inlandsversand(year) || steelMarketReport.get_Importe(year)">
+                        Ø {{year}}
+                    </td>
+                    <td *ngIf="steelMarketReport.get_Inlandsversand(year) || steelMarketReport.get_Importe(year)">
+                        {{steelMarketReport.get_Inlandsversand(year)}}
+                    </td >
+                    <td class="percent" *ngIf="steelMarketReport.get_Inlandsversand(year) || steelMarketReport.get_Importe(year)">
+                        {{steelMarketReport.get_Inlandsversand_percent(year)}}
+                    </td>
+                    <td *ngIf="steelMarketReport.get_Inlandsversand(year) || steelMarketReport.get_Importe(year)">
+                        {{steelMarketReport.get_Importe(year)}}
+                    </td>
+                    <td class="percent" *ngIf="steelMarketReport.get_Inlandsversand(year) || steelMarketReport.get_Importe(year)">
+                        {{steelMarketReport.get_Importe_percent(year)}}
+                    </td>
+                    <td *ngIf="steelMarketReport.get_Inlandsversand(year) || steelMarketReport.get_Importe(year)">
+                        {{steelMarketReport.get_Marktversorgung(year)}}
+                    </td>
+                    <td class="percent" *ngIf="steelMarketReport.get_Inlandsversand(year) || steelMarketReport.get_Importe(year)">100</td>
+                </tr>
+
+                <tr style="border-bottom: 1px solid black;"> </tr>
+
+                <!-- Zusammenfassung des 1. Quartals -->
+                <tr *ngFor="let month of firstQuarter">
+                    <td>
+                        {{month}} {{getWrittenYear(this.selectedDate)}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Inlandsversand(month)}}
+                    </td>
+                    <td class="percent">
+                        {{steelMarketReport.get_Inlandsversand_percent(month)}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Importe(month)}}
+                    </td>
+                    <td class="percent">
+                        {{steelMarketReport.get_Importe_percent(month)}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Marktversorgung(month)}}
+                    </td>
+                    <td class="percent"> 100 </td>
+                </tr>
+
+                <tr class="summary">
+                    <td style="text-align: left;">1. Quartal </td>
+                    <td>
+                        {{steelMarketReport.get_Inlandsversand("1. Quartal")}}
+                    </td>
+                    <td class="percent">
+                        {{steelMarketReport.get_Inlandsversand_percent("1. Quartal")}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Importe("1. Quartal")}}
+                    </td>
+                    <td class="percent">
+                        {{steelMarketReport.get_Importe_percent("1. Quartal")}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Marktversorgung("1. Quartal")}}
+                    </td>
+                    <td class="percent"> 100 </td>
+                </tr>
+
+                <!-- Zusammenfassung des 2. Quartals -->
+                <tr *ngFor="let month of secondQuarter">
+                    <td>
+                        {{month}} {{getWrittenYear(this.selectedDate)}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Inlandsversand(month)}}
+                    </td>
+                    <td class="percent">
+                        {{steelMarketReport.get_Inlandsversand_percent(month)}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Importe(month)}}
+                    </td>
+                    <td class="percent">
+                        {{steelMarketReport.get_Importe_percent(month)}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Marktversorgung(month)}}
+                    </td>
+                    <td class="percent"> 100 </td>
+                </tr>
+
+                <tr class="summary">
+                    <td style="text-align: left;">2. Quartal </td>
+                    <td>
+                        {{steelMarketReport.get_Inlandsversand("2. Quartal")}}
+                    </td>
+                    <td class="percent">
+                        {{steelMarketReport.get_Inlandsversand_percent("2. Quartal")}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Importe("2. Quartal")}}
+                    </td>
+                    <td class="percent">
+                        {{steelMarketReport.get_Importe_percent("2. Quartal")}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Marktversorgung("2. Quartal")}}
+                    </td>
+                    <td class="percent"> 100 </td>
+                </tr>
+
+                <!-- Zusammenfassung des 1. Hablbjahres -->
+                <tr class="summary">
+                    <td style="text-align: left;">1. Halbjahr </td>
+                    <td>
+                        {{steelMarketReport.get_Inlandsversand("1. Halbjahr")}}
+                    </td>
+                    <td class="percent">
+                        {{steelMarketReport.get_Inlandsversand_percent("1. Halbjahr")}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Importe("1. Halbjahr")}}
+                    </td>
+                    <td class="percent">
+                        {{steelMarketReport.get_Importe_percent("1. Halbjahr")}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Marktversorgung("1. Halbjahr")}}
+                    </td>
+                    <td class="percent"> 100 </td>
+                </tr>
+
+                <!-- Zusammenfassung des 3. Quartals -->
+                <tr *ngFor="let month of thirdQuarter">
+                    <td>
+                        {{month}} {{getWrittenYear(this.selectedDate)}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Inlandsversand(month)}}
+                    </td>
+                    <td class="percent">
+                        {{steelMarketReport.get_Inlandsversand_percent(month)}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Importe(month)}}
+                    </td>
+                    <td class="percent">
+                        {{steelMarketReport.get_Importe_percent(month)}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Marktversorgung(month)}}
+                    </td>
+                    <td class="percent"> 100 </td>
+                </tr>
+
+                <tr class="summary">
+                    <td style="text-align: left;">3. Quartal </td>
+                    <td>
+                        {{steelMarketReport.get_Inlandsversand("3. Quartal")}}
+                    </td>
+                    <td class="percent">
+                        {{steelMarketReport.get_Inlandsversand_percent("3. Quartal")}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Importe("3. Quartal")}}
+                    </td>
+                    <td class="percent">
+                        {{steelMarketReport.get_Importe_percent("3. Quartal")}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Marktversorgung("3. Quartal")}}
+                    </td>
+                    <td class="percent"> 100 </td>
+                </tr>
+
+                <!-- Zusammenfassung des 4. Quartals -->
+                <tr *ngFor="let month of fourthQuarter">
+                    <td>
+                        {{month}} {{getWrittenYear(this.selectedDate)}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Inlandsversand(month)}}
+                    </td>
+                    <td class="percent">
+                        {{steelMarketReport.get_Inlandsversand_percent(month)}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Importe(month)}}
+                    </td>
+                    <td class="percent">
+                        {{steelMarketReport.get_Importe_percent(month)}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Marktversorgung(month)}}
+                    </td>
+                    <td class="percent"> 100 </td>
+                </tr>
+
+                <tr class="summary">
+                    <td style="text-align: left;">4. Quartal </td>
+                    <td>
+                        {{steelMarketReport.get_Inlandsversand("4. Quartal")}}
+                    </td>
+                    <td class="percent">
+                        {{steelMarketReport.get_Inlandsversand_percent("4. Quartal")}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Importe("4. Quartal")}}
+                    </td>
+                    <td class="percent">
+                        {{steelMarketReport.get_Importe_percent("4. Quartal")}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Marktversorgung("4. Quartal")}}
+                    </td>
+                    <td class="percent"> 100 </td>
+                </tr>
+
+                <!-- Zusammenfassung des 2. Hablbjahres -->
+                <tr class="summary">
+                    <td style="text-align: left;">2. Halbjahr </td>
+                    <td>
+                        {{steelMarketReport.get_Inlandsversand("2. Halbjahr")}}
+                    </td>
+                    <td class="percent">
+                        {{steelMarketReport.get_Inlandsversand_percent("2. Halbjahr")}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Importe("2. Halbjahr")}}
+                    </td>
+                    <td class="percent">
+                        {{steelMarketReport.get_Importe_percent("2. Halbjahr")}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Marktversorgung("2. Halbjahr")}}
+                    </td>
+                    <td class="percent"> 100 </td>
+                </tr>
+
+                <!-- Monatsdurchschnitt -->
+                <tr class="summary">
+                    <td style="text-align: left;">
+                        Monats Ø 1 - {{steelMarketReport.get_numberOfMonths()}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Inlandsversand_avg()}}
+                    </td>
+                    <td class="percent">
+                        {{steelMarketReport.get_Inlandsversand_percent_avg()}}
+                    </td>
+                    <td>
+                       {{steelMarketReport.get_Importe_avg()}}
+                    </td>
+                    <td class="percent">
+                        {{steelMarketReport.get_Importe_percent_avg()}}
+                    </td>
+                    <td>
+                        {{steelMarketReport.get_Marktversorgung_avg()}}
+                    </td>
+                    <td class="percent"> 100 </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Dateiende -->
+<div style="float: left; width: 100%;">
+    <hr style="margin-top:40px">
+    <button style="float: right;" class="btn btn-warning" (click)="print()"> Drucken </button>
+</div>

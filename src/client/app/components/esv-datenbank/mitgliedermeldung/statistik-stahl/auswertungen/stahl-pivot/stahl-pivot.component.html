@@ -1,0 +1,203 @@
+<div style="margin-top: 20px;">
+    <h4><b>Stahl Pivot</b></h4>
+</div>
+
+<ul class="nav nav-tabs noprint">
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true"
+            aria-expanded="false">Unternehmen</a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MEMBER_ALL" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">Alle</label>
+                </div>
+            </a>
+            <a class="dropdown-item" *ngFor="let member of listOfMembers" id="members">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" [attr.id]="member.ID"
+                        (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">{{ member.name }}</label>
+                </div>
+            </a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+            aria-expanded="false">Monat</a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_ALL" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">Alle</label>
+                </div>
+            </a>
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_01" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">Januar</label>
+                </div>
+            </a>
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_02" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">Februar</label>
+                </div>
+            </a>
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_03" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">März</label>
+                </div>
+            </a>
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_04" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">April</label>
+                </div>
+            </a>
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_05" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">Mai</label>
+                </div>
+            </a>
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_06" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">Juni</label>
+                </div>
+            </a>
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_07" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">Juli</label>
+                </div>
+            </a>
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_08" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">August</label>
+                </div>
+            </a>
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_09" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">September</label>
+                </div>
+            </a>
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_10" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">Oktober</label>
+                </div>
+            </a>
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_11" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">November</label>
+                </div>
+            </a>
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_12" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">Dezember</label>
+                </div>
+            </a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true"
+            aria-expanded="false">Jahr</a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="YEAR_ALL" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">Alle</label>
+                </div>
+            </a>
+            <a class="dropdown-item" *ngFor="let year of listOfYears">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" [attr.id]="'YEAR_' + year" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">{{ year }}</label>
+                </div>
+            </a>
+        </div>
+    </li>
+</ul>
+
+<div id="printSteelTotal">
+    <div id="scrollbar" class="showScrollbar">
+        <table>
+            <tr>
+                <th rowspan="2"> Produkt </th>
+                <th colspan="3"> <small>Summe von Mengen in t</small></th>
+            </tr>
+            <tr>
+                <th> Inland </th>
+                <th> Export </th>
+                <th> Gesamt </th>
+            </tr>
+            <tr>
+                <td colspan="4"> 1. Seildraht und ähnliche Drähte</td>
+            </tr>
+            <tr>
+                <td> a) Seildraht </td>
+                <td> {{ seildraht_inland_sum }} </td>
+                <td> {{ seildraht_export_sum }} </td>
+                <td> {{ seildraht_ges_sum }} </td>
+            </tr>
+            <tr>
+                <td> b) Polsterfederdraht </td>
+                <td> {{ polsterfederdraht_inland_sum }} </td>
+                <td> {{ polsterfederdraht_export_sum }} </td>
+                <td> {{ polsterfederdraht_ges_sum }} </td>
+            </tr>
+            <tr>
+                <td colspan="4"> 2. Federdraht </td>
+            </tr>
+            <tr>
+                <td> a) Sorte SH/SL/SM </td>
+                <td> {{ federdraht_SH_SL_SM_inland_sum }} </td>
+                <td> {{ federdraht_SH_SL_SM_export_sum }} </td>
+                <td> {{ federdraht_SH_SL_SM_ges_sum }} </td>
+            </tr>
+            <tr>
+                <td> b) Sorte DH/DM </td>
+                <td> {{ federdraht_DH_DM_inland_sum }} </td>
+                <td> {{ federdraht_DH_DM_export_sum }} </td>
+                <td> {{ federdraht_DH_DM_ges_sum }} </td>
+            </tr>
+            <tr>
+                <td> c) sonstige Federdrähte </td>
+                <td> {{ federdraht_sonstig_inland_sum }} </td>
+                <td> {{ federdraht_sonstig_export_sum }} </td>
+                <td> {{ federdraht_sonstig_ges_sum }} </td>
+            </tr>
+            <tr class="section">
+                <td> Federdraht gesamt: </td>
+                <td> {{ addNumbers([federdraht_SH_SL_SM_inland_sum, federdraht_DH_DM_inland_sum, federdraht_sonstig_inland_sum]) }} </td>
+                <td> {{ addNumbers([federdraht_SH_SL_SM_export_sum, federdraht_DH_DM_export_sum, federdraht_sonstig_export_sum]) }} </td>
+                <td> {{ addNumbers([federdraht_SH_SL_SM_ges_sum, federdraht_DH_DM_ges_sum, federdraht_sonstig_ges_sum]) }} </td>
+            </tr>
+            <tr>
+                <td> 3. Alle nicht genannten Drähte </td>
+                <td> {{ draehte_sonstige_inland_sum }} </td>
+                <td> {{ draehte_sonstige_export_sum }} </td>
+                <td> {{ draehte_sonstige_ges_sum }} </td>
+            </tr>
+            <tr class="section">
+                <td> Gesamt</td>
+                <td> {{inland_sum}} </td>
+                <td> {{export_sum}} </td>
+                <td> {{ges_sum}} </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- Dateiende -->
+<hr>
+<button style="float: right" class="btn btn-warning" (click)="print()"> Drucken </button>

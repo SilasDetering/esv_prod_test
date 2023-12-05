@@ -1,0 +1,185 @@
+<div id="printIronImportRepYear">
+
+    <div style="margin-top: 20px;">
+        <h5>An unsere Mitglieder</h5>
+        <h4><b>Statistik {{getWrittenYear(this.selectedDate)}} - Einfuhr und Marktversorgung</b></h4>
+    </div>
+
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th rowspan="4"> <br><br><br></th>
+                    <th colspan="4">Eisendraht</th>
+                </tr>
+                <tr>
+                    <th>blank</th>
+                    <th>verzinkt</th>
+                    <th>sonstiger</th>
+                    <th>kunstst.</th>
+                </tr>
+                <tr>
+                    <th class="prodID" rowspan="2">72171010, 72171039</th>
+                    <th class="prodID" rowspan="2">72172010, 72172030</th>
+                    <th class="prodID" rowspan="2">72173041, 72173049</th>
+                    <th class="prodID" rowspan="2">72179020</th>
+                </tr>
+                <tr>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Länder</th>
+                    <th style="text-align: left;">t</th>
+                    <th style="text-align: left;">t</th>
+                    <th style="text-align: left;">t</th>
+                    <th style="text-align: left;">t</th>
+                </tr>
+
+                <tr *ngFor="let country of countryImports">
+                    <ng-container *ngIf="country.isEU && entryIsNotEmpty(country)">
+                        <td>{{country.countryName}}</td>
+                        <td>{{country.eisendraht_blank}}</td>
+                        <td>{{country.eisendraht_verzinkt}}</td>
+                        <td>{{country.eisendraht_sonstiger}}</td>
+                        <td>{{country.eisendraht_kunststoffummantelt}}</td>
+                    </ng-container>
+                </tr>
+
+                <tr>
+                    <td class="section"> EU </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("EU", "eisendraht_blank")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("EU", "eisendraht_verzinkt")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("EU", "eisendraht_sonstiger")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("EU", "eisendraht_kunststoffummantelt")}} </td>
+                </tr>
+
+                <tr *ngFor="let country of countryImports">
+                    <ng-container *ngIf="country.isEFTA && entryIsNotEmpty(country)">
+                        <td>{{country.countryName}}</td>
+                        <td>{{country.eisendraht_blank}}</td>
+                        <td>{{country.eisendraht_verzinkt}}</td>
+                        <td>{{country.eisendraht_sonstiger}}</td>
+                        <td>{{country.eisendraht_kunststoffummantelt}}</td>
+                    </ng-container>
+                </tr>
+
+                <tr>
+                    <td class="section"> EFTA </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("EFTA", "eisendraht_blank")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("EFTA", "eisendraht_verzinkt")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("EFTA", "eisendraht_sonstiger")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("EFTA", "eisendraht_kunststoffummantelt")}} </td>
+                </tr>
+
+                <tr *ngFor="let country of countryImports">
+                    <ng-container *ngIf="country.continent == 'Europa' && !country.isEFTA && !country.isEU && entryIsNotEmpty(country)">
+                        <td>{{country.countryName}}</td>
+                        <td>{{country.eisendraht_blank}}</td>
+                        <td>{{country.eisendraht_verzinkt}}</td>
+                        <td>{{country.eisendraht_sonstiger}}</td>
+                        <td>{{country.eisendraht_kunststoffummantelt}}</td>
+                    </ng-container>
+                </tr>
+
+                <tr>
+                    <td class="section"> EUROPA </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Europa", "eisendraht_blank")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Europa", "eisendraht_verzinkt")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Europa", "eisendraht_sonstiger")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Europa", "eisendraht_kunststoffummantelt")}} </td>
+                </tr>
+
+                <tr *ngFor="let country of countryImports">
+                    <ng-container *ngIf="country.continent == 'Afrika' && !country.isEFTA && !country.isEU && entryIsNotEmpty(country)">
+                        <td>{{country.countryName}}</td>
+                        <td>{{country.eisendraht_blank}}</td>
+                        <td>{{country.eisendraht_verzinkt}}</td>
+                        <td>{{country.eisendraht_sonstiger}}</td>
+                        <td>{{country.eisendraht_kunststoffummantelt}}</td>
+                    </ng-container>
+                </tr>
+
+                <tr>
+                    <td class="section"> AFRIKA </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Afrika", "eisendraht_blank")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Afrika", "eisendraht_verzinkt")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Afrika", "eisendraht_sonstiger")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Afrika", "eisendraht_kunststoffummantelt")}} </td>
+                </tr>
+
+                <tr *ngFor="let country of countryImports">
+                    <ng-container *ngIf="country.continent == 'Asien' && !country.isEFTA && !country.isEU  && entryIsNotEmpty(country)">
+                        <td>{{country.countryName}}</td>
+                        <td>{{country.eisendraht_blank}}</td>
+                        <td>{{country.eisendraht_verzinkt}}</td>
+                        <td>{{country.eisendraht_sonstiger}}</td>
+                        <td>{{country.eisendraht_kunststoffummantelt}}</td>
+                    </ng-container>
+                </tr>
+
+                <tr>
+                    <td class="section"> ASIEN </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Asien", "eisendraht_blank")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Asien", "eisendraht_verzinkt")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Asien", "eisendraht_sonstiger")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Asien", "eisendraht_kunststoffummantelt")}} </td>
+                </tr>
+
+                <tr *ngFor="let country of countryImports">
+                    <ng-container *ngIf="country.continent == 'Nordamerika' || country.continent == 'Suedamerika' 
+                    && !country.isEFTA && !country.isEU  && entryIsNotEmpty(country)">
+                        <td>{{country.countryName}}</td>
+                        <td>{{country.eisendraht_blank}}</td>
+                        <td>{{country.eisendraht_verzinkt}}</td>
+                        <td>{{country.eisendraht_sonstiger}}</td>
+                        <td>{{country.eisendraht_kunststoffummantelt}}</td>
+                    </ng-container>
+                </tr>
+
+                <tr>
+                    <td class="section"> AMERIKA </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Nordamerika", "eisendraht_blank") 
+                        + sumOfCountriesPerCategory("Suedamerika", "eisendraht_blank")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Nordamerika", "eisendraht_verzinkt") 
+                        + sumOfCountriesPerCategory("Suedamerika", "eisendraht_verzinkt")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Nordamerika", "eisendraht_sonstiger") 
+                        + sumOfCountriesPerCategory("Suedamerika", "eisendraht_sonstiger")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Nordamerika", "eisendraht_kunststoffummantelt") 
+                        + sumOfCountriesPerCategory("Suedamerika", "eisendraht_kunststoffummantelt")}} </td>
+                </tr>
+
+                <tr *ngFor="let country of countryImports">
+                    <ng-container *ngIf="country.continent == 'Ozeanien' && !country.isEFTA && !country.isEU && entryIsNotEmpty(country)">
+                        <td>{{country.countryName}}</td>
+                        <td>{{country.eisendraht_blank}}</td>
+                        <td>{{country.eisendraht_verzinkt}}</td>
+                        <td>{{country.eisendraht_sonstiger}}</td>
+                        <td>{{country.eisendraht_kunststoffummantelt}}</td>
+                    </ng-container>
+                </tr>
+
+                <tr>
+                    <td class="section"> AUSTRALIEN UND OZEANIEN </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Ozeanien", "eisendraht_blank")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Ozeanien", "eisendraht_verzinkt")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Ozeanien", "eisendraht_sonstiger")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Ozeanien", "eisendraht_kunststoffummantelt")}} </td>
+                </tr>
+
+                <tr>
+                    <td class="section"><b>GESAMT</b></td>
+                    <td class="section">{{sumOfAllCountries("eisendraht_blank")}}</td>
+                    <td class="section">{{sumOfAllCountries("eisendraht_verzinkt")}}</td>
+                    <td class="section">{{sumOfAllCountries("eisendraht_sonstiger")}}</td>
+                    <td class="section">{{sumOfAllCountries("eisendraht_kunststoffummantelt")}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<!-- Dateiende -->
+<hr>
+<button style="float: right" class="btn btn-warning" (click)="print()"> Drucken </button>

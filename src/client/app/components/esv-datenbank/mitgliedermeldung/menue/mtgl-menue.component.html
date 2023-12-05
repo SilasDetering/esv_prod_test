@@ -1,0 +1,69 @@
+<h1 style="text-align: center; margin-top: 50px;">ESV - Mitglieder Statistik</h1>
+<hr style="max-width: 60%; margin: 0 auto">
+
+<div style="display: flex; justify-content: center;">
+    <ul class="nav nav-tabs d-flex justify-content-center" role="tablist" style="margin-top: 50px; width: 40%;">
+        <li class="nav-item" role="presentation" style="width: 50%; text-align: center;">
+            <a class="nav-link active" id="menueIron" data-bs-toggle="tab" role="tab" tabindex="0"
+                (click)="changeView('menueIron')">Eisen</a>
+        </li>
+        <li class="nav-item" role="presentation" style="width: 50%; text-align: center;">
+            <a class="nav-link" id="menueSteel" data-bs-toggle="tab" role="tab" tabindex="1"
+                (click)="changeView('menueSteel')">Stahl</a>
+        </li>
+    </ul>
+</div>
+
+
+<div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade active show" id="tab_menueIron" role="tabpanel" style="margin-top: 10px;">
+
+        <!-- MENUE IRON -->
+        <div style="text-align: center;">
+            <div class="d-grid gap-2 menueButton">
+                <button class="btn btn-lg btn-primary buttonIron" type="button" [routerLink]="['/esv-statistik/eisen-meldung']">Eisen - Meldungen
+                    hinzufügen</button>
+            </div>
+            <div class="d-grid gap-2 menueButton">
+                <button class="btn btn-lg btn-primary buttonIron" type="button" [routerLink]="['/esv-statistik/eisen-auswertung']">Eisen -
+                    Auswertungen</button>
+            </div>
+            <div class="d-grid gap-2 menueButton">
+                <button class="btn btn-lg btn-primary buttonIron" type="button" [routerLink]="['/esv-statistik/eisen-rechnung']">Eisen -
+                    Rechnungen</button>
+            </div>
+        </div>
+
+    </div>
+    <div class="tab-pane fade" id="tab_menueSteel" role="tabpanel" style="margin-top: 10px;">
+
+        <!-- MENUE STEEL -->
+        <div style="text-align: center;">
+            <div class="d-grid gap-2 menueButton">
+                <button class="btn btn-lg btn-secondary buttonSteel" type="button" [routerLink]="['/esv-statistik/stahl-meldung']">Stahl - Meldungen
+                    hinzufügen</button>
+            </div>
+            <div class="d-grid gap-2 menueButton">
+                <button class="btn btn-lg btn-secondary buttonSteel" type="button" [routerLink]="['/esv-statistik/stahl-auswertung']">Stahl -
+                    Auswertungen</button>
+            </div>
+            <div class="d-grid gap-2 menueButton">
+                <button class="btn btn-lg btn-secondary buttonSteel" type="button" [routerLink]="['/esv-statistik/stahl-rechnung']">Stahl -
+                    Rechnungen</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div style="text-align: center;">
+    <div class="d-grid gap-2 menueButton">
+        <button class="btn btn-lg btn-primary" type="button" [routerLink]="['/esv-statistik/mitglieder']">Mitglieder Übersicht</button>
+    </div>
+    <div class="d-grid gap-2 menueButton">
+        <button class="btn btn-lg btn-primary" type="button" [routerLink]="['/esv-import/laender']" >Länder</button>
+    </div>
+    <div class="d-grid gap-2 backButton">
+        <button class="btn btn-lg btn-outline-secondary" type="button" [routerLink]="['/hauptmenue']">Zurück</button>
+    </div>
+</div>

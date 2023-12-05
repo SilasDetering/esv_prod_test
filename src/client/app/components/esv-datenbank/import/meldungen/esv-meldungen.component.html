@@ -1,0 +1,48 @@
+<h1 style="margin-top: 50px;">Importstatistiken</h1>
+<button style="float: right" class="btn btn-outline-dark" [routerLink]="['/esv-import']"> Zurück </button>
+
+<div style="margin-bottom: 30px; margin-top: 40px;">
+    <h4>Neuer Eintrag</h4>
+    <hr>
+
+    <form style="margin-bottom: 40px;" (submit)="onMeldungHinzufuegen()">
+        <div class="form-group" style="margin-top: 10px;">
+            <label>Datum</label>
+            <input type="date" class="form-control" id="dateField" style="width: 25%; min-width: fit-content">         
+        </div>
+        <div class="form-group" style="margin-top: 10px;">
+            <label>CSV Datei</label>
+            <input class="form-control" type="file" accept=".csv" id="fileInput" style="width: 50%; min-width: fit-content" (change)="handleFileInput($event)" name="insertedFile">
+        </div>
+
+        <div style="margin-top: 10px;">
+            <input type="submit" class="btn btn-primary" value="+ Eintrag hinzufügen" style="margin-top: 10px">
+        </div>
+    </form>
+    
+    <h4>Vergangene Einträge</h4>
+    <hr>
+
+    <div style="overflow: auto; max-height: 10cm; padding: 5px;">
+        <table class="table">
+            <tr *ngFor="let report of listOfLastRep" style="border: 0px;">
+                <div style="border-radius: 10px; background-color:rgb(248, 248, 248); margin-top: 2px;">
+                    <td style="border: 0px; width: 50%; font-size: larger;">{{this.getWrittenMonth(report.importDate) + " " + this.getWrittenYear(report.importDate)}}</td>
+                    <td style="border: 0px; width: 50%; font-style:italic ;color:rgb(70, 70, 70); text-align: right;">{{this.getWrittenDate(report.insertDate)}}</td>
+                    <td style="border: 0px;">
+                        <button (click)="secondConfirm(report.importDate)" class="btn btn-outline-danger" style="margin-left: 5px;" id="deleteButton"><b>&cross;</b></button>
+                    </td>
+                </div>
+            </tr>
+        </table>
+    </div>
+
+    <div id="secondConfirm" class="secondConfirm">
+        <div style="margin-top: 40px;">
+            <h6>Möchtest du den Bericht vom '<b>{{importToDelete.slice(0,7)}}</b>' wirklich löschen?</h6>
+            <button class="btn btn-outline-danger" (click)="deleteImport( importToDelete )">löschen bestätigen</button>
+            <button class="btn btn-outline-dark" (click)="abortConfirm()" style="margin-left: 5px; ">abbbrechen</button>
+        </div>
+    </div>
+</div>
+

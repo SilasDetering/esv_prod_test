@@ -1,0 +1,239 @@
+<div style="margin-top: 20px;">
+    <h4><b>Eisen Gesamt</b></h4>
+</div>
+
+<ul class="nav nav-tabs noprint">
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true"
+            aria-expanded="false">Unternehmen</a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MEMBER_ALL" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">Alle</label>
+                </div>
+            </a>
+            <a class="dropdown-item" *ngFor="let member of listOfMembers" id="members">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" [attr.id]="member.ID"
+                        (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">{{ member.name }}</label>
+                </div>
+            </a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+            aria-expanded="false">Monat</a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_ALL" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">Alle</label>
+                </div>
+            </a>
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_01" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">Januar</label>
+                </div>
+            </a>
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_02" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">Februar</label>
+                </div>
+            </a>
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_03" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">März</label>
+                </div>
+            </a>
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_04" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">April</label>
+                </div>
+            </a>
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_05" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">Mai</label>
+                </div>
+            </a>
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_06" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">Juni</label>
+                </div>
+            </a>
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_07" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">Juli</label>
+                </div>
+            </a>
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_08" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">August</label>
+                </div>
+            </a>
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_09" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">September</label>
+                </div>
+            </a>
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_10" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">Oktober</label>
+                </div>
+            </a>
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_11" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">November</label>
+                </div>
+            </a>
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="MONTH_12" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">Dezember</label>
+                </div>
+            </a>
+        </div>
+    </li>
+
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true"
+            aria-expanded="false">Jahr</a>
+        <div class="dropdown-menu">
+            <a class="dropdown-item">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="YEAR_ALL" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">Alle</label>
+                </div>
+            </a>
+            <a class="dropdown-item" *ngFor="let year of listOfYears">
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" [attr.id]="'YEAR_' + year" (click)="onSelect()" />
+                    <label class="form-check-label" for="Checkme1">{{ year }}</label>
+                </div>
+            </a>
+        </div>
+    </li>
+</ul>
+
+<div id="printIronTotal">
+    <div id="scrollbar" class="showScrollbar">
+        <table>
+            <tr>
+                <th rowspan="2"> Produkt </th>
+                <th colspan="3"> <small>Summe von Mengen in t</small></th>
+            </tr>
+            <tr>
+                <th> Inland </th>
+                <th> Export </th>
+                <th> Gesamt </th>
+            </tr>
+            <tr>
+                <td> Blumendraht </td>
+                <td> {{ blumendraht_inland_sum }} </td>
+                <td> {{ blumendraht_export_sum }} </td>
+                <td> {{ blumendraht_ges_sum }} </td>
+            </tr>
+            <tr>
+                <td> Eisendrähte / blank, verkupfert </td>
+                <td> {{ ed_blank_verkupfert_inland_sum }} </td>
+                <td> {{ ed_blank_verkupfert_export_sum }} </td>
+                <td> {{ ed_blank_verkupfert_ges_sum }} </td>
+            </tr>
+            <tr>
+                <td> Eisendrähte / geglüht </td>
+                <td> {{ ed_geglueht_inland_sum }} </td>
+                <td> {{ ed_geglueht_export_sum }} </td>
+                <td> {{ ed_geglueht_ges_sum }} </td>
+            </tr>
+            <tr>
+                <td> Eisendrähte / kunststoffummantelt </td>
+                <td> {{ ed_kuststoffummantelt_inland_sum }} </td>
+                <td> {{ ed_kuststoffummantelt_export_sum }} </td>
+                <td> {{ ed_kuststoffummantelt_ges_sum }} </td>
+            </tr>
+            <tr>
+                <td> Eisendrähte / verzinkt bis 6,0 mm ø </td>
+                <td> {{ ed_verzinkt_bis_6_inland_sum }} </td>
+                <td> {{ ed_verzinkt_bis_6_export_sum }} </td>
+                <td> {{ ed_verzinkt_bis_6_ges_sum }} </td>
+            </tr>
+            <tr>
+                <td> Eisendrähte / verzinkt üb. 6,0 mm ø </td>
+                <td> {{ ed_verzinkt_ueber_6_inland_sum }} </td>
+                <td> {{ ed_verzinkt_ueber_6_export_sum }} </td>
+                <td> {{ ed_verzinkt_ueber_6_ges_sum }} </td>
+            </tr>
+            <tr>
+                <td> Eisendrähte / verzinnt </td>
+                <td> {{ ed_verzinnt_inland_sum }} </td>
+                <td> {{ ed_verzinnt_export_sum }} </td>
+                <td> {{ ed_verzinnt_ges_sum }} </td>
+            </tr>
+            <tr>
+                <td> Flachdraht </td>
+                <td> {{ flachdraht_inland_sum }} </td>
+                <td> {{ flachdraht_export_sum }} </td>
+                <td> {{ flachdraht_ges_sum }} </td>
+            </tr>
+            <tr>
+                <td> Kettendraht </td>
+                <td> {{ kettendraht_inland_sum }} </td>
+                <td> {{ kettendraht_export_sum }} </td>
+                <td> {{ kettendraht_ges_sum }} </td>
+            </tr>
+            <tr>
+                <td> Nicht patentierte Stahldrähte </td>
+                <td> {{ npStahldraehte_inland_sum }} </td>
+                <td> {{ npStahldraehte_export_sum }} </td>
+                <td> {{ npStahldraehte_ges_sum }} </td>
+            </tr>
+            <tr>
+                <td> Nietendraht </td>
+                <td> {{ nietendraht_inland_sum }} </td>
+                <td> {{ nietendraht_export_sum }} </td>
+                <td> {{ nietendraht_ges_sum }} </td>
+            </tr>
+            <tr>
+                <td> Schraubendraht DIN EN 10.263 Teil 1 - 4 </td>
+                <td> {{ schraubendraht_inland_sum }} </td>
+                <td> {{ schraubendraht_export_sum }} </td>
+                <td> {{ schraubendraht_ges_sum }} </td>
+            </tr>
+            <tr>
+                <td> Sonstige Eisendrähte </td>
+                <td> {{ sonstige_inland_sum }} </td>
+                <td> {{ sonstige_export_sum }} </td>
+                <td> {{ sonstige_ges_sum }} </td>
+            </tr>
+            <tr>
+                <td> Stangendraht / blank, verkupfert, verzinkt </td>
+                <td> {{ stangendraht_inland_sum }} </td>
+                <td> {{ stangendraht_export_sum }} </td>
+                <td> {{ stangendraht_ges_sum }} </td>
+            </tr>
+            <tr class="section">
+                <td> Gesamt</td>
+                <td> {{inland_sum}} </td>
+                <td> {{export_sum}} </td>
+                <td> {{ges_sum}} </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<!-- Dateiende -->
+<hr>
+<button style="float: right" class="btn btn-warning" (click)="print()"> Drucken </button>

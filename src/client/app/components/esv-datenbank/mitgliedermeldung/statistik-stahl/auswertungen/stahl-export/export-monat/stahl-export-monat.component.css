@@ -1,0 +1,48 @@
+table {
+    margin-top: 1%;
+    border-collapse: collapse;
+    width: 100%;
+    border: 3px solid black;
+}
+
+th {
+    padding: 5px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+td {
+    padding: 5px;
+}
+
+.value {
+    text-align: right;
+}
+
+.title th {
+    border-bottom: 0px;
+}
+
+.prodID {
+    font-size: x-small;
+}
+
+.section {
+    border-bottom: 3px solid black;
+    border-top: 3px solid black;
+    font-weight: bold;
+    border-left: 0px;
+    border-right: 0px;
+}
+
+.empty td{
+    border: 0px solid black;
+}
+
+.sum{
+    border-bottom: 3px solid black;
+    border-top: 4px solid black;
+    font-weight: bold;
+    border-left: 0px;
+    border-right: 0px;
+}

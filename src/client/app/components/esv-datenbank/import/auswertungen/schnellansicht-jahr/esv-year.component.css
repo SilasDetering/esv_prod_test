@@ -1,0 +1,21 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 3px solid black;
+}
+
+th {
+    padding: 5px;
+    border: 1px solid black;
+    text-align: center;
+}
+
+td {
+    padding: 5px;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+}
+
+.showScrollbar {
+    overflow: auto;
+}

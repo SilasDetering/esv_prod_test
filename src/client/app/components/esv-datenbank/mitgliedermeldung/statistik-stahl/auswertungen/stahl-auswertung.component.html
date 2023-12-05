@@ -1,0 +1,26 @@
+<h2 style="margin-top: 50px;">Auswertung</h2>
+<button style="float: right" [routerLink]="['/esv-statistik/menue/stahl']" class="btn btn-outline-dark"> Zurück </button>
+
+<ul class="nav nav-tabs" role="tablist" style="margin-top: 50px;">
+    <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="pivot" data-bs-toggle="tab" role="tab" tabindex="0" (click)="changeView('pivot')">Pivot</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="export" data-bs-toggle="tab" role="tab" tabindex="1" (click)="changeView('export')">Export pro Land</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="divergence" data-bs-toggle="tab" role="tab" tabindex="2" (click)="changeView('divergence')">Vergleich</a>
+    </li>
+</ul>
+
+<div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade active show" id="tab_pivot" role="tabpanel" style="margin-top: 10px;">
+        <app-stahl-pivot></app-stahl-pivot>
+    </div>
+    <div class="tab-pane fade" id="tab_export" role="tabpanel" style="margin-top: 10px;">
+       <app-stahl-export></app-stahl-export>
+    </div>
+    <div class="tab-pane fade " id="tab_divergence" role="tabpanel" style="margin-top: 10px;">
+        <app-stahl-divergenz></app-stahl-divergenz>
+    </div>
+</div>

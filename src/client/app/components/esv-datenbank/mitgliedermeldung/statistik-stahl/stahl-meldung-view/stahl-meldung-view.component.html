@@ -1,0 +1,87 @@
+<td><h3>{{selectedReport.companyID}}</h3></td>
+<td><h3 style="margin-left: 10px;">{{this.europeFormat(selectedReport.reportDate)}}</h3></td>
+
+<button style="float: right" class="btn btn-outline-dark" [routerLink]="['/esv-statistik/stahl-meldung']"> Zurück </button>
+
+<div style="margin-top: 10px;">
+
+    <hr style="margin-bottom: 5px;">
+
+        <!-- INLAND/EXPORT - REPORT -->
+        <div style="margin-top: 20px;">
+            <table>
+                <thead>
+                    <tr>
+                        <td style="width: 40%;">
+                            <h5>Produkt</h5>
+                        </td>
+                        <td style="width: 20%;">
+                            <h5>Inland (in t)</h5>
+                        </td>
+                        <td style="width: 20%;">
+                            <h5>Export (in t)</h5>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="col1">
+                        <td> <label> Seildraht </label> </td>
+                        <td> <input type="number" class="form-control input" name="seildraht_inland"
+                                placeholder="Menge in t" [(ngModel)]="selectedReport.seildraht_inland"></td>
+                        <td> <input type="number" class="form-control input" name="seildraht_export"
+                                placeholder="Menge in t" [(ngModel)]="selectedReport.seildraht_export"></td>
+                    </tr>
+                    <tr>
+                        <td> <label> Polsterfederdraht </label> </td>
+                        <td> <input type="number" class="form-control input" name="polsterfederdraht_inland"
+                                placeholder="Menge in t" [(ngModel)]="selectedReport.polsterfederdraht_inland"></td>
+                        <td> <input type="number" class="form-control input" name="polsterfederdraht_export"
+                                placeholder="Menge in t" [(ngModel)]="selectedReport.polsterfederdraht_export"></td>
+                    </tr>
+                    <tr class="col1">
+                        <td> <label> Federdraht SH/SL/SM </label> </td>
+                        <td> <input type="number" class="form-control input" name="federdraht_SH_SL_SM_inland"
+                                placeholder="Menge in t" [(ngModel)]="selectedReport.federdraht_SH_SL_SM_inland"></td>
+                        <td> <input type="number" class="form-control input" name="federdraht_SH_SL_SM_export"
+                                placeholder="Menge in t" [(ngModel)]="selectedReport.federdraht_SH_SL_SM_export"></td>
+                    </tr>
+                    <tr>
+                        <td> <label> Fehderdraht DH/DM </label> </td>
+                        <td> <input type="number" class="form-control input" name="federdraht_DH_DM_inland"
+                                placeholder="Menge in t" [(ngModel)]="selectedReport.federdraht_DH_DM_inland"></td>
+                        <td> <input type="number" class="form-control input" name="federdraht_DH_DM_export"
+                                placeholder="Menge in t" [(ngModel)]="selectedReport.federdraht_DH_DM_export"></td>
+                    </tr>
+                    <tr class="col1">
+                        <td> <label> Sonstige Federdrähte </label> </td>
+                        <td> <input type="number" class="form-control input" name="federdraht_sonstig_inland"
+                                placeholder="Menge in t" [(ngModel)]="selectedReport.federdraht_sonstig_inland"></td>
+                        <td> <input type="number" class="form-control input" name="federdraht_sonstig_export"
+                                placeholder="Menge in t" [(ngModel)]="selectedReport.federdraht_sonstig_export"></td>
+                    </tr>
+                    <tr>
+                        <td> <label> Alle nicht genannten Drähte </label> </td>
+                        <td> <input type="number" class="form-control input" name="draehte_sonstige_inland"
+                                placeholder="Menge in t" [(ngModel)]="selectedReport.draehte_sonstige_inland"></td>
+                        <td> <input type="number" class="form-control input" name="draehte_sonstige_export"
+                                placeholder="Menge in t" [(ngModel)]="selectedReport.draehte_sonstige_export"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- LÄNDER EXPORTE -->
+        <hr style="width: 25%;">
+
+        <div class="col1" style="border-radius: 10px; margin-top: 2px; width: 50%;"
+            *ngFor="let countryExport of selectedReport.country_exports; let i = index">
+            <td style="width: 60%;">
+                <input readonly type="text" class="form-control input" style="margin-left: 2px;" placeholder="0"
+                    [ngModel]="selectedReport.country_exports[i].countryID" [name]="'countryExp_amount_' + i">
+            </td>
+            <td style="border: 0px; width: 50%;">
+                <input readonly type="number" class="form-control input" style="margin-left: 2px;" placeholder="0"
+                    [ngModel]="selectedReport.country_exports[i].amount" [name]="'countryExp_amount_' + i">
+            </td>
+        </div>
+        <hr>

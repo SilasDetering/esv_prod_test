@@ -1,0 +1,46 @@
+<h2 class="page-header">Benutzer hinzufügen</h2>
+<form class="form-group has-danger" (submit)="onRegisterSubmit()">
+    <div style="margin-top: 10px;">
+        <label>Vorname</label>
+        <input type="text" [(ngModel)]="firstName" name="firstName" class="form-control" id="vorname" oninput="praefix_Username.value = vorname.value">
+    </div>
+    <div style="margin-top: 10px;">
+        <label>Nachname</label>
+        <input type="text" [(ngModel)]="lastName" name="lastName" class="form-control" id="nachname" oninput="suffix_Username.value = nachname.value">
+    </div>
+    <div style="margin-top: 10px;">
+        <label>Username</label>
+        <table>
+            <th> <input type="text" class="form-control" disabled="" placeholder="vorname" id="praefix_Username" style="text-transform:lowercase" readonly> </th>
+            .
+            <th> <input type="text" class="form-control" disabled="" placeholder="nachname" id="suffix_Username" style="text-transform:lowercase" readonly> </th>
+        </table>
+    </div>
+    <div style="margin-top: 10px;">
+        <label>Email</label>
+        <input type="text" [(ngModel)]="email" name="email" class="form-control" id="emailField">
+    </div>
+    <div style="margin-top: 10px;">
+        <label>Passwort</label>
+        <input type="password" class="form-control" [(ngModel)]="password" name="password" id="passwordForm">
+
+        <div class="card border-danger mb-3" style="max-width: 30rem; margin-top: 10px; margin-left: 20px;" *ngIf="showPwRequirements">
+            <div class="card-body">
+                <h5 class="card-title"> Ungültiges Passwort <br></h5>
+                - 8 bis 20 Zeichen<br/>
+                - groß und klein Buchstaben<br/>
+                - Mindestens eine Zahl<br/>
+                - Mindestens ein Sonderzeichen<br/>
+            </div>
+        </div>
+    </div>
+    <div class="form-check form-switch" style="margin-top: 10px;">
+        <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" [(ngModel)]="isAdmin" name="isAdmin">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Administratorrechte (für die Benutzerverwaltung)</label>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Registrieren" style="margin-top: 10px"> 
+</form>
+
+<hr style="margin-top: 70px;">
+
+<button class="btn btn-outline-dark" onclick="history.back()" style="margin-top: 10px; float:left">Zurück</button>

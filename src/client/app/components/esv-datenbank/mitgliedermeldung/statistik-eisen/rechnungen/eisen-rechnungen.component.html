@@ -1,0 +1,46 @@
+<h2 style="margin-top: 50px;">Rechnungen</h2>
+
+<div style="display: flex;">
+
+    <!-- SELECT COMPANY -->
+    <div style="flex: 1;">
+        <label for="company-select" class="form-label mt-4">Unternehmen</label>
+        <div class="form-group" style="max-width: 75%;">
+            <select class="form-select" id="company-select" [(ngModel)]="selectedMemberID" (change)="onMemberChange()" name="selectMember">
+                <option *ngFor="let memberOption of listOfMembers" [value]="memberOption.ID">
+                    {{memberOption.name}}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- SELECT DATE -->
+    <div style="flex: 1; margin-left: 5px;">
+        <div class="form-group" style="max-width: 75%;">
+            <label for="dateField" class="form-label mt-4">Datum</label>
+            <input type="date" class="form-control" id="dateField" [(ngModel)]="selectedDate" (change)="onDateChange()" name="selectDate">
+        </div>
+    </div>
+
+    <button style="float: right" [routerLink]="['/esv-statistik/menue/eisen']" class="btn-back btn btn-outline-dark"> Zurück </button>
+</div>
+
+<ul class="nav nav-tabs" role="tablist" style="margin-top: 50px;">
+    <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="A" data-bs-toggle="tab" role="tab" tabindex="0" (click)="changeView('A')">Rechnung A</a>
+        
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="B" data-bs-toggle="tab" role="tab" tabindex="1" (click)="changeView('B')">Rechnung B</a>
+    </li>
+</ul>
+
+<div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade active show" id="tab_A" role="tabpanel" style="margin-top: 10px;">
+        <app-rechnung-a [reportInvoice]="invoice" *ngIf="invoice"></app-rechnung-a>
+        <div class="err" *ngIf="!invoice"> Kein Bericht gefunden! Bitte wählen sie ein Datum und ein Unternehmen.</div>
+    </div>
+    <div class="tab-pane fade" id="tab_B" role="tabpanel" style="margin-top: 10px;">
+        <app-rechnung-b [reportInvoice]="invoice" *ngIf="invoice"></app-rechnung-b>
+        <div class="err" *ngIf="!invoice"> Kein Bericht gefunden! Bitte wählen sie ein Datum und ein Unternehmen.</div>
+    </div>
+</div>

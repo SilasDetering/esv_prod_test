@@ -1,0 +1,61 @@
+<h2 style="margin-top: 50px;">Auswertung</h2>
+<button style="float: right" [routerLink]="['/esv-import']" class="btn btn-outline-dark"> Zurück </button>
+
+<div class="form-group" style="margin-top: 10px;">
+    <label>Datum</label>
+    <input type="date" class="form-control" style="max-width: 25%;" id="inputDate">         
+</div>
+
+<ul class="nav nav-tabs" role="tablist" style="margin-top: 50px;">
+    <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="fastRepMonth" data-bs-toggle="tab" role="tab" tabindex="0" (click)="changeView('fastRepMonth')">Schnellbericht (Monat)</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="fastRepYear" data-bs-toggle="tab" role="tab" tabindex="1" (click)="changeView('fastRepYear')">Schnellbericht (Jahr)</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="import_iron" data-bs-toggle="tab" role="tab" tabindex="2" (click)="changeView('import_iron')">Ländereinfuhren (Eisen)</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="import_iron_per_year" data-bs-toggle="tab" role="tab" tabindex="3" (click)="changeView('import_iron_per_year')">Ländereinfuhren (Eisen pro Jahr)</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="market_iron" data-bs-toggle="tab" role="tab" tabindex="4" (click)="changeView('market_iron')">Markt (Eisen)</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="import_steel" data-bs-toggle="tab" role="tab" tabindex="5" (click)="changeView('import_steel')">Ländereinfuhren (Stahl)</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="import_steel_per_year" data-bs-toggle="tab" role="tab" tabindex="6" (click)="changeView('import_steel_per_year')">Ländereinfuhren (Stahl pro Jahr)</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="market_steel" data-bs-toggle="tab" role="tab" tabindex="7" (click)="changeView('market_steel')">Markt (Stahl)</a>
+    </li>
+</ul>
+
+<div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade active show" id="tab_fastRepMonth" role="tabpanel" style="margin-top: 10px;">
+        <app-esv-month [selectedDate]="selectedDate" [monthStats]="monthStatsList" [yearAvgList] = "yearAvgList"></app-esv-month>
+    </div>
+    <div class="tab-pane fade" id="tab_fastRepYear" role="tabpanel" style="margin-top: 10px;">
+        <app-esv-year [selectedDate]="selectedDate" [monthStats]="monthStatsList" [yearAvgList] = "yearAvgList"></app-esv-year>
+    </div>
+    <div class="tab-pane fade" id="tab_import_iron" role="tabpanel" style="margin-top: 10px;">
+        <app-esv-import-eisen [selectedDate]="selectedDate"></app-esv-import-eisen>
+    </div>
+    <div class="tab-pane fade" id="tab_import_iron_per_year" role="tabpanel" style="margin-top: 10px;">
+        <app-esv-import-iron-per-year [selectedDate]="selectedDate"></app-esv-import-iron-per-year>
+    </div>
+    <div class="tab-pane fade" id="tab_import_steel" role="tabpanel" style="margin-top: 10px;">
+        <app-esv-import-stahl [selectedDate]="selectedDate"></app-esv-import-stahl>
+    </div>
+    <div class="tab-pane fade" id="tab_import_steel_per_year" role="tabpanel" style="margin-top: 10px;">
+        <app-esv-import-steel-per-year [selectedDate]="selectedDate"></app-esv-import-steel-per-year>
+    </div>
+    <div class="tab-pane fade" id="tab_market_iron" role="tabpanel" style="margin-top: 10px;">
+        <app-esv-market-eisen [selectedDate]="selectedDate" [monthStats]="monthStatsList" [yearAvgList] = "yearAvgList" [inlandsversandDaten]="inlandsversandDatenEisen"></app-esv-market-eisen>
+    </div>
+    <div class="tab-pane fade" id="tab_market_steel" role="tabpanel" style="margin-top: 10px;">
+        <app-esv-market-stahl [selectedDate]="selectedDate" [monthStats]="monthStatsList" [yearAvgList] = "yearAvgList" [inlandsversandDaten]="inlandsversandDatenStahl"></app-esv-market-stahl>
+    </div>
+</div>

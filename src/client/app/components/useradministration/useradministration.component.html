@@ -1,0 +1,42 @@
+<div style="margin-top: 50px;">
+
+    <h2 style="float: left">Benutzer: </h2>
+    <button style="float: right; margin-top: 10px;" [routerLink]="['/hauptmenue']" class="btn btn-outline-dark">Zurück</button>
+
+    <table class="table" style="margin-top: 100px">
+        <thead>
+            <tr>
+                <th scope="col">Vorname</th>
+                <th scope="col">Name</th>
+                <th scope="col">Benutzername</th>
+                <th scope="col">Email</th>
+                <th scope="col">Rechte</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tr *ngFor="let user of listOfUsers">
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td *ngIf="user.isAdmin"> <span class="badge bg-info">Admin</span> </td>
+            <td *ngIf="!user.isAdmin"></td>
+            <td>
+                <button class="btn btn-outline-secondary" style="min-width: 40px;" (click)="goToEditUser(user)"><b>&#9998;</b></button>
+                <button *ngIf="!user.isAdmin" (click)="secondConfirm(user.username)" class="btn btn-outline-danger" 
+                style="margin-left: 5px; min-width: 40px;" id="deleteButton"><b>&cross;</b></button>
+            </td>
+        </tr>
+    </table>
+
+    <div id="secondConfirm" class="secondConfirm">
+        <div style="margin-top: 40px;">
+            <h6>Möchtest du den Benutzer <b>{{ userToDelete }} </b> wirklich löschen?</h6>
+            <button class="btn btn-outline-danger" (click)="deleteUser(userToDelete)">löschen bestätigen</button>
+            <button class="btn btn-outline-dark" (click)="abortConfirm()" style="margin-left: 5px; ">abbbrechen</button>
+        </div>
+    </div>
+
+    <hr style="margin-top: 40px;">
+    <button class="btn btn-primary" [routerLink]="['/useradministration/register']" style="margin-top: 10px; float:left">+ Benutzer hinzufügen</button>
+</div>

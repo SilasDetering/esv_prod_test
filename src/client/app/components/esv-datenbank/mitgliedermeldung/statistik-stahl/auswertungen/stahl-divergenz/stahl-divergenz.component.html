@@ -1,0 +1,22 @@
+<div class="form-group" style="margin-top: 10px;">
+    <label>Datum</label>
+    <input type="date" class="form-control" style="max-width: 25%;" id="inputDate" (change)="setDate($event)">         
+</div>
+
+<ul class="nav nav-tabs" role="tablist" style="margin-top: 50px;">
+    <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="monat" data-bs-toggle="tab" role="tab" tabindex="0" (click)="changeView('monat')">Monat u. Monate aufsummiert</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="quarter" data-bs-toggle="tab" role="tab" tabindex="1" (click)="changeView('quarter')">Quartal</a>
+    </li>
+</ul>
+
+<div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade active show" id="tab_monat" role="tabpanel" style="margin-top: 10px;">
+        <app-stahl-div-monat [selectedDate]="selectedDate" [steelReportMonthSum]="steelReportMonthSum" [steelReportYearSum]="steelReportYearSum"></app-stahl-div-monat>
+    </div>
+    <div class="tab-pane fade" id="tab_quarter" role="tabpanel" style="margin-top: 10px;">
+        <app-stahl-div-quartal [selectedDate]="selectedDate" [steelReportQuarterSum]="steelReportQuarterSum"></app-stahl-div-quartal>
+    </div>
+</div>

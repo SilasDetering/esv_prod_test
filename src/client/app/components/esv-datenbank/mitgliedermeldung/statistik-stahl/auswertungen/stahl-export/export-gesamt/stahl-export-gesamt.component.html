@@ -1,0 +1,282 @@
+<div id="printIronTotal">
+    <div id="scrollbar" class="showScrollbar">
+        <ul class="nav nav-tabs noprint">
+            <li class="nav-item">
+                <div class="form-group" style="margin-bottom: 8px;">
+                    <select class="form-select" id="exampleSelect1" (click)="onSelect()" [(ngModel)]="selectedYear">
+                        <option value="" selected disabled>Jahr</option>
+                        <option *ngFor="let year of listOfYears">{{ year }}</option>
+                    </select>
+                </div>
+            </li>
+        </ul>
+        <div id="printSteelQuartalTotal">
+            <table>
+                <tr>
+                    <th rowspan="2"> Land </th>
+                    <th colspan="5"> <small>Summe von Mengen in t ({{ selectedYear }})</small></th>
+                </tr>
+                <tr>
+                    <th> 1. Quartal </th>
+                    <th> 2. Quartal </th>
+                    <th> 3. Quartal </th>
+                    <th> 4. Quartal </th>
+                    <th> Gesamt </th>
+                </tr>
+                <tr style="height: 35px;">
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                <tr>
+                <tr class="continent">
+                    <td> EU </td>
+                    <td *ngFor="let sum of sumsEU"> {{ sum }} </td>
+                </tr>
+                <tr *ngFor="let country of listOfCountriesEU">
+                    <td> {{ country.name }} </td>
+                    <td [attr.id]="country.countryID + 'Q1'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q2'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q3'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q4'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'GES'"> 0 </td>
+                </tr>
+                <tr style="height: 35px;">
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                <tr>
+                </tr>
+                <tr class="continent">
+                    <td> EFTA </td>
+                    <td *ngFor="let sum of sumsEFTA"> {{ sum }} </td>
+                </tr>
+                <tr *ngFor="let country of listOfCountriesEFTA">
+                    <td> {{ country.name }} </td>
+                    <td [attr.id]="country.countryID + 'Q1'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q2'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q3'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q4'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'GES'"> 0 </td>
+                </tr>
+                <tr style="height: 35px;">
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                <tr>
+                <tr class="continent">
+                    <td> Übriges EUROPA </td>
+                    <td *ngFor="let sum of sumsEUROPE"> {{ sum }} </td>
+                </tr>
+                <tr *ngFor="let country of listOfCountriesEUROPE">
+                    <td> {{ country.name }} </td>
+                    <td [attr.id]="country.countryID + 'Q1'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q2'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q3'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q4'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'GES'"> 0 </td>
+                </tr>
+                <tr style="height: 35px;">
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                <tr>
+                <tr class="continent">
+                    <td> AFRIKA </td>
+                    <td *ngFor="let sum of sumsAFRICA"> {{ sum }} </td>
+                </tr>
+                <tr *ngFor="let country of listOfCountriesAFRICA">
+                    <td> {{ country.name }} </td>
+                    <td [attr.id]="country.countryID + 'Q1'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q2'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q3'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q4'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'GES'"> 0 </td>
+                </tr>
+                <tr style="height: 35px;">
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                <tr>
+                <tr class="continent">
+                    <td> NORDAMERIKA </td>
+                    <td *ngFor="let sum of sumsNORTHAMERICA"> {{ sum }} </td>
+                </tr>
+                <tr *ngFor="let country of listOfCountriesNORTHAMERICA">
+                    <td> {{ country.name }} </td>
+                    <td [attr.id]="country.countryID + 'Q1'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q2'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q3'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q4'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'GES'"> 0 </td>
+                </tr>
+                <tr style="height: 35px;">
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                <tr>
+                <tr class="continent">
+                    <td> SÜDAMERIKA </td>
+                    <td *ngFor="let sum of sumsSOUTHAMERICA"> {{ sum }} </td>
+                </tr>
+                <tr *ngFor="let country of listOfCountriesSOUTHAMERICA">
+                    <td> {{ country.name }} </td>
+                    <td [attr.id]="country.countryID + 'Q1'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q2'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q3'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q4'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'GES'"> 0 </td>
+                </tr>
+                <tr style="height: 35px;">
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                <tr>
+                <tr class="continent">
+                    <td> ASIEN </td>
+                    <td *ngFor="let sum of sumsASIA"> {{ sum }} </td>
+                </tr>
+                <tr *ngFor="let country of listOfCountriesASIA">
+                    <td> {{ country.name }} </td>
+                    <td [attr.id]="country.countryID + 'Q1'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q2'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q3'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q4'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'GES'"> 0 </td>
+                </tr>
+                <tr style="height: 35px;">
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                <tr>
+                <tr class="continent">
+                    <td> OZEANIEN </td>
+                    <td *ngFor="let sum of sumsOCEANIA"> {{ sum }} </td>
+                </tr>
+                <tr *ngFor="let country of listOfCountriesOCEANIA">
+                    <td> {{ country.name }} </td>
+                    <td [attr.id]="country.countryID + 'Q1'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q2'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q3'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q4'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'GES'"> 0 </td>
+                </tr>
+                <tr style="height: 35px;">
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                <tr>
+                <tr class="continent">
+                    <td> ANTARKTIS </td>
+                    <td *ngFor="let sum of sumsANTARCTICA"> {{ sum }} </td>
+                </tr>
+                <tr *ngFor="let country of listOfCountriesANTARCTICA">
+                    <td> {{ country.name }} </td>
+                    <td [attr.id]="country.countryID + 'Q1'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q2'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q3'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'Q4'"> 0 </td>
+                    <td [attr.id]="country.countryID + 'GES'"> 0 </td>
+                </tr>
+            </table>
+            <br><br><br>
+            <table>
+                <tr>
+                    <th rowspan="2"> Land </th>
+                    <th colspan="6"> <small>Summe von Mengen in t ({{ selectedYear }})</small></th>
+                </tr>
+                <tr>
+                    <th> 1. Quartal </th>
+                    <th> 2. Quartal </th>
+                    <th> 3. Quartal </th>
+                    <th> 4. Quartal </th>
+                    <th> Gesamt </th>
+                    <th>Prozentual</th>
+                </tr>
+                <tr style="height: 35px;">
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                    <td class="noborder"> </td>
+                <tr>
+                <tr>
+                    <td> EU </td>
+                    <td *ngFor="let sum of sumsEU"> {{ sum }} </td>
+                    <td> {{ percentageEU }}% </td>
+                </tr>
+                <tr>
+                    <td> EFTA </td>
+                    <td *ngFor="let sum of sumsEFTA"> {{ sum }} </td>
+                    <td> {{ percentageEFTA }}% </td>
+                </tr>
+                <tr>
+                    <td> Übriges EUROPA </td>
+                    <td *ngFor="let sum of sumsEUROPE"> {{ sum }} </td>
+                    <td> {{ percentageEUROPE }}% </td>
+                </tr>
+                <tr>
+                    <td> AFRIKA </td>
+                    <td *ngFor="let sum of sumsAFRICA"> {{ sum }} </td>
+                    <td> {{ percentageAFRICA }}% </td>
+                </tr>
+                <tr>
+                    <td> NORDAMERIKA </td>
+                    <td *ngFor="let sum of sumsNORTHAMERICA"> {{ sum }} </td>
+                    <td> {{ percentageNORTHAMERICA }}% </td>
+                </tr>
+                <tr>
+                    <td> SÜDAMERIKA </td>
+                    <td *ngFor="let sum of sumsSOUTHAMERICA"> {{ sum }} </td>
+                    <td> {{ percentageSOUTHAMERICA }}% </td>
+                </tr>
+                <tr>
+                    <td> ASIEN </td>
+                    <td *ngFor="let sum of sumsASIA"> {{ sum }} </td>
+                    <td> {{ percentageASIA }}% </td>
+                </tr>
+                <tr>
+                    <td> OZEANIEN </td>
+                    <td *ngFor="let sum of sumsOCEANIA"> {{ sum }} </td>
+                    <td> {{ percentageOCEANIA }}% </td>
+                </tr>
+                <tr>
+                    <td> ANTARKTIS </td>
+                    <td *ngFor="let sum of sumsANTARCTICA"> {{ sum }} </td>
+                    <td> {{ percentageANTARCTICA }}% </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Dateiende -->
+<hr>
+<button style="float: right" class="btn btn-warning" (click)="print()"> Drucken </button>

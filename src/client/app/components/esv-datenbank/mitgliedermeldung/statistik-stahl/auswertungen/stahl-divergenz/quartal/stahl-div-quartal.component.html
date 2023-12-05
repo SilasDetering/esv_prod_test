@@ -1,0 +1,83 @@
+<div id="printSteelDivergenzQuarter" style="margin-top: 20px;">
+
+    <h4>Erzeugnisart-Statistik Stahldraht</h4>
+    <!-- ======================================= QUARTAL =======================================-->
+
+    <table style="margin-top: 20px;">
+        <thead>
+            <tr>
+                <th rowspan="2">Erzeugnisse <br><br><br> Stahldraht </th>
+                <th colspan="3">{{getWrittenQuartal(selectedDate) + " " + getWrittenYear(selectedDate)}}</th>
+                <th colspan="3">{{getWrittenQuartal(selectedDate) + " " + getWrittenLastYear(selectedDate)}}</th>
+                <th colspan="3">Veränderung <br> +/- </th>
+            </tr>
+            <tr>
+                <td class="top_lable"><b>Inland</b><br> Versand <br> <b>t</b> </td>
+                <td class="top_lable"><b>Ausland</b><br> Versand <br> <b>t</b> </td>
+                <td class="top_lable"><b>Gesamt</b><br> Versand <br> <b>t</b> </td>
+                <td class="top_lable"><b>Inland</b><br> Versand <br> <b>t</b> </td>
+                <td class="top_lable"><b>Ausland</b><br> Versand <br> <b>t</b> </td>
+                <td class="top_lable"><b>Gesamt</b><br> Versand <br> <b>t</b> </td>
+                <td class="top_lable"><b>Inland</b><br> Versand <br> <b>%</b> </td>
+                <td class="top_lable"><b>Ausland</b><br> Versand <br> <b>%</b> </td>
+                <td class="top_lable"><b>Gesamt</b><br> Versand <br> <b>%</b> </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="left_lable">1. Seildraht u. ähnl. Drähte</td>
+                <td>{{steelReportQuarterSum[0]?.seildraht_inland}}</td>
+                <td>{{steelReportQuarterSum[0]?.seildraht_export}}</td>
+                <td>{{steelReportQuarterSum[0]?.seildraht_sum}}</td>
+                <td>{{steelReportQuarterSum[1]?.seildraht_inland}}</td>
+                <td>{{steelReportQuarterSum[1]?.seildraht_export}}</td>
+                <td>{{steelReportQuarterSum[1]?.seildraht_sum}}</td>
+                <td>{{steelReportQuarterSum[2]?.seildraht_inland}}</td>
+                <td>{{steelReportQuarterSum[2]?.seildraht_export}}</td>
+                <td>{{steelReportQuarterSum[2]?.seildraht_sum}}</td>
+            </tr>
+            <tr>
+                <td class="left_lable">2. Federdraht</td>
+                <td>{{steelReportQuarterSum[0]?.federdraht_inland}}</td>
+                <td>{{steelReportQuarterSum[0]?.federdraht_export}}</td>
+                <td>{{steelReportQuarterSum[0]?.federdraht_sum}}</td>
+                <td>{{steelReportQuarterSum[1]?.federdraht_inland}}</td>
+                <td>{{steelReportQuarterSum[1]?.federdraht_export}}</td>
+                <td>{{steelReportQuarterSum[1]?.federdraht_sum}}</td>
+                <td>{{steelReportQuarterSum[2]?.federdraht_inland}}</td>
+                <td>{{steelReportQuarterSum[2]?.federdraht_export}}</td>
+                <td>{{steelReportQuarterSum[2]?.federdraht_sum}}</td>
+            </tr>
+            <tr>
+                <td class="left_lable">3. Alle nicht genannten Drähte</td>
+                <td>{{steelReportQuarterSum[0]?.draehte_sonstige_inland}}</td>
+                <td>{{steelReportQuarterSum[0]?.draehte_sonstige_export}}</td>
+                <td>{{steelReportQuarterSum[0]?.draehte_sonstige_sum}}</td>
+                <td>{{steelReportQuarterSum[1]?.draehte_sonstige_inland}}</td>
+                <td>{{steelReportQuarterSum[1]?.draehte_sonstige_export}}</td>
+                <td>{{steelReportQuarterSum[1]?.draehte_sonstige_sum}}</td>
+                <td>{{steelReportQuarterSum[2]?.draehte_sonstige_inland}}</td>
+                <td>{{steelReportQuarterSum[2]?.draehte_sonstige_export}}</td>
+                <td>{{steelReportQuarterSum[2]?.draehte_sonstige_sum}}</td>
+            </tr>
+            <tr class="sum">
+                <th class="left_lable">Gesamtergebnis:</th>
+                <td>{{steelReportQuarterSum[0]?.steel_inland_sum}}</td>
+                <td>{{steelReportQuarterSum[0]?.steel_export_sum}}</td>
+                <td>{{steelReportQuarterSum[0]?.steel_sum}}</td>
+                <td>{{steelReportQuarterSum[1]?.steel_inland_sum}}</td>
+                <td>{{steelReportQuarterSum[1]?.steel_export_sum}}</td>
+                <td>{{steelReportQuarterSum[1]?.steel_sum}}</td>
+                <td>{{steelReportQuarterSum[2]?.steel_inland_sum}}</td>
+                <td>{{steelReportQuarterSum[2]?.steel_export_sum}}</td>
+                <td>{{steelReportQuarterSum[2]?.steel_sum}}</td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+</div>
+
+<!-- Dateiende -->
+<hr>
+<button style="float: right" class="btn btn-warning" (click)="print()"> Drucken </button>

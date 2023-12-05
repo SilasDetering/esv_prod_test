@@ -1,0 +1,23 @@
+<ul class="nav nav-tabs" role="tablist" style="margin-top: 50px;">
+    <li class="nav-item" role="presentation">
+        <a class="nav-link active" id="month" data-bs-toggle="tab" role="tab" tabindex="0" (click)="changeView('month')">Monat</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="quartal" data-bs-toggle="tab" role="tab" tabindex="1" (click)="changeView('quartal')">Quartal</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="total" data-bs-toggle="tab" role="tab" tabindex="2" (click)="changeView('total')">Gesamt</a>
+    </li>
+</ul>
+
+<div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade active show" id="tab_month" role="tabpanel" style="margin-top: 10px;">
+        <app-stahl-export-monat></app-stahl-export-monat>
+    </div>
+    <div class="tab-pane fade" id="tab_quartal" role="tabpanel" style="margin-top: 10px;">
+        <app-stahl-export-quartal></app-stahl-export-quartal>
+    </div>
+    <div class="tab-pane fade" id="tab_total" role="tabpanel" style="margin-top: 10px;">
+        <app-stahl-export-gesamt></app-stahl-export-gesamt>
+    </div>
+</div>

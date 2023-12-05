@@ -1,0 +1,217 @@
+<div id="printSteelImportRepYear">
+
+    <div style="margin-top: 20px;">
+        <h5>An unsere Mitglieder</h5>
+        <h4><b>Statistik {{getWrittenYear(this.selectedDate)}} - Einfuhr und Marktversorgung</b></h4>
+    </div>
+
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th rowspan="3"> <br><br><br></th>
+                    <th colspan="3">Stahldraht , weniger als 0,6 %C</th>
+                    <th colspan="3">Stahldraht, 0,6% und mehr C</th>
+                </tr>
+                <tr>
+                    <th>blank</th>
+                    <th>verzinkt</th>
+                    <th>sonstiger</th>
+                    <th>blank</th>
+                    <th>verzinkt</th>
+                    <th>sonstiger</th>
+                </tr>
+                <tr>
+                    <th class="prodID" rowspan="2">72171050</th>
+                    <th class="prodID" rowspan="2">72172050</th>
+                    <th class="prodID" rowspan="2">72179050</th>
+                    <th class="prodID" rowspan="2">72171090</th>
+                    <th class="prodID" rowspan="2">72172090</th>
+                    <th class="prodID" rowspan="2">72173090, 72179090</th>
+                </tr>
+                <tr>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th>Länder</th>
+                    <th style="text-align: left;">t</th>
+                    <th style="text-align: left;">t</th>
+                    <th style="text-align: left;">t</th>
+                    <th style="text-align: left;">t</th>
+                    <th style="text-align: left;">t</th>
+                    <th style="text-align: left;">t</th>
+                </tr>
+
+                <tr *ngFor="let country of countryImports">
+                    <ng-container *ngIf="country.isEU && entryIsNotEmpty(country)">
+                        <td>{{country.countryName}}</td>
+                        <td>{{country.stahldraht_weniger_blank}}</td>
+                        <td>{{country.stahldraht_weniger_verzinkt}}</td>
+                        <td>{{country.stahldraht_weniger_sonstiger}}</td>
+                        <td>{{country.stahldraht_mehr_blank}}</td>
+                        <td>{{country.stahldraht_mehr_verzinkt}}</td>
+                        <td>{{country.stahldraht_mehr_sonstiger}}</td>
+                    </ng-container>
+                </tr>
+
+                <tr>
+                    <td class="section"> EU </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("EU", "stahldraht_weniger_blank")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("EU", "stahldraht_weniger_verzinkt")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("EU", "stahldraht_weniger_sonstiger")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("EU", "stahldraht_mehr_blank")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("EU", "stahldraht_mehr_verzinkt")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("EU", "stahldraht_mehr_sonstiger")}} </td>
+                </tr>
+
+                <tr *ngFor="let country of countryImports">
+                    <ng-container *ngIf="country.isEFTA && entryIsNotEmpty(country)">
+                        <td>{{country.countryName}}</td>
+                        <td>{{country.stahldraht_weniger_blank}}</td>
+                        <td>{{country.stahldraht_weniger_verzinkt}}</td>
+                        <td>{{country.stahldraht_weniger_sonstiger}}</td>
+                        <td>{{country.stahldraht_mehr_blank}}</td>
+                        <td>{{country.stahldraht_mehr_verzinkt}}</td>
+                        <td>{{country.stahldraht_mehr_sonstiger}}</td>
+                    </ng-container>
+                </tr>
+
+                <tr>
+                    <td class="section"> EFTA </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("EFTA", "stahldraht_weniger_blank")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("EFTA", "stahldraht_weniger_verzinkt")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("EFTA", "stahldraht_weniger_sonstiger")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("EFTA", "stahldraht_mehr_blank")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("EFTA", "stahldraht_mehr_verzinkt")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("EFTA", "stahldraht_mehr_sonstiger")}} </td>
+                </tr>
+
+                <tr *ngFor="let country of countryImports">
+                    <ng-container *ngIf="country.continent == 'Europa' && !country.isEFTA && !country.isEU && entryIsNotEmpty(country)">
+                        <td>{{country.countryName}}</td>
+                        <td>{{country.stahldraht_weniger_blank}}</td>
+                        <td>{{country.stahldraht_weniger_verzinkt}}</td>
+                        <td>{{country.stahldraht_weniger_sonstiger}}</td>
+                        <td>{{country.stahldraht_mehr_blank}}</td>
+                        <td>{{country.stahldraht_mehr_verzinkt}}</td>
+                        <td>{{country.stahldraht_mehr_sonstiger}}</td>
+                    </ng-container>
+                </tr>
+
+                <tr>
+                    <td class="section"> EUROPA </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Europa", "stahldraht_weniger_blank")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Europa", "stahldraht_weniger_verzinkt")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Europa", "stahldraht_weniger_sonstiger")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Europa", "stahldraht_mehr_blank")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Europa", "stahldraht_mehr_verzinkt")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Europa", "stahldraht_mehr_sonstiger")}} </td>
+                </tr>
+
+                <tr *ngFor="let country of countryImports">
+                    <ng-container *ngIf="country.continent == 'Afrika' && !country.isEFTA && !country.isEU && entryIsNotEmpty(country)">
+                        <td>{{country.countryName}}</td>
+                        <td>{{country.stahldraht_weniger_blank}}</td>
+                        <td>{{country.stahldraht_weniger_verzinkt}}</td>
+                        <td>{{country.stahldraht_weniger_sonstiger}}</td>
+                        <td>{{country.stahldraht_mehr_blank}}</td>
+                        <td>{{country.stahldraht_mehr_verzinkt}}</td>
+                        <td>{{country.stahldraht_mehr_sonstiger}}</td>
+                    </ng-container>
+                </tr>
+
+                <tr>
+                    <td class="section"> AFRIKA </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Afrika", "stahldraht_weniger_blank")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Afrika", "stahldraht_weniger_verzinkt")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Afrika", "stahldraht_weniger_sonstiger")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Afrika", "stahldraht_mehr_blank")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Afrika", "stahldraht_mehr_verzinkt")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Afrika", "stahldraht_mehr_sonstiger")}} </td>
+                </tr>
+
+                <tr *ngFor="let country of countryImports">
+                    <ng-container *ngIf="country.continent == 'Asien' && !country.isEFTA && !country.isEU && entryIsNotEmpty(country)">
+                        <td>{{country.countryName}}</td>
+                        <td>{{country.stahldraht_weniger_blank}}</td>
+                        <td>{{country.stahldraht_weniger_verzinkt}}</td>
+                        <td>{{country.stahldraht_weniger_sonstiger}}</td>
+                        <td>{{country.stahldraht_mehr_blank}}</td>
+                        <td>{{country.stahldraht_mehr_verzinkt}}</td>
+                        <td>{{country.stahldraht_mehr_sonstiger}}</td>
+                    </ng-container>
+                </tr>
+
+                <tr>
+                    <td class="section"> ASIEN </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Asien", "stahldraht_weniger_blank")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Asien", "stahldraht_weniger_verzinkt")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Asien", "stahldraht_weniger_sonstiger")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Asien", "stahldraht_mehr_blank")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Asien", "stahldraht_mehr_verzinkt")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Asien", "stahldraht_mehr_sonstiger")}} </td>
+                </tr>
+
+                <tr *ngFor="let country of countryImports">
+                    <ng-container *ngIf="country.continent == 'Nordamerika' || country.continent == 'Suedamerika' && !country.isEFTA && !country.isEU && entryIsNotEmpty(country)">
+                        <td>{{country.countryName}}</td>
+                        <td>{{country.stahldraht_weniger_blank}}</td>
+                        <td>{{country.stahldraht_weniger_verzinkt}}</td>
+                        <td>{{country.stahldraht_weniger_sonstiger}}</td>
+                        <td>{{country.stahldraht_mehr_blank}}</td>
+                        <td>{{country.stahldraht_mehr_verzinkt}}</td>
+                        <td>{{country.stahldraht_mehr_sonstiger}}</td>
+                    </ng-container>
+                </tr>
+
+                <tr>
+                    <td class="section"> AMERIKA </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Nordamerika", "stahldraht_weniger_blank") + sumOfCountriesPerCategory("Suedamerika", "stahldraht_weniger_blank")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Nordamerika", "stahldraht_weniger_verzinkt") + sumOfCountriesPerCategory("Suedamerika", "stahldraht_weniger_verzinkt")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Nordamerika", "stahldraht_weniger_sonstiger") + sumOfCountriesPerCategory("Suedamerika", "stahldraht_weniger_sonstiger")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Nordamerika", "stahldraht_mehr_blank") + sumOfCountriesPerCategory("Suedamerika", "stahldraht_mehr_blank")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Nordamerika", "stahldraht_mehr_verzinkt") + sumOfCountriesPerCategory("Suedamerika", "stahldraht_mehr_verzinkt")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Nordamerika", "stahldraht_mehr_sonstiger") + sumOfCountriesPerCategory("Suedamerika", "stahldraht_mehr_sonstiger")}} </td>
+                </tr>
+
+                <tr *ngFor="let country of countryImports">
+                    <ng-container *ngIf="country.continent == 'Ozeanien' && !country.isEFTA && !country.isEU && entryIsNotEmpty(country)">
+                        <td>{{country.countryName}}</td>
+                        <td>{{country.stahldraht_weniger_blank}}</td>
+                        <td>{{country.stahldraht_weniger_verzinkt}}</td>
+                        <td>{{country.stahldraht_weniger_sonstiger}}</td>
+                        <td>{{country.stahldraht_mehr_blank}}</td>
+                        <td>{{country.stahldraht_mehr_verzinkt}}</td>
+                        <td>{{country.stahldraht_mehr_sonstiger}}</td>
+                    </ng-container>
+                </tr>
+
+                <tr>
+                    <td class="section"> AUSTRALIEN UND OZEANIEN </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Ozeanien", "stahldraht_weniger_blank")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Ozeanien", "stahldraht_weniger_verzinkt")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Ozeanien", "stahldraht_weniger_sonstiger")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Ozeanien", "stahldraht_mehr_blank")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Ozeanien", "stahldraht_mehr_verzinkt")}} </td>
+                    <td class="section"> {{sumOfCountriesPerCategory("Ozeanien", "stahldraht_mehr_sonstiger")}} </td>
+                </tr>
+
+                <tr>
+                    <td class="section"><b>GESAMT</b></td>
+                    <td class="section">{{sumOfAllCountries("stahldraht_weniger_blank")}}</td>
+                    <td class="section">{{sumOfAllCountries("stahldraht_weniger_verzinkt")}}</td>
+                    <td class="section">{{sumOfAllCountries("stahldraht_weniger_sonstiger")}}</td>
+                    <td class="section">{{sumOfAllCountries("stahldraht_mehr_blank")}}</td>
+                    <td class="section">{{sumOfAllCountries("stahldraht_mehr_verzinkt")}}</td>
+                    <td class="section">{{sumOfAllCountries("stahldraht_mehr_sonstiger")}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+<!-- Dateiende -->
+<hr>
+<button style="float: right" class="btn btn-warning" (click)="print()"> Drucken </button>

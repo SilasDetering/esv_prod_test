@@ -1,0 +1,461 @@
+<div id="printYearRep">
+
+  <div style="margin-top: 20px;">
+    <h4><b>Importe {{chosenYear}}</b></h4>
+  </div>
+
+  <div id="scrollbar" class="">
+    <table>
+      <tr>
+        <th colspan="2"></th>
+        <th> Januar<br>{{chosenYear}}<br>t </th>
+        <th> Februar<br>{{chosenYear}}<br>t </th>
+        <th> März<br>{{chosenYear}}<br>t </th>
+        <th> April<br>{{chosenYear}}<br>t </th>
+        <th> Mai<br>{{chosenYear}}<br>t </th>
+        <th> Juli<br>{{chosenYear}}<br>t </th>
+        <th> Juni<br>{{chosenYear}}<br>t </th>
+        <th> August<br>{{chosenYear}}<br>t </th>
+        <th> September<br>{{chosenYear}}<br>t </th>
+        <th> Oktober<br>{{chosenYear}}<br>t </th>
+        <th> November<br>{{chosenYear}}<br>t </th>
+        <th> Dezember<br>{{chosenYear}}<br>t </th>
+        <th> Summe<br>{{chosenYear}}<br>t </th>
+        <th> Mts. - ø <br>{{chosenYear}}<br>t </th>
+        <th> Mts. - ø <br>{{parseInteger(chosenYear)-1}}<br>t </th>
+        <th> Mts. - ø <br>{{parseInteger(chosenYear)-2}}<br>t </th>
+      </tr>
+      <tr>
+        <th colspan="2" style="border: 0px"> Erzeugnisse </th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td rowspan="3" style="border: 0px">Eisendraht</td>
+        <td style="border-left: 0px">blank</td>
+        <ng-container *ngFor="let dontCare of helperArray; index as i">
+          <td> {{ sortedMonthStats[i]?.eisendraht_blank ? sortedMonthStats[i]?.eisendraht_blank : '' }} </td>
+        </ng-container>
+        <td>{{chosenYearSum ? chosenYearSum.eisendraht_blank_sum : ''}}</td>
+        <td>{{chosenyearAvgs[2] ? chosenyearAvgs[2].eisendraht_blank_avg: '' }}</td>
+        <td>{{chosenyearAvgs[1] ? chosenyearAvgs[1].eisendraht_blank_avg: '' }}</td>
+        <td>{{chosenyearAvgs[0] ? chosenyearAvgs[0].eisendraht_blank_avg: '' }}</td>
+      </tr>
+      <tr>
+        <td style="border: 0px">verzinkt</td>
+        <ng-container *ngFor="let dontCare of helperArray; index as i">
+          <td> {{ sortedMonthStats[i]?.eisendraht_verzinkt ? sortedMonthStats[i]?.eisendraht_verzinkt : '' }} </td>
+        </ng-container>
+        <td>{{chosenYearSum ? chosenYearSum.eisendraht_verzinkt_sum : ''}}</td>
+        <td>{{chosenyearAvgs[2] ? chosenyearAvgs[2].eisendraht_verzinkt_avg: '' }}</td>
+        <td>{{chosenyearAvgs[1] ? chosenyearAvgs[1].eisendraht_verzinkt_avg: '' }}</td>
+        <td>{{chosenyearAvgs[0] ? chosenyearAvgs[0].eisendraht_verzinkt_avg: '' }}</td>
+      </tr>
+      <tr>
+        <td style="border: 0px">sonstiger <br> inkl. kunstst.</td>
+        <!-- Iteriere über die Monate 0 bis 11 -->
+        <ng-container *ngFor="let dontCare of helperArray; index as i">
+          <td>
+            {{ addNumbers([
+              sortedMonthStats[i]?.eisendraht_sonstiger, 
+              sortedMonthStats[i]?.eisendraht_kunststoffummantelt 
+              ]) 
+            }}
+          </td>
+        </ng-container>
+        <td>
+          {{ addNumbers([
+            chosenYearSum?.eisendraht_sonstiger_sum, 
+            chosenYearSum?.eisendraht_kunststoffummantelt_sum
+            ]) 
+          }}
+        </td> 
+        <td>
+          {{ addNumbers([
+            chosenyearAvgs[2] && chosenyearAvgs[2].eisendraht_sonstiger_avg ? chosenyearAvgs[2].eisendraht_sonstiger_avg : undefined,
+            chosenyearAvgs[2] && chosenyearAvgs[2].eisendraht_kunststoffummantelt_avg ? chosenyearAvgs[2].eisendraht_kunststoffummantelt_avg : undefined,
+            ]) 
+          }}
+        </td>
+        <td>
+          {{ addNumbers([
+            chosenyearAvgs[1] && chosenyearAvgs[1].eisendraht_sonstiger_avg ? chosenyearAvgs[1].eisendraht_sonstiger_avg : undefined,
+            chosenyearAvgs[1] && chosenyearAvgs[1].eisendraht_kunststoffummantelt_avg ? chosenyearAvgs[1].eisendraht_kunststoffummantelt_avg : undefined,
+            ]) 
+          }}
+        </td>
+        <td>
+          {{ addNumbers([
+            chosenyearAvgs[0] && chosenyearAvgs[0].eisendraht_sonstiger_avg ? chosenyearAvgs[0].eisendraht_sonstiger_avg : undefined,
+            chosenyearAvgs[0] && chosenyearAvgs[0].eisendraht_kunststoffummantelt_avg ? chosenyearAvgs[0].eisendraht_kunststoffummantelt_avg : undefined,
+            ]) 
+          }}
+        </td>
+      </tr>
+      <tr>
+        <th colspan="2">Eisendraht gesamt:</th>
+        <ng-container *ngFor="let dontCare of helperArray; index as i">
+          <th>
+            {{ addNumbers([
+              sortedMonthStats[i]?.eisendraht_blank, 
+              sortedMonthStats[i]?.eisendraht_verzinkt, 
+              sortedMonthStats[i]?.eisendraht_sonstiger, 
+              sortedMonthStats[i]?.eisendraht_kunststoffummantelt
+              ])
+            }}
+          </th>
+        </ng-container>
+        <th>
+          {{ addNumbers([
+            chosenYearSum?.eisendraht_blank_sum,
+            chosenYearSum?.eisendraht_verzinkt_sum, 
+            chosenYearSum?.eisendraht_sonstiger_sum,
+            chosenYearSum?.eisendraht_kunststoffummantelt_sum
+            ]) 
+          }}
+        </th> 
+        
+        <th>
+          {{ addNumbers([
+            chosenyearAvgs[2] && chosenyearAvgs[2].eisendraht_blank_avg ? chosenyearAvgs[2].eisendraht_blank_avg : undefined,
+            chosenyearAvgs[2] && chosenyearAvgs[2].eisendraht_verzinkt_avg ? chosenyearAvgs[2].eisendraht_verzinkt_avg : undefined,
+            chosenyearAvgs[2] && chosenyearAvgs[2].eisendraht_sonstiger_avg ? chosenyearAvgs[2].eisendraht_sonstiger_avg : undefined,
+            chosenyearAvgs[2] && chosenyearAvgs[2].eisendraht_kunststoffummantelt_avg ? chosenyearAvgs[2].eisendraht_kunststoffummantelt_avg : undefined,
+            ]) 
+          }}
+        </th>
+        <th>
+          {{ addNumbers([
+            chosenyearAvgs[1] && chosenyearAvgs[1].eisendraht_blank_avg ? chosenyearAvgs[1].eisendraht_blank_avg : undefined,
+            chosenyearAvgs[1] && chosenyearAvgs[1].eisendraht_verzinkt_avg ? chosenyearAvgs[1].eisendraht_verzinkt_avg : undefined,
+            chosenyearAvgs[1] && chosenyearAvgs[1].eisendraht_sonstiger_avg ? chosenyearAvgs[1].eisendraht_sonstiger_avg : undefined,
+            chosenyearAvgs[1] && chosenyearAvgs[1].eisendraht_kunststoffummantelt_avg ? chosenyearAvgs[1].eisendraht_kunststoffummantelt_avg : undefined,
+            ]) 
+          }}
+        </th>
+        <th>
+          {{ addNumbers([
+            chosenyearAvgs[0] && chosenyearAvgs[0].eisendraht_blank_avg ? chosenyearAvgs[0].eisendraht_blank_avg : undefined,
+            chosenyearAvgs[0] && chosenyearAvgs[0].eisendraht_verzinkt_avg ? chosenyearAvgs[0].eisendraht_verzinkt_avg : undefined,
+            chosenyearAvgs[0] && chosenyearAvgs[0].eisendraht_sonstiger_avg ? chosenyearAvgs[0].eisendraht_sonstiger_avg : undefined,
+            chosenyearAvgs[0] && chosenyearAvgs[0].eisendraht_kunststoffummantelt_avg ? chosenyearAvgs[0].eisendraht_kunststoffummantelt_avg : undefined,
+            ]) 
+          }}
+        </th>
+      </tr>
+
+      <!-- Stahldraht mit weniger als 0,6% C -->
+      <tr>
+        <td rowspan="3" style="border: 0px">Stahldraht <br> mit weniger <br> als 0,6% C</td>
+        <td style="border: 0px">blank</td>
+        <ng-container *ngFor="let dontCare of helperArray; index as i">
+          <td> {{ sortedMonthStats[i]?.stahldraht_weniger_blank ? sortedMonthStats[i]?.stahldraht_weniger_blank : '' }} </td>
+        </ng-container>
+        <td>{{chosenYearSum ? chosenYearSum.stahldraht_weniger_blank_sum : ''}}</td> 
+        <td>{{chosenyearAvgs[2]? chosenyearAvgs[2].stahldraht_weniger_blank_avg : ''}}</td>
+        <td>{{chosenyearAvgs[1]? chosenyearAvgs[1].stahldraht_weniger_blank_avg : ''}}</td>
+        <td>{{chosenyearAvgs[0]? chosenyearAvgs[0].stahldraht_weniger_blank_avg : ''}}</td>
+      </tr>
+      <tr>
+        <td style="border: 0px">verzinkt</td>
+        <ng-container *ngFor="let dontCare of helperArray; index as i">
+          <td> {{ sortedMonthStats[i]?.stahldraht_weniger_verzinkt ? sortedMonthStats[i]?.stahldraht_weniger_verzinkt : '' }} </td>
+        </ng-container>
+        <td>{{chosenYearSum ? chosenYearSum.stahldraht_weniger_verzinkt_sum : ''}}</td> 
+        <td>{{chosenyearAvgs[2]? chosenyearAvgs[2].stahldraht_weniger_verzinkt_avg : ''}}</td>
+        <td>{{chosenyearAvgs[1]? chosenyearAvgs[1].stahldraht_weniger_verzinkt_avg : ''}}</td>
+        <td>{{chosenyearAvgs[0]? chosenyearAvgs[0].stahldraht_weniger_verzinkt_avg : ''}}</td>
+      </tr>
+      <tr>
+        <td style="border: 0px">sonstiger</td>
+        <ng-container *ngFor="let dontCare of helperArray; index as i">
+          <td> {{ sortedMonthStats[i]?.stahldraht_weniger_sonstiger ? sortedMonthStats[i]?.stahldraht_weniger_sonstiger : '' }} </td>
+        </ng-container>
+        <td>{{chosenYearSum ? chosenYearSum.stahldraht_weniger_sonstiger_sum : ''}}</td>
+        <td>{{chosenyearAvgs[2]? chosenyearAvgs[2].stahldraht_weniger_sonstiger_avg : ''}}</td>
+        <td>{{chosenyearAvgs[1]? chosenyearAvgs[1].stahldraht_weniger_sonstiger_avg : ''}}</td>
+        <td>{{chosenyearAvgs[0]? chosenyearAvgs[0].stahldraht_weniger_sonstiger_avg : ''}}</td>
+      </tr>
+      <tr>
+        <td colspan="2" style="border: 1px solid black">Zw.-Summe:</td>
+        <ng-container *ngFor="let dontCare of helperArray; index as i">
+          <th>
+            {{ addNumbers([
+              sortedMonthStats[i]?.stahldraht_weniger_blank, 
+              sortedMonthStats[i]?.stahldraht_weniger_verzinkt, 
+              sortedMonthStats[i]?.stahldraht_weniger_sonstiger
+              ])
+            }}
+          </th>
+        </ng-container>
+        <th>
+          {{ addNumbers([ 
+            chosenYearSum?.stahldraht_weniger_blank_sum, 
+            chosenYearSum?.stahldraht_weniger_verzinkt_sum, 
+            chosenYearSum?.stahldraht_weniger_sonstiger_sum
+            ])
+          }}
+        </th>
+        <th>
+          {{ addNumbers([ 
+            chosenyearAvgs[2] && chosenyearAvgs[2].stahldraht_weniger_blank_avg ? chosenyearAvgs[2].stahldraht_weniger_blank_avg : undefined,
+            chosenyearAvgs[2] && chosenyearAvgs[2].stahldraht_weniger_verzinkt_avg ? chosenyearAvgs[2].stahldraht_weniger_verzinkt_avg : undefined, 
+            chosenyearAvgs[2] && chosenyearAvgs[2].stahldraht_weniger_sonstiger_avg ? chosenyearAvgs[2].stahldraht_weniger_sonstiger_avg : undefined, 
+            ])
+          }}
+        </th>
+        <th>
+          {{ addNumbers([ 
+            chosenyearAvgs[1] && chosenyearAvgs[1].stahldraht_weniger_blank_avg ? chosenyearAvgs[1].stahldraht_weniger_blank_avg : undefined,
+            chosenyearAvgs[1] && chosenyearAvgs[1].stahldraht_weniger_verzinkt_avg ? chosenyearAvgs[1].stahldraht_weniger_verzinkt_avg : undefined, 
+            chosenyearAvgs[1] && chosenyearAvgs[1].stahldraht_weniger_sonstiger_avg ? chosenyearAvgs[1].stahldraht_weniger_sonstiger_avg : undefined,  
+            ])
+          }}
+        </th>
+        <th>
+          {{ addNumbers([ 
+            chosenyearAvgs[0] && chosenyearAvgs[0].stahldraht_weniger_blank_avg ? chosenyearAvgs[0].stahldraht_weniger_blank_avg : undefined,
+            chosenyearAvgs[0] && chosenyearAvgs[0].stahldraht_weniger_verzinkt_avg ? chosenyearAvgs[0].stahldraht_weniger_verzinkt_avg : undefined, 
+            chosenyearAvgs[0] && chosenyearAvgs[0].stahldraht_weniger_sonstiger_avg ? chosenyearAvgs[0].stahldraht_weniger_sonstiger_avg : undefined, 
+            ])
+          }}
+        </th> 
+      </tr>
+
+      <!-- Stahldraht mit 0,6% C und mehr -->
+      <tr>
+        <td rowspan="3" style="border: 0px">Stahldraht <br> mit 0,6% C <br> und mehr </td>
+        <td style="border: 0px">blank</td>
+        <ng-container *ngFor="let dontCare of helperArray; index as i">
+          <td> {{ sortedMonthStats[i]?.stahldraht_mehr_blank ? sortedMonthStats[i]?.stahldraht_mehr_blank : '' }} </td>
+        </ng-container>
+        <td>{{chosenYearSum ? chosenYearSum.stahldraht_mehr_blank_sum : ''}}</td>
+        <td>{{chosenyearAvgs[2]? chosenyearAvgs[2].stahldraht_mehr_blank_avg : ''}}</td>
+        <td>{{chosenyearAvgs[1]? chosenyearAvgs[1].stahldraht_mehr_blank_avg : ''}}</td>
+        <td>{{chosenyearAvgs[0]? chosenyearAvgs[0].stahldraht_mehr_blank_avg : ''}}</td>
+      </tr>
+      <tr>
+        <td style="border: 0px">verzinkt</td>
+        <ng-container *ngFor="let dontCare of helperArray; index as i">
+          <td> {{ sortedMonthStats[i]?.stahldraht_mehr_verzinkt ? sortedMonthStats[i]?.stahldraht_mehr_verzinkt : '' }} </td>
+        </ng-container>
+        <td>{{chosenYearSum ? chosenYearSum.stahldraht_mehr_verzinkt_sum : ''}}</td>
+        <td>{{chosenyearAvgs[2]? chosenyearAvgs[2].stahldraht_mehr_verzinkt_avg : ''}}</td> 
+        <td>{{chosenyearAvgs[1]? chosenyearAvgs[1].stahldraht_mehr_verzinkt_avg : ''}}</td>
+        <td>{{chosenyearAvgs[0]? chosenyearAvgs[0].stahldraht_mehr_verzinkt_avg : ''}}</td>
+      </tr>
+      <tr>
+        <td style="border: 0px">sonstiger</td>
+        <ng-container *ngFor="let dontCare of helperArray; index as i">
+          <td> {{ sortedMonthStats[i]?.stahldraht_mehr_sonstiger ? sortedMonthStats[i]?.stahldraht_mehr_sonstiger : '' }} </td>
+        </ng-container>
+        <td>{{chosenYearSum ? chosenYearSum.stahldraht_mehr_sonstiger_sum : ''}}</td>
+        <td>{{chosenyearAvgs[2]? chosenyearAvgs[2].stahldraht_mehr_sonstiger_avg : ''}}</td>
+        <td>{{chosenyearAvgs[1]? chosenyearAvgs[1].stahldraht_mehr_sonstiger_avg : ''}}</td>
+        <td>{{chosenyearAvgs[0]? chosenyearAvgs[0].stahldraht_mehr_sonstiger_avg : ''}}</td>
+      </tr>
+      <tr>
+        <td colspan="2" style="border: 1px solid black">Zw.-Summe:</td>
+        <ng-container *ngFor="let dontCare of helperArray; index as i">
+          <th>
+            {{ addNumbers([ 
+              sortedMonthStats[i]?.stahldraht_mehr_blank, 
+              sortedMonthStats[i]?.stahldraht_mehr_verzinkt, 
+              sortedMonthStats[i]?.stahldraht_mehr_sonstiger
+              ])
+            }}
+          </th>
+        </ng-container>
+        <th>
+          {{ addNumbers([ 
+            chosenYearSum?.stahldraht_mehr_blank_sum, 
+            chosenYearSum?.stahldraht_mehr_verzinkt_sum, 
+            chosenYearSum?.stahldraht_mehr_sonstiger_sum
+            ])
+          }}
+        </th>
+        <th>
+          {{ addNumbers([ 
+            chosenyearAvgs[2] && chosenyearAvgs[2].stahldraht_mehr_blank_avg ? chosenyearAvgs[2].stahldraht_mehr_blank_avg : undefined,
+            chosenyearAvgs[2] && chosenyearAvgs[2].stahldraht_mehr_verzinkt_avg ? chosenyearAvgs[2].stahldraht_mehr_verzinkt_avg : undefined,
+            chosenyearAvgs[2] && chosenyearAvgs[2].stahldraht_mehr_sonstiger_avg ? chosenyearAvgs[2].stahldraht_mehr_sonstiger_avg : undefined,
+            ])
+          }}
+        </th>
+        <th>
+          {{ addNumbers([ 
+            chosenyearAvgs[1] && chosenyearAvgs[1].stahldraht_mehr_blank_avg ? chosenyearAvgs[1].stahldraht_mehr_blank_avg : undefined,
+            chosenyearAvgs[1] && chosenyearAvgs[1].stahldraht_mehr_verzinkt_avg ? chosenyearAvgs[1].stahldraht_mehr_verzinkt_avg : undefined,
+            chosenyearAvgs[1] && chosenyearAvgs[1].stahldraht_mehr_sonstiger_avg ? chosenyearAvgs[1].stahldraht_mehr_sonstiger_avg : undefined,
+            ])
+          }}
+        </th>
+        <th>
+          {{ addNumbers([
+            chosenyearAvgs[0] && chosenyearAvgs[0].stahldraht_mehr_blank_avg ? chosenyearAvgs[0].stahldraht_mehr_blank_avg : undefined,
+            chosenyearAvgs[0] && chosenyearAvgs[0].stahldraht_mehr_verzinkt_avg ? chosenyearAvgs[0].stahldraht_mehr_verzinkt_avg : undefined,
+            chosenyearAvgs[0] && chosenyearAvgs[0].stahldraht_mehr_sonstiger_avg ? chosenyearAvgs[0].stahldraht_mehr_sonstiger_avg : undefined,
+            ])
+          }}
+        </th>
+      </tr>
+      <tr>
+        <th colspan="2">Stahldraht gesamt:</th>
+        <ng-container *ngFor="let dontCare of helperArray; index as i">
+          <th>
+            {{ addNumbers([
+              sortedMonthStats[i]?.stahldraht_mehr_blank, 
+              sortedMonthStats[i]?.stahldraht_mehr_verzinkt, 
+              sortedMonthStats[i]?.stahldraht_mehr_sonstiger, 
+              sortedMonthStats[i]?.stahldraht_weniger_blank, 
+              sortedMonthStats[i]?.stahldraht_weniger_verzinkt, 
+              sortedMonthStats[i]?.stahldraht_weniger_sonstiger
+              ])
+            }}
+          </th>
+        </ng-container>
+        <th>
+          {{ addNumbers([ 
+            chosenYearSum?.stahldraht_weniger_blank_sum, 
+            chosenYearSum?.stahldraht_weniger_verzinkt_sum, 
+            chosenYearSum?.stahldraht_weniger_sonstiger_sum, 
+            chosenYearSum?.stahldraht_mehr_blank_sum, 
+            chosenYearSum?.stahldraht_mehr_verzinkt_sum, 
+            chosenYearSum?.stahldraht_mehr_sonstiger_sum
+            ])
+          }}
+        </th>
+        <th>
+          {{ addNumbers([ 
+            chosenyearAvgs[2] && chosenyearAvgs[2].stahldraht_mehr_blank_avg ? chosenyearAvgs[2].stahldraht_mehr_blank_avg : undefined,
+            chosenyearAvgs[2] && chosenyearAvgs[2].stahldraht_mehr_verzinkt_avg ? chosenyearAvgs[2].stahldraht_mehr_verzinkt_avg : undefined,
+            chosenyearAvgs[2] && chosenyearAvgs[2].stahldraht_mehr_sonstiger_avg ? chosenyearAvgs[2].stahldraht_mehr_sonstiger_avg : undefined,
+            chosenyearAvgs[2] && chosenyearAvgs[2].stahldraht_weniger_blank_avg ? chosenyearAvgs[2].stahldraht_weniger_blank_avg : undefined,
+            chosenyearAvgs[2] && chosenyearAvgs[2].stahldraht_weniger_verzinkt_avg ? chosenyearAvgs[2].stahldraht_weniger_verzinkt_avg : undefined,
+            chosenyearAvgs[2] && chosenyearAvgs[2].stahldraht_weniger_sonstiger_avg ? chosenyearAvgs[2].stahldraht_weniger_sonstiger_avg : undefined,
+            ])
+          }}
+        </th>
+        <th>
+          {{ addNumbers([ 
+            chosenyearAvgs[1] && chosenyearAvgs[1].stahldraht_mehr_blank_avg ? chosenyearAvgs[1].stahldraht_mehr_blank_avg : undefined,
+            chosenyearAvgs[1] && chosenyearAvgs[1].stahldraht_mehr_verzinkt_avg ? chosenyearAvgs[1].stahldraht_mehr_verzinkt_avg : undefined,
+            chosenyearAvgs[1] && chosenyearAvgs[1].stahldraht_mehr_sonstiger_avg ? chosenyearAvgs[1].stahldraht_mehr_sonstiger_avg : undefined,
+            chosenyearAvgs[1] && chosenyearAvgs[1].stahldraht_weniger_blank_avg ? chosenyearAvgs[1].stahldraht_weniger_blank_avg : undefined,
+            chosenyearAvgs[1] && chosenyearAvgs[1].stahldraht_weniger_verzinkt_avg ? chosenyearAvgs[1].stahldraht_weniger_verzinkt_avg : undefined,
+            chosenyearAvgs[1] && chosenyearAvgs[1].stahldraht_weniger_sonstiger_avg ? chosenyearAvgs[1].stahldraht_weniger_sonstiger_avg : undefined,
+            ])
+          }}
+        </th>
+        <th>
+          {{ addNumbers([ 
+            chosenyearAvgs[0] && chosenyearAvgs[0].stahldraht_mehr_blank_avg ? chosenyearAvgs[0].stahldraht_mehr_blank_avg : undefined,
+            chosenyearAvgs[0] && chosenyearAvgs[0].stahldraht_mehr_verzinkt_avg ? chosenyearAvgs[0].stahldraht_mehr_verzinkt_avg : undefined,
+            chosenyearAvgs[0] && chosenyearAvgs[0].stahldraht_mehr_sonstiger_avg ? chosenyearAvgs[0].stahldraht_mehr_sonstiger_avg : undefined,
+            chosenyearAvgs[0] && chosenyearAvgs[0].stahldraht_weniger_blank_avg ? chosenyearAvgs[0].stahldraht_weniger_blank_avg : undefined,
+            chosenyearAvgs[0] && chosenyearAvgs[0].stahldraht_weniger_verzinkt_avg ? chosenyearAvgs[0].stahldraht_weniger_verzinkt_avg : undefined,
+            chosenyearAvgs[0] && chosenyearAvgs[0].stahldraht_weniger_sonstiger_avg ? chosenyearAvgs[0].stahldraht_weniger_sonstiger_avg : undefined,
+            ])
+          }}
+        </th>
+      </tr>
+      <tr>
+        <th colspan="2">Drähte insgesamt:</th>
+        <ng-container *ngFor="let dontCare of helperArray; index as i">
+          <th>
+            {{ addNumbers([
+              sortedMonthStats[i]?.eisendraht_blank, 
+              sortedMonthStats[i]?.eisendraht_verzinkt, 
+              sortedMonthStats[i]?.eisendraht_sonstiger, 
+              sortedMonthStats[i]?.eisendraht_kunststoffummantelt, 
+              sortedMonthStats[i]?.stahldraht_mehr_blank, 
+              sortedMonthStats[i]?.stahldraht_mehr_verzinkt, 
+              sortedMonthStats[i]?.stahldraht_mehr_sonstiger, 
+              sortedMonthStats[i]?.stahldraht_weniger_blank, 
+              sortedMonthStats[i]?.stahldraht_weniger_verzinkt, 
+              sortedMonthStats[i]?.stahldraht_weniger_sonstiger
+              ])
+            }}
+          </th>
+        </ng-container>
+        <th>
+          {{ addNumbers([
+            chosenYearSum?.eisendraht_blank_sum, 
+            chosenYearSum?.eisendraht_verzinkt_sum, 
+            chosenYearSum?.eisendraht_sonstiger_sum, 
+            chosenYearSum?.stahldraht_weniger_blank_sum, 
+            chosenYearSum?.stahldraht_weniger_verzinkt_sum, 
+            chosenYearSum?.stahldraht_weniger_sonstiger_sum, 
+            chosenYearSum?.stahldraht_mehr_blank_sum, 
+            chosenYearSum?.stahldraht_mehr_verzinkt_sum, 
+            chosenYearSum?.stahldraht_mehr_sonstiger_sum
+            ])
+          }}
+        </th>
+        <th>
+          {{ addNumbers([
+            chosenyearAvgs[2] && chosenyearAvgs[2].eisendraht_blank_avg ? chosenyearAvgs[2].eisendraht_blank_avg : undefined,
+            chosenyearAvgs[2] && chosenyearAvgs[2].eisendraht_verzinkt_avg ? chosenyearAvgs[2].eisendraht_verzinkt_avg : undefined,
+            chosenyearAvgs[2] && chosenyearAvgs[2].eisendraht_sonstiger_avg ? chosenyearAvgs[2].eisendraht_sonstiger_avg : undefined,
+            chosenyearAvgs[2] && chosenyearAvgs[2].eisendraht_kunststoffummantelt_avg ? chosenyearAvgs[2].eisendraht_kunststoffummantelt_avg : undefined,
+            chosenyearAvgs[2] && chosenyearAvgs[2].stahldraht_mehr_blank_avg ? chosenyearAvgs[2].stahldraht_mehr_blank_avg : undefined,
+            chosenyearAvgs[2] && chosenyearAvgs[2].stahldraht_mehr_verzinkt_avg ? chosenyearAvgs[2].stahldraht_mehr_verzinkt_avg : undefined,
+            chosenyearAvgs[2] && chosenyearAvgs[2].stahldraht_mehr_sonstiger_avg ? chosenyearAvgs[2].stahldraht_mehr_sonstiger_avg : undefined,
+            chosenyearAvgs[2] && chosenyearAvgs[2].stahldraht_weniger_blank_avg ? chosenyearAvgs[2].stahldraht_weniger_blank_avg : undefined,
+            chosenyearAvgs[2] && chosenyearAvgs[2].stahldraht_weniger_verzinkt_avg ? chosenyearAvgs[2].stahldraht_weniger_verzinkt_avg : undefined,
+            chosenyearAvgs[2] && chosenyearAvgs[2].stahldraht_weniger_sonstiger_avg ? chosenyearAvgs[2].stahldraht_weniger_sonstiger_avg : undefined
+            ])
+          }}
+        </th>
+        <th>
+          {{ addNumbers([
+            chosenyearAvgs[1] && chosenyearAvgs[1].eisendraht_blank_avg ? chosenyearAvgs[1].eisendraht_blank_avg : undefined,
+            chosenyearAvgs[1] && chosenyearAvgs[1].eisendraht_verzinkt_avg ? chosenyearAvgs[1].eisendraht_verzinkt_avg : undefined,
+            chosenyearAvgs[1] && chosenyearAvgs[1].eisendraht_sonstiger_avg ? chosenyearAvgs[1].eisendraht_sonstiger_avg : undefined,
+            chosenyearAvgs[1] && chosenyearAvgs[1].eisendraht_kunststoffummantelt_avg ? chosenyearAvgs[1].eisendraht_kunststoffummantelt_avg : undefined,
+            chosenyearAvgs[1] && chosenyearAvgs[1].stahldraht_mehr_blank_avg ? chosenyearAvgs[1].stahldraht_mehr_blank_avg : undefined,
+            chosenyearAvgs[1] && chosenyearAvgs[1].stahldraht_mehr_verzinkt_avg ? chosenyearAvgs[1].stahldraht_mehr_verzinkt_avg : undefined,
+            chosenyearAvgs[1] && chosenyearAvgs[1].stahldraht_mehr_sonstiger_avg ? chosenyearAvgs[1].stahldraht_mehr_sonstiger_avg : undefined,
+            chosenyearAvgs[1] && chosenyearAvgs[1].stahldraht_weniger_blank_avg ? chosenyearAvgs[1].stahldraht_weniger_blank_avg : undefined,
+            chosenyearAvgs[1] && chosenyearAvgs[1].stahldraht_weniger_verzinkt_avg ? chosenyearAvgs[1].stahldraht_weniger_verzinkt_avg : undefined,
+            chosenyearAvgs[1] && chosenyearAvgs[1].stahldraht_weniger_sonstiger_avg ? chosenyearAvgs[1].stahldraht_weniger_sonstiger_avg : undefined, 
+            ])
+          }}
+        </th>
+        <th>
+          {{ addNumbers([
+            chosenyearAvgs[0] && chosenyearAvgs[0].eisendraht_blank_avg ? chosenyearAvgs[0].eisendraht_blank_avg : undefined,
+            chosenyearAvgs[0] && chosenyearAvgs[0].eisendraht_verzinkt_avg ? chosenyearAvgs[0].eisendraht_verzinkt_avg : undefined,
+            chosenyearAvgs[0] && chosenyearAvgs[0].eisendraht_sonstiger_avg ? chosenyearAvgs[0].eisendraht_sonstiger_avg : undefined,
+            chosenyearAvgs[0] && chosenyearAvgs[0].eisendraht_kunststoffummantelt_avg ? chosenyearAvgs[0].eisendraht_kunststoffummantelt_avg : undefined,
+            chosenyearAvgs[0] && chosenyearAvgs[0].stahldraht_mehr_blank_avg ? chosenyearAvgs[0].stahldraht_mehr_blank_avg : undefined,
+            chosenyearAvgs[0] && chosenyearAvgs[0].stahldraht_mehr_verzinkt_avg ? chosenyearAvgs[0].stahldraht_mehr_verzinkt_avg : undefined,
+            chosenyearAvgs[0] && chosenyearAvgs[0].stahldraht_mehr_sonstiger_avg ? chosenyearAvgs[0].stahldraht_mehr_sonstiger_avg : undefined,
+            chosenyearAvgs[0] && chosenyearAvgs[0].stahldraht_weniger_blank_avg ? chosenyearAvgs[0].stahldraht_weniger_blank_avg : undefined,
+            chosenyearAvgs[0] && chosenyearAvgs[0].stahldraht_weniger_verzinkt_avg ? chosenyearAvgs[0].stahldraht_weniger_verzinkt_avg : undefined,
+            chosenyearAvgs[0] && chosenyearAvgs[0].stahldraht_weniger_sonstiger_avg ? chosenyearAvgs[0].stahldraht_weniger_sonstiger_avg : undefined
+            ])
+          }}
+        </th>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- Dateiende -->
+<hr>
+<button style="float: right" class="btn btn-warning" (click)="print()"> Drucken </button>

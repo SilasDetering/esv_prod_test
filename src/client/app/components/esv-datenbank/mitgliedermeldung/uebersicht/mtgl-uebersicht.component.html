@@ -1,0 +1,94 @@
+<h1 style="margin-top: 50px;">Mitglieder</h1>
+<button style="float: right" [routerLink]="['/esv-statistik']" class="btn btn-outline-dark"> Zurück </button>
+
+<!-- Mitglieder Auflistung -->
+<div class="countryList">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Bezeichner</th>
+                <th scope="col">Name - Gruppe</th>
+                <th scope="col">Debt.-Nr.</th>
+                <th scope="col">Adresse</th>
+                <th scope="col">Zahlt Grundbeitrag</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tr *ngFor="let member of listOfMembers">
+            <td>{{ member.ID }}</td>
+            <td>{{member.name}} <span *ngIf="member.group"> - </span> <span *ngIf="member.group">{{member.group}}</span> </td>
+            <td>{{ member.debNr }}</td>
+            <td>{{ member.address.printAddress() }}</td>
+            <td class="checkmark" *ngIf="member.grundbeitrag else noCheck">&#10003;</td>
+            <ng-template #noCheck>
+                <td class="checkmark">-</td>
+            </ng-template>
+
+            <td>
+                <button class="btn btn-outline-danger deleteButton"
+                    (click)="secondConfirm(member)"><b>&cross;</b></button>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+<!-- Second Confirm-->
+<div id="secondConfirm" class="secondConfirm" style="display: none;">
+    <div style="margin-top: 10px; margin-bottom: -15px;">
+        <h6>Möchtest du das Mitglied <b> {{memberToDelete.name}} </b> wirklich löschen?</h6>
+        <button class="btn btn-outline-danger" (click)="deleteMember(memberToDelete)">löschen</button>
+        <button class="btn btn-outline-dark" style="margin-left: 5px;" (click)="aboardConfirm()">abbbrechen</button>
+    </div>
+</div>
+
+<hr style="margin-top: 40px;">
+
+<!-- Mitglied hinzufügen -->
+<div style="margin-top: 20px;">
+    <div>
+        <form (submit)="onAddMemberSubmit()">
+            <table style="width: 100%;">
+                <tr>
+                    <td>
+                        <label>Kürzel</label>
+                        <input type="text" placeholder="Kürzel" [(ngModel)]="newMember.ID" name="member_ID"
+                            class="form-control">
+
+                        <label>Name</label>
+                        <input type="text" placeholder="Name" [(ngModel)]="newMember.name" name="member_name"
+                            class="form-control" style="margin-top: 5px;">
+
+                        <label>Gruppe</label>
+                        <input type="text" placeholder="Gruppe (Optional)" [(ngModel)]="newMember.group"
+                            name="member_group" class="form-control" style="margin-top: 5px;">
+
+                        <label>Debitorennummer</label>
+                        <input type="number" placeholder="Debitorennummer" [(ngModel)]="newMember.debNr"
+                            name="member_debNr" class="form-control" style="margin-top: 5px;">
+                    </td>
+                    <td style="width: 5%;"> </td>
+                    <td style="vertical-align: top;">
+                        <label>Adresse</label>
+                        <input type="text" placeholder="Straße, Hausnummer" [(ngModel)]="newMember.address.street"
+                            name="member_steet" class="form-control" style="margin-top: 5px;">
+                        <input type="number" placeholder="PLZ" [(ngModel)]="newMember.address.zipCode" name="member_zip"
+                            class="form-control" style="margin-top: 5px;">
+                        <input type="text" placeholder="Stadt" [(ngModel)]="newMember.address.city" name="member_city"
+                            class="form-control" style="margin-top: 5px;">
+                        <input type="text" placeholder="Land (Optional)" [(ngModel)]="newMember.address.country"
+                            name="member_country" class="form-control" style="margin-top: 5px;">
+                        <label>Zahlt Grundbeitrag</label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" [(ngModel)]="newMember.grundbeitrag" name="member_grundbeitrag">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+
+            <hr>
+
+            <button type="submit" class="btn btn-primary" style="margin-top: 5px;">Hinzufügen</button>
+        </form>
+    </div>
+</div>

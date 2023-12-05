@@ -1,0 +1,99 @@
+<h1 style="margin-top: 50px;">Länder</h1>
+<button style="float: right" (click)="backClick()" class="btn btn-outline-dark"> Zurück </button>
+
+<!-- Kontinent Filter -->
+<label for="continent-select" class="form-label mt-4">Kontinent</label>
+<div>
+    <select class="form-select" id="continent-select" (change)="onSelectCountry()">
+        <option value="all">Alle</option>
+        <option value="Europa">Europa</option>
+        <option value="Asien">Asien</option>
+        <option value="Nordamerika">Nordamerika</option>
+        <option value="Südamerika">Südamerika</option>
+        <option value="Afrika">Afrika</option>
+        <option value="Ozeanien">Ozeanien</option>
+        <option value="Antarktis">Antarktis</option>
+    </select>
+</div>
+
+<!-- Lander Auflistung -->
+<div class="countryList">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Länder Kennung</th>
+                <th scope="col">Land</th>
+                <th scope="col">Kontinent</th>
+                <th class="checkmark" scope="col">EU</th>
+                <th class="checkmark" scope="col">EFTA</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tr *ngFor="let country of listOfCountries">
+            <td>{{ country.countryID }}</td>
+            <td>{{ country.name }}</td>
+            <td>{{ country.continent }}</td>
+            <td class="checkmark" *ngIf="country.isEU; else noCheck">&#10003;</td>
+            <td class="checkmark" *ngIf="country.isEFTA; else noCheck">&#10003;</td>
+            <ng-template #noCheck>
+                <td class="checkmark">-</td>
+            </ng-template>
+            <td>
+                <button class="btn btn-outline-danger deleteButton" (click)="secondConfirm(country)"><b>&cross;</b></button>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+<!-- Second Confirm-->
+<div id="secondConfirm" class="secondConfirm" style="display: none;">
+    <div style="margin-top: 10px; margin-bottom: -15px;">
+        <h6>Möchtest du das Land <b>{{countryToDelete.name}}</b> wirklich löschen?</h6>
+        <button class="btn btn-outline-danger" (click)="deleteCountry(countryToDelete)">löschen</button>
+        <button class="btn btn-outline-dark" style="margin-left: 5px;" (click)="aboardConfirm()">abbbrechen</button>
+    </div>
+</div>
+
+<hr style="margin-top: 40px;">
+
+<!-- Land hinzufügen -->
+<div style="margin-top: 20px; width: 50%;">
+    <div>
+        <form (submit)="onAddCountrySubmit()">
+            <label>Länder Kennung</label>
+            <input type="text" [(ngModel)]="newCountry_ID" name="newCountry_ID"
+                class="form-control">
+                <p style="font-size: small;"> Wichtig! Der Wert muss mit der Länderkennung aus der Meldung des Statistischen Bundesamtes übereinstimmen! </p>
+            <label>Name</label>
+            <input type="text" [(ngModel)]="newCountry_Name" name="newCountry_Name"
+                class="form-control" style="margin-top: 2px;">
+            <label>Kontinent</label>
+            <select class="form-select" id="continent-select" style="margin-top: 2px;"
+                [(ngModel)]="newCountry_Continent" name="newCountry_Continent">
+                <option value="Europa">Europa</option>
+                <option value="Afrika">Afrika</option>
+                <option value="Antarktis">Antarktis</option>
+                <option value="Asien">Asien</option>
+                <option value="Nordamerika">Nordamerika</option>
+                <option value="Ozeanien">Ozeanien</option>
+                <option value="Südamerika">Südamerika</option>
+            </select>
+            <div class="form-check" style="margin-top: 2px;" *ngIf="newCountry_Continent == 'Europa'">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                    [(ngModel)]="newCountry_isEU" name="newCountry_isEU">
+                <label class="form-check-label" for="flexCheckDefault">
+                    EU
+                </label>
+            </div>
+            <div class="form-check" style="margin-top: 2px;" *ngIf="newCountry_Continent == 'Europa'">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"
+                    [(ngModel)]="newCountry_isEFTA" name="newCountry_isEFTA">
+                <label class="form-check-label" for="flexCheckDefault">
+                    EFTA
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary" style="margin-top: 10px;">Hinzufügen</button>
+        </form>
+    </div>
+</div>

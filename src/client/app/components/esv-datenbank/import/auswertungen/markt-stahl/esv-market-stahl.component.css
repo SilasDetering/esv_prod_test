@@ -1,0 +1,37 @@
+table {
+    border-collapse: collapse;
+    border: 3px solid black;
+    width: 100%;
+}
+
+th {
+    padding: 5px;
+    border: 1px solid black;
+    text-align: center;
+    border-bottom: 0px;
+}
+
+td {
+    padding: 5px;
+    border-top: 0px;
+    border-bottom: 0px;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    text-align: right;
+}
+
+.unit {
+    border-bottom: 1px solid black; 
+    text-align: center;
+}
+
+.summary {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    text-align: right;
+}
+
+.percent {
+    text-align: center;
+}
+

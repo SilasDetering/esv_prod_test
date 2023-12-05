@@ -1,0 +1,21 @@
+<div style="margin-top: 30px">
+    <h3>{{user? user.username : ""}}</h3> 
+    <span *ngIf="user?.isAdmin" class="badge bg-info">Admin</span>
+    <ul class="list-group" style="margin-top: 10px;">
+        <table>      
+            <tr>
+                <td><h5>Vorname:</h5></td>
+                <td><h5>{{user? user.firstName : ""}}</h5></td>
+            </tr>
+            <tr>
+                <td><h5>Name:</h5></td>
+                <td><h5>{{user? user.lastName : ""}}</h5></td>
+            </tr>
+            <tr>
+                <td><h5>E-Mail:</h5></td>
+                <td><h5>{{user? user.email : ""}}</h5></td>
+            </tr>
+        </table>
+    </ul>
+    <button class="btn btn-outline-dark" onclick="history.back()" style="margin-top: 20px; float:left">Zurück</button>
+</div>

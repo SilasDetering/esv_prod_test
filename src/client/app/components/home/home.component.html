@@ -1,0 +1,15 @@
+<div class="jumbotron text-center" style="margin-top: 40px;">
+
+    <img src="client\assets\images\ESV_logo.png" alt="Logo" style="width: 300px; margin: 10px;">
+
+    <h1>Eisendraht und Stahldraht-Vereinigung e.V.</h1>
+    <p class="lead">Herzlich Willkommen</p>
+    <div style="margin-top: 40px;">
+        <p *ngIf="!userIsLoggedIn()" class="bs-component">
+            <a class="btn btn-primary" [routerLink]="['/login']" style="margin: 0 25px">Login</a>
+        </p>
+        <p *ngIf="userIsLoggedIn()" class="bs-component d-grid gap-2 menueButton">
+            <a class="btn btn-primary" [routerLink]="['/hauptmenue']" style="margin: 0 25px">zum Hauptmenü</a>
+        </p>
+    </div>
+</div>

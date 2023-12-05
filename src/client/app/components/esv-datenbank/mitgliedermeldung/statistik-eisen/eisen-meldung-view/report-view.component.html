@@ -1,0 +1,143 @@
+<td><h3>{{selectedReport.companyID}}</h3></td>
+<td><h3 style="margin-left: 10px;">{{this.europeFormat(selectedReport.reportDate)}}</h3></td>
+
+<button style="float: right" class="btn btn-outline-dark" [routerLink]="['/esv-statistik/eisen-meldung']"> Zurück </button>
+
+<div style="margin-top: 10px;">
+
+    <hr style="margin-bottom: 5px;">
+
+        <!-- INLAND/EXPORT - REPORT -->
+        <div style="margin-top: 20px;">
+            <table>
+                <thead>
+                    <tr>
+                        <td style="width: 40%;">
+                            <h5>Produkt</h5>
+                        </td>
+                        <td style="width: 20%;">
+                            <h5>Inland (in t)</h5>
+                        </td>
+                        <td style="width: 20%;">
+                            <h5>Export (in t)</h5>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="col1">
+                        <td> <label> Blumendraht </label> </td>
+                        <td> <input readonly type="number" class="form-control input" name="blumendraht_inland"
+                                placeholder="0" [(ngModel)]="selectedReport.blumendraht_inland"></td>
+                        <td> <input readonly type="number" class="form-control input" name="blumendraht_export"
+                                placeholder="0" [(ngModel)]="selectedReport.blumendraht_export"></td>
+                    </tr>
+                    <tr>
+                        <td> <label> Flachdraht </label> </td>
+                        <td> <input readonly type="number" class="form-control input" name="flachdraht_inland"
+                                placeholder="0" [(ngModel)]="selectedReport.flachdraht_inland"></td>
+                        <td> <input readonly type="number" class="form-control input" name="flachdraht_export"
+                                placeholder="0" [(ngModel)]="selectedReport.flachdraht_export"></td>
+                    </tr>
+                    <tr class="col1">
+                        <td> <label> Kettendraht </label> </td>
+                        <td> <input readonly type="number" class="form-control input" name="kettendraht_inland"
+                                placeholder="0" [(ngModel)]="selectedReport.kettendraht_inland"></td>
+                        <td> <input readonly type="number" class="form-control input" name="kettendraht_export"
+                                placeholder="0" [(ngModel)]="selectedReport.kettendraht_export"></td>
+                    </tr>
+                    <tr>
+                        <td> <label> Nicht patentierte Stahldrähte </label> </td>
+                        <td> <input readonly type="number" class="form-control input" name="npStahldraehte_inland"
+                                placeholder="0" [(ngModel)]="selectedReport.npStahldraehte_inland"></td>
+                        <td> <input readonly type="number" class="form-control input" name="npStahldraehte_export"
+                                placeholder="0" [(ngModel)]="selectedReport.npStahldraehte_export"></td>
+                    </tr>
+                    <tr class="col1">
+                        <td> <label> Nietendraht </label> </td>
+                        <td> <input readonly type="number" class="form-control input" name="nietendraht_inland"
+                                placeholder="0" [(ngModel)]="selectedReport.nietendraht_inland"></td>
+                        <td> <input type="number" class="form-control input" name="nietendraht_export"
+                                placeholder="0" [(ngModel)]="selectedReport.nietendraht_export"></td>
+                    </tr>
+                    <tr>
+                        <td> <label> Schraubendraht DIN EN 10.263 Teil 1 - 4 </label> </td>
+                        <td> <input readonly type="number" class="form-control input" name="schraubendraht_inland"
+                                placeholder="0" [(ngModel)]="selectedReport.schraubendraht_inland"></td>
+                        <td> <input type="number" class="form-control input" name="schraubendraht_export"
+                                placeholder="0" [(ngModel)]="selectedReport.schraubendraht_export"></td>
+                    </tr>
+                    <tr class="col1">
+                        <td> <label> Eisendrähte / blank, verkupfert </label> </td>
+                        <td> <input readonly type="number" class="form-control input" name="ed_blank_verkupfert_inland"
+                                placeholder="0" [(ngModel)]="selectedReport.ed_blank_verkupfert_inland"></td>
+                        <td> <input readonly type="number" class="form-control input" name="ed_blank_verkupfert_export"
+                                placeholder="0" [(ngModel)]="selectedReport.ed_blank_verkupfert_export"></td>
+                    </tr>
+                    <tr>
+                        <td> <label> Eisendrähte / geglüht </label> </td>
+                        <td> <input readonly type="number" class="form-control input" name="ed_geglüht_inland"
+                                placeholder="0" [(ngModel)]="selectedReport.ed_geglueht_inland"></td>
+                        <td> <input readonly type="number" class="form-control input" name="ed_geglüht_export"
+                                placeholder="0" [(ngModel)]="selectedReport.ed_geglueht_export"></td>
+                    </tr>
+                    <tr class="col1">
+                        <td> <label> Eisendrähte / verzinkt bis 6,0 mm ø </label> </td>
+                        <td> <input readonly type="number" class="form-control input" name="ed_verzinkt_bis_6_inland"
+                                placeholder="0" [(ngModel)]="selectedReport.ed_verzinkt_bis_6_inland"> </td>
+                        <td> <input readonly type="number" class="form-control input" name="ed_verzinkt_bis_6_export"
+                                placeholder="0" [(ngModel)]="selectedReport.ed_verzinkt_bis_6_export"> </td>
+                    </tr>
+                    <tr>
+                        <td> <label> Eisendrähte / verzinkt üb. 6,0 mm ø </label> </td>
+                        <td> <input readonly type="number" class="form-control input" name="ed_verzinkt_ueber_6_inland"
+                                placeholder="0" [(ngModel)]="selectedReport.ed_verzinkt_ueber_6_inland"> </td>
+                        <td> <input readonly type="number" class="form-control input" name="ed_verzinkt_ueber_6_export"
+                                placeholder="0" [(ngModel)]="selectedReport.ed_verzinkt_ueber_6_export"> </td>
+                    </tr>
+                    <tr class="col1">
+                        <td> <label> Eisendrähte / verzinnt </label> </td>
+                        <td> <input readonly type="number" class="form-control input" name="ed_verzinnt_inland"
+                                placeholder="0" [(ngModel)]="selectedReport.ed_verzinnt_inland"></td>
+                        <td> <input readonly type="number" class="form-control input" name="ed_verzinnt_export"
+                                placeholder="0" [(ngModel)]="selectedReport.ed_verzinnt_export"></td>
+                    </tr>
+                    <tr>
+                        <td> <label> Eisendrähte / kunststoffummantelt </label> </td>
+                        <td> <input readonly type="number" class="form-control input" name="ed_kuststoffummantelt_inland"
+                                placeholder="0" [(ngModel)]="selectedReport.ed_kuststoffummantelt_inland"> </td>
+                        <td> <input readonly type="number" class="form-control input" name="ed_kuststoffummantelt_export"
+                                placeholder="0" [(ngModel)]="selectedReport.ed_kuststoffummantelt_export"> </td>
+                    </tr>
+                    <tr class="col1">
+                        <td> <label> Stangendraht / blank, verkupfert, verzinkt </label> </td>
+                        <td> <input readonly type="number" class="form-control input" name="Stangendraht_inland"
+                                placeholder="0" [(ngModel)]="selectedReport.stangendraht_inland"> </td>
+                        <td> <input readonly type="number" class="form-control input" name="Stangendraht_export"
+                                placeholder="0" [(ngModel)]="selectedReport.stangendraht_export"> </td>
+                    </tr>
+                    <tr>
+                        <td> <label> Sonstige Eisendrähte </label> </td>
+                        <td> <input readonly type="number" class="form-control input" name="sonstige_inland"
+                                placeholder="0" [(ngModel)]="selectedReport.sonstige_inland"> </td>
+                        <td> <input readonly type="number" class="form-control input" name="sonstige_export"
+                                placeholder="0" [(ngModel)]="selectedReport.sonstige_export"> </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- LÄNDER EXPORTE -->
+        <hr style="width: 25%;">
+
+        <div class="col1" style="border-radius: 10px; margin-top: 2px; width: 50%;"
+            *ngFor="let countryExport of selectedReport.country_exports; let i = index">
+            <td style="width: 60%;">
+                <input readonly type="text" class="form-control input" style="margin-left: 2px;" placeholder="0"
+                    [ngModel]="selectedReport.country_exports[i].countryID" [name]="'countryExp_amount_' + i">
+            </td>
+            <td style="border: 0px; width: 50%;">
+                <input readonly type="number" class="form-control input" style="margin-left: 2px;" placeholder="0"
+                    [ngModel]="selectedReport.country_exports[i].amount" [name]="'countryExp_amount_' + i">
+            </td>
+        </div>
+        <hr>

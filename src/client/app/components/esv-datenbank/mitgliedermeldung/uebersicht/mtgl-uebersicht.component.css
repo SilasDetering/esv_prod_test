@@ -1,0 +1,17 @@
+.deleteButton {
+    margin-left: 5px;
+    height: 30px;
+    width: 30px;
+    float: right;
+    margin-right: 10px;
+    line-height: 10px;
+    color: rgb(206, 41, 41);
+}
+
+label {
+    margin-top: 10px;
+}
+
+.checkmark {
+    text-align: center;
+}

@@ -1,0 +1,152 @@
+<div class="form-group" style="margin-top: 10px;">
+    <input type="date" class="form-control" style="max-width: 25%;" id="inputDate" (change)="setDate($event)">
+    <label>Datum</label>
+</div>
+
+<div id="printMonthView">
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Kd.-Nr.</th>
+                <th>Land</th>
+                <th>Exportsumme in t</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <!-- EU -->
+            <tr>
+                <td class="section">EU</td>
+                <td class="section"></td>
+                <td class="section value"> {{sumOfCountries("EU")}} </td>
+            </tr>
+
+            <tr *ngFor="let export of exportList">
+                <ng-container *ngIf="export.country.isEU">
+                    <td>{{export.companyID}}</td>
+                    <td>{{export.country.name}}</td>
+                    <td class="value">{{export.amount}}</td>
+                </ng-container>
+            </tr>
+
+            <!-- EFTA -->
+            <!--<tr class="empty"><td>&nbsp;</td></tr>-->
+
+            <tr>
+                <td class="section">EFTA</td>
+                <td class="section"></td>
+                <td class="section value"> {{sumOfCountries("EFTA")}} </td>
+            </tr>
+
+            <tr *ngFor="let export of exportList">
+                <ng-container *ngIf="export.country.isEFTA">
+                    <td>{{export.companyID}}</td>
+                    <td>{{export.country.name}}</td>
+                    <td class="value">{{export.amount}}</td>
+                </ng-container>
+            </tr>
+
+            <!-- Europa -->
+            <tr class="empty"><td>&nbsp;</td></tr>
+
+            <tr>
+                <td class="section">Europa</td>
+                <td class="section"></td>
+                <td class="section value"> {{sumOfCountries("Europa")}} </td>
+            </tr>
+
+            <tr *ngFor="let export of exportList">
+                <ng-container *ngIf="export.country.continent == 'Europa' && !export.country.isEFTA && !export.country.isEU">
+                    <td>{{export.companyID}}</td>
+                    <td>{{export.country.name}}</td>
+                    <td class="value">{{export.amount}}</td>
+                </ng-container>
+            </tr>
+
+            <!-- Afrika -->
+            <tr class="empty"><td>&nbsp;</td></tr>
+
+            <tr>
+                <td class="section">Afrika</td>
+                <td class="section"></td>
+                <td class="section value"> {{sumOfCountries("Afrika")}} </td>
+            </tr>
+
+            <tr *ngFor="let export of exportList">
+                <ng-container *ngIf="export.country.continent == 'Afrika' && !export.country.isEFTA && !export.country.isEU">
+                    <td>{{export.companyID}}</td>
+                    <td>{{export.country.name}}</td>
+                    <td class="value">{{export.amount}}</td>
+                </ng-container>
+            </tr>
+
+            <!-- Asien -->
+            <tr class="empty"><td>&nbsp;</td></tr>
+
+            <tr>
+                <td class="section">Asien</td>
+                <td class="section"></td>
+                <td class="section value"> {{sumOfCountries("Asien")}} </td>
+            </tr>
+
+            <tr *ngFor="let export of exportList">
+                <ng-container *ngIf="export.country.continent == 'Asien' && !export.country.isEFTA && !export.country.isEU">
+                    <td>{{export.companyID}}</td>
+                    <td>{{export.country.name}}</td>
+                    <td class="value">{{export.amount}}</td>
+                </ng-container>
+            </tr>
+
+            <!-- Amerika -->
+            <tr class="empty"><td>&nbsp;</td></tr>
+
+            <tr>
+                <td class="section">Amerika</td>
+                <td class="section"></td>
+                <td class="section value"> {{sumOfCountries("Nordamerika") + sumOfCountries("Südamerika")}} </td>
+            </tr>
+
+            <tr *ngFor="let export of exportList">
+                <ng-container *ngIf="export.country.continent == 'Nordamerika' || export.country.continent == 'Suedamerika' 
+                    && !export.country.isEFTA && !export.country.isEU">
+                    <td>{{export.companyID}}</td>
+                    <td>{{export.country.name}}</td>
+                    <td class="value">{{export.amount}}</td>
+                </ng-container>
+            </tr>
+
+            <!-- Australien und Ozeanien -->
+            <tr class="empty"><td>&nbsp;</td></tr>
+
+            <tr>
+                <td class="section">Australien und Ozeanien</td>
+                <td class="section"></td>
+                <td class="section value"> {{sumOfCountries("Ozeanien")}} </td>
+            </tr>
+
+            <tr *ngFor="let export of exportList">
+                <ng-container *ngIf="export.country.continent == 'Ozeanien' && !export.country.isEFTA && !export.country.isEU">
+                    <td>{{export.companyID}}</td>
+                    <td>{{export.country.name}}</td>
+                    <td class="value">{{export.amount}}</td>
+                </ng-container>
+            </tr>
+            
+            <!-- Gesamt -->
+            <tr class="empty"><td>&nbsp;</td></tr>
+
+            <tr>
+                <td class="sum">Gesamt</td>
+                <td class="sum"></td>
+                <td class="sum value"> {{sumOfCountries("Gesamt")}} </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+</div>
+
+<!-- Dateiende -->
+<hr>
+<button style="float: right" class="btn btn-warning" (click)="print()"> Drucken </button>

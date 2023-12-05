@@ -1,0 +1,140 @@
+<div style="width: 100%;" id="printB">
+    <h3 style="text-align: center;">EISENDRAHT- UND STAHLDRAHT-VEREINIGUNG E.V.</h3>
+    <h5 style="text-align: center; font-size: small;">Mitglied im WSM Wirtschaftsverband Stahl- und Metallverarbeitung e.V.</h5>
+    <br>
+    <br>
+
+    <table>
+        <td style="width: 68%;">
+            <!-- Empfänger -->
+            <input class="ESV_tag" type="text" [defaultValue]="'Eisendraht- und Stahldraht-Vereinigung e.V. • Postfach 30 03 52 • 40403 Düsseldorf'">
+            <br>
+            <div class="recever">
+                {{reportInvoice?.company?.group}} <br>
+                <b>{{reportInvoice?.company?.name}}</b> <br>
+                {{reportInvoice?.company?.address?.street}} <br>
+                {{reportInvoice?.company?.address?.zipCode}} {{reportInvoice?.company?.address?.city}} {{reportInvoice?.company?.address?.country}}<br>
+            </div>
+        </td>
+        <td style="width: 32%;">
+            <!-- Absender -->
+            <div>
+                <img src="client\assets\images\ESV_logo.png" width="100%"> <br>
+                <br>
+                <input type="text" placeholder="Straße" [defaultValue]="'Kaiserswerther Str. 137'">
+                <input type="text" placeholder="Stadt + PLZ" [defaultValue]="'40474 Düsseldorf'">
+                <input type="text" placeholder="USt-Id-Nr. XXXXXXXXXXX" [defaultValue]="'USt-Id-Nr. DE314833172'">
+                <br>
+                <br>
+                <input type="text" placeholder="Telefon" [defaultValue]="'Tel. 0211/45 64 237'">
+                <input type="text" placeholder="Telefax" [defaultValue]="'Fax: 0211/454 33 76'">
+                <input type="text" placeholder="Email" [defaultValue]="'E-Mail: susanne.flesch@drahtverband.org'">
+                <br>
+                <br>
+                <u> Datum: </u>
+                <br>
+                <input class="small" type="text" placeholder="Datum" [defaultValue]="today">
+            </div>
+        </td>
+    </table>
+
+
+
+    <br><br>
+
+    <h5>Beitragsrechnung für Eisendraht</h5>
+    Deb.-Nr.: {{reportInvoice?.company?.debNr}}
+    <br>
+    <br>
+    Auf Beschluss der letzten Mitgliederversammlung und Vorschlag des Vorstandes der <br> 
+    Eisendraht- und Stahldraht-Vereinigung e.V. wird folgender Beitrag erhoben:
+    <br>
+    <br>
+    <hr>
+
+    <h5 style="text-align: center;">
+        {{getWrittenMonth(reportInvoice?.reportDate) + " " + getWrittenYear(reportInvoice?.reportDate)}}
+    </h5>
+
+    <table class="invoice">
+        <tr>
+            <td></td>
+            <th>EUR</th>
+        </tr>
+        <tr>
+            <td>
+                {{reportInvoice? reportInvoice.inland_tonnes+reportInvoice.export_tonnes: 0}} t Versand (Inl. u. Ausl.) 1,10 €/t
+            </td>
+            <th>{{ writeAsEuro((reportInvoice? reportInvoice.inland_bill: 0) + (reportInvoice? reportInvoice.export_bill: 0)) }}</th>
+        </tr>
+        <tr *ngIf="reportInvoice? reportInvoice.company.grundbeitrag: false">
+            <td> Grundbeitrag </td>
+            <th style="text-align: right;">{{ writeAsEuro( 200 )}}</th>
+        </tr>
+        <tr *ngIf="reportInvoice?.budget_over_max_contribution">
+            <td> Abgezogen Differenz über Maximalbeitrag</td>
+            <th style="text-align: right;">- {{ writeAsEuro( reportInvoice? reportInvoice.budget_over_max_contribution: 0 )}}</th>
+        </tr>
+        <tr>
+            <td></td>
+            <th>
+                ________________
+            </th>
+        </tr>
+        <tr>
+            <td></td>
+            <th>Gesamtsumme: {{ writeAsEuro( reportInvoice? reportInvoice.total_bill: 0 ) }}</th>
+        </tr>
+    </table>
+
+    <div style="text-align: right; font-size: small; font-weight: bold;">
+        (Dieser Betrag beinhaltet keine Umsatzsteuer)
+    </div>
+
+    <hr>
+
+    <div style="text-align: center; font-size: small;">
+        Diese Beitragsrechnung ist keine Rechnung im Sinne des Umsatzsteuergesetzes <br>
+        und unterliegt daher nicht den Formvorschriften dieses Gesetzes.          
+    </div>
+
+    <br>
+    <br>
+    Wir bitten um Überweisung auf eines unserer nachstehend aufgeführten Konten:
+    <br>
+    <br>
+    <input type="text" placeholder="IBAN" [defaultValue]="defaultIBAN_1">
+    <br>
+    <input type="text" placeholder="IBAN" [defaultValue]="defaultIBAN_2">
+    <br>
+    <br>
+    <b>Eisendraht- und Stahldraht-Vereinigung e. V.</b>
+</div>
+
+<!-- Dateiende -->
+<hr>
+
+<div class="accordion" id="accordion" *ngIf="reportInvoice ? reportInvoice.list_of_missing_reports.length > 0 : false">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <b>Hinweis: Fehlende Meldungen!</b>
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordion">
+            <div class="accordion-body">
+                <p>
+                    Folgende Meldungen wurden nicht gefunden und werden bei der Erstellung der Rechnungen nicht mit einbenzogen. <br>
+                    Bitte fügen Sie folgende Meldungen noch hinzu, damit der Maximalbetrag korrekt berechnet werden kann:
+                </p>
+                <ul>
+                    <li *ngFor="let missingReport of reportInvoice?.list_of_missing_reports">
+                        {{missingReport}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button style="float: right; margin-top: 10px;" class="btn btn-warning" (click)="print()"> Drucken </button>

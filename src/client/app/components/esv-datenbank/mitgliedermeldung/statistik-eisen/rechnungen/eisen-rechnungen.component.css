@@ -1,0 +1,12 @@
+.btn-back {
+    max-height: 40px;
+}
+
+.err {
+    text-align: center;
+    border-radius: 5px;
+    text-align: center;
+    margin: 5%;
+    background-color: rgb(223, 144, 144);
+    font-size: large;
+}

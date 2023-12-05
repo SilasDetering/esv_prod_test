@@ -1,0 +1,173 @@
+<h1 style="margin-top: 50px;">Mitgliedermeldung</h1>
+<button style="float: right" class="btn btn-outline-dark" [routerLink]="['/esv-statistik/menue/stahl']"> Zurück </button>
+
+<div style="margin-top: 40px;">
+    <h3>Neue Meldung</h3>
+
+    <hr style="margin-bottom: 5px;">
+
+    <form (ngSubmit)="onReportSubmit()">
+
+        <div style="display: flex;">
+
+            <!-- SELECT COMPANY -->
+            <div style="flex: 1;">
+                <label for="company-select" class="form-label mt-4">Unternehmen</label>
+                <div class="form-group" style="max-width: 75%;">
+                    <select class="form-select" id="company-select" [(ngModel)]="selectedMember" name="selectMember">
+                        <option *ngFor="let memberOption of listOfMembers" [value]="memberOption.ID">
+                            {{memberOption.name}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- SELECT DATE -->
+            <div style="flex: 1; margin-left: 5px;">
+                <div class="form-group" style="max-width: 75%;">
+                    <label for="dateField" class="form-label mt-4">Datum</label>
+                    <input type="date" class="form-control" id="dateField" [(ngModel)]="selectedDate" name="selectDate">
+                </div>
+            </div>
+
+        </div>
+
+
+        <!-- INLAND/EXPORT - REPORT -->
+        <hr style="width: 25%;">
+        <h5> Produkte Inland / Ausland </h5>
+
+        <div style="margin-top: 20px;">
+            <table>
+                <thead>
+                    <tr>
+                        <td style="width: 40%;">
+                            <h5>Produkt</h5>
+                        </td>
+                        <td style="width: 20%;">
+                            <h5>Inland (in t)</h5>
+                        </td>
+                        <td style="width: 20%;">
+                            <h5>Export (in t)</h5>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="col1">
+                        <td> <label> Seildraht </label> </td>
+                        <td> <input type="number" class="form-control input" name="seildraht_inland"
+                                placeholder="Menge in t" [(ngModel)]="seildraht_inland"></td>
+                        <td> <input type="number" class="form-control input" name="seildraht_export"
+                                placeholder="Menge in t" [(ngModel)]="seildraht_export"></td>
+                    </tr>
+                    <tr>
+                        <td> <label> Polsterfederdraht </label> </td>
+                        <td> <input type="number" class="form-control input" name="polsterfederdraht_inland"
+                                placeholder="Menge in t" [(ngModel)]="polsterfederdraht_inland"></td>
+                        <td> <input type="number" class="form-control input" name="polsterfederdraht_export"
+                                placeholder="Menge in t" [(ngModel)]="polsterfederdraht_export"></td>
+                    </tr>
+                    <tr class="col1">
+                        <td> <label> Federdraht SH/SL/SM </label> </td>
+                        <td> <input type="number" class="form-control input" name="federdraht_SH_SL_SM_inland"
+                                placeholder="Menge in t" [(ngModel)]="federdraht_SH_SL_SM_inland"></td>
+                        <td> <input type="number" class="form-control input" name="federdraht_SH_SL_SM_export"
+                                placeholder="Menge in t" [(ngModel)]="federdraht_SH_SL_SM_export"></td>
+                    </tr>
+                    <tr>
+                        <td> <label> Fehderdraht DH/DM </label> </td>
+                        <td> <input type="number" class="form-control input" name="federdraht_DH_DM_inland"
+                                placeholder="Menge in t" [(ngModel)]="federdraht_DH_DM_inland"></td>
+                        <td> <input type="number" class="form-control input" name="federdraht_DH_DM_export"
+                                placeholder="Menge in t" [(ngModel)]="federdraht_DH_DM_export"></td>
+                    </tr>
+                    <tr class="col1">
+                        <td> <label> Sonstige Federdrähte </label> </td>
+                        <td> <input type="number" class="form-control input" name="federdraht_sonstig_inland"
+                                placeholder="Menge in t" [(ngModel)]="federdraht_sonstig_inland"></td>
+                        <td> <input type="number" class="form-control input" name="federdraht_sonstig_export"
+                                placeholder="Menge in t" [(ngModel)]="federdraht_sonstig_export"></td>
+                    </tr>
+                    <tr>
+                        <td> <label> Alle nicht genannten Drähte </label> </td>
+                        <td> <input type="number" class="form-control input" name="draehte_sonstige_inland"
+                                placeholder="Menge in t" [(ngModel)]="draehte_sonstige_inland"></td>
+                        <td> <input type="number" class="form-control input" name="draehte_sonstige_export"
+                                placeholder="Menge in t" [(ngModel)]="draehte_sonstige_export"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- LÄNDER EXPORTE -->
+        <hr style="width: 25%;">
+        <h5 style="margin-bottom: 20px;"> Länderausfuhren </h5>
+
+        <div class="col1" style="border-radius: 10px; margin-top: 2px; width: 50%;"
+            *ngFor="let countryExport of exportedProducts; let i = index">
+            <td style="width: 60%;">
+                <select class="form-select" id="country-select" style="margin-left: 2px;"
+                    [(ngModel)]="exportedProducts[i].countryID" [name]="exportedProducts[i].name">
+                    <option *ngFor="let country of listOfCountries" [value]="country.countryID">{{country.name}}
+                    </option>
+                </select>
+            </td>
+            <td style="border: 0px; width: 50%;">
+                <input type="number" class="form-control input" style="margin-left: 2px;" placeholder="Menge in t"
+                    [(ngModel)]="exportedProducts[i].amount" [name]="'countryExp_amount_' + i">
+            </td>
+            <td style="border: 0px; width: 10%;">
+                <button class="btn btn-outline-danger" style="margin-left: 150px;" id="deleteButton"
+                    (click)="removeExportRep(i)"><b>&cross;</b></button>
+            </td>
+        </div>
+
+
+        <button type="button" class="btn btn-outline-primary" (click)="addExportRep()"><b>+</b></button>
+
+        <hr>
+
+        <div style="display: flex; margin-top: 20px;">
+            <!-- SUBMIT FORM -->
+            <input type="submit" class="btn btn-primary" value="+ Eintrag hinzufügen" style="margin-right: 20px;">
+
+            <!-- LOAD FILE -->
+            <!--<input class="form-control" type="file" accept=".csv" id="fileInput"
+                style="width: 30%; min-width: fit-content" name="insertedFile">-->
+            <!-- (change)="handleFileInput($event)"-->
+        </div>
+
+    </form>
+
+    <h3 style="margin-top: 120px;">Vergangene Meldungen</h3>
+    <hr>
+
+    <div style="overflow: auto; max-height: 10cm; padding: 5px;">
+        <table class="table">
+          <tr *ngFor="let report of listOfLastRep">
+            <div style="border-radius: 10px; background-color:rgb(11, 20, 53); margin-top: 2px;">
+              <td style="border: 0px; width: 20%; font-size: larger;">{{report.reportDate}}</td>
+              <td style="border: 0px; width: 80%; font-size: larger;">{{report.companyID}}</td>
+              <td style="border: 0px;">
+                <button class="btn btn-outline-secondary" style="margin-left: 150px;" id="deleteButton"
+                  (click)="redirectToReportView(report)">🔎</button>
+              </td>
+              <td style="border: 0px;">
+                <button class="btn btn-outline-danger" style="margin-left: 2px;" id="deleteButton"
+                  (click)="secondConfirm(report)"><b>&cross;</b></button>
+              </td>
+            </div>
+          </tr>
+        </table>
+    </div>
+      
+
+    <div id="secondConfirm" class="secondConfirm" style="display: none;">
+        <div style="margin-top: 40px;">
+            <h6>Möchtest du die Meldung von '<b>{{reportToDelete?.companyID}} vom {{reportToDelete?.reportDate}}</b>'
+                wirklich löschen?</h6>
+            <button class="btn btn-outline-danger" (click)="deleteReport( reportToDelete )">löschen bestätigen</button>
+            <button class="btn btn-outline-dark" (click)="abortConfirm()" style="margin-left: 5px; ">abbbrechen</button>
+        </div>
+    </div>
+
+</div>

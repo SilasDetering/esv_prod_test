@@ -1,0 +1,181 @@
+<div style="width: 100%;" id="printSteelA">
+
+    <table class="invoice-header">
+        <tr>
+            <td>
+                Eisendraht- und Stahldraht-
+            </td>
+            <td>
+                Name:
+            </td>
+            <td class="company-id">
+                {{reportInvoice?.company?.ID}}
+            </td>
+        </tr>
+        <tr>
+            <td>Vereinigung e.V.</td>
+        </tr>
+        <tr>
+            <td>Postfach 30 03 52
+            <td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td class="invoice-date">{{reportInvoice?.reportDate}}</td>
+        </tr>
+        <tr>
+            <td>40403 Düsseldorf</td>
+        </tr>
+    </table>
+
+    <div style="margin-top: 2%;">
+        <h4 style="text-align: center;"><b>Erzeugnisart-Statistik Stahldraht</b></h4>
+        <h5 style="text-align: center;">für Erzeugnisse der Eisendraht- und Stahldraht-Vereinigung e.V. gemäß "Anlage A"
+            der Satzung</h5>
+    </div>
+
+    <table class="invoice-list">
+        <thead>
+            <tr>
+                <th></th>
+                <th> <b>Erzeugnisse</b> <br><br> <b>1. Gezogene Drähte</b> </th>
+                <th> <b>Inland</b> <br> Versand <br><br> t </th>
+                <th> <b>Ausland</b> <br> Versand <br><br> t </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="note"></td>
+                <td>Seildraht</td>
+                <td class="value">{{ convertToSteelReport(reportInvoice?.report).seildraht_inland }}</td>
+                <td class="value">{{ convertToSteelReport(reportInvoice?.report).seildraht_export }}</td>
+            </tr>
+            <tr>
+                <td class="note"></td>
+                <td>Polsterfederdraht</td>
+                <td class="value">{{convertToSteelReport(reportInvoice?.report).polsterfederdraht_inland}}</td>
+                <td class="value">{{convertToSteelReport(reportInvoice?.report).polsterfederdraht_export}}</td>
+            </tr>
+            <tr>
+                <td class="note"></td>
+                <td>a) Sorte SH/SL/SM</td>
+                <td class="value">{{convertToSteelReport(reportInvoice?.report).federdraht_SH_SL_SM_inland}}</td>
+                <td class="value">{{convertToSteelReport(reportInvoice?.report).federdraht_SH_SL_SM_export}}</td>
+            </tr>
+            <tr>
+                <td class="note"></td>
+                <td>b) Sorte DH/DM</td>
+                <td class="value">{{convertToSteelReport(reportInvoice?.report).federdraht_DH_DM_inland}}</td>
+                <td class="value">{{convertToSteelReport(reportInvoice?.report).federdraht_DH_DM_export}}</td>
+            </tr>
+            <tr>
+                <td class="note"></td>
+                <td>c) Sonstige Federdrähte</td>
+                <td class="value">{{convertToSteelReport(reportInvoice?.report).federdraht_sonstig_inland}}</td>
+                <td class="value">{{convertToSteelReport(reportInvoice?.report).federdraht_sonstig_export}}</td>
+            </tr>
+            <tr>
+                <td class="note"></td>
+                <td>3. Alle nicht genannten Drähte</td>
+                <td class="value">{{convertToSteelReport(reportInvoice?.report).draehte_sonstige_inland}}</td>
+                <td class="value">{{convertToSteelReport(reportInvoice?.report).draehte_sonstige_export}}</td>
+            </tr>
+
+            <tr>
+                <th></th>
+                <th class="list-sum">Gezogene Drähte insgesamt:</th>
+                <th class="value">{{reportInvoice?.inland_tonnes}}
+                </th>
+                <th class="value">{{reportInvoice?.export_tonnes}}
+                </th>
+            </tr>
+        </tbody>
+
+    </table>
+
+    <br>
+    <br>
+
+    <div class="invoice-calc">
+        <div style="padding: 5px;">
+            <table style="border: 0px;">
+                <tr>
+                    <td colspan="2">Beitragsberechnung (für die Buchhaltung ! )</td>
+                </tr>
+                <tr>
+                    <td colspan="2" *ngIf="reportInvoice?.budget_over_max_contribution">Maximalbeitrag erreicht</td>
+                </tr>
+                <tr>
+                    <td colspan="2">        
+                        <input type="text" style="width: 100%; text-align: left;">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Draht pro Tonne x 1,10 Euro Inland</td>
+                    <td style="text-align: right;">{{ writeAsEuro( reportInvoice? reportInvoice.inland_bill: 0 )}}</td>
+                </tr>
+                <tr>
+                    <td> Draht pro Tonne x 1,10 Euro Ausland </td>
+                    <td style="text-align: right;">{{ writeAsEuro( reportInvoice? reportInvoice.export_bill: 0 )}}</td>
+                </tr>
+                <tr *ngIf="reportInvoice? reportInvoice.company.grundbeitrag: false">
+                    <td> Grundbeitrag </td>
+                    <td style="text-align: right;">{{ writeAsEuro( 200 )}}</td>
+                </tr>
+                <tr *ngIf="reportInvoice?.budget_over_max_contribution">
+                    <td> Abgezogen Differenz über Maximalbeitrag</td>
+                    <td style="text-align: right;">- {{ writeAsEuro( reportInvoice? reportInvoice.budget_over_max_contribution: 0 )}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <th>{{ writeAsEuro( reportInvoice? reportInvoice.total_bill: 0 ) }}</th>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <br>
+    <br>
+
+    <table class="invoice-foot">
+        <tr>
+            <td><input type="text" placeholder="Name" style="text-align: center;"></td>
+            <td><input type="text" placeholder="Datum" [defaultValue]="today" style="text-align: center;"></td>
+            <td><input type="text" placeholder="Mail/Tel." style="text-align: center;"></td>
+        </tr>
+        <tr class="low">
+            <td>Sachbearbeiter/in</td>
+            <td>Datum</td>
+            <td>Mail / Tel.</td>
+        </tr>
+    </table>
+</div>
+
+<!-- Dateiende -->
+<hr>
+
+<div class="accordion" id="accordion" *ngIf="reportInvoice ? reportInvoice.list_of_missing_reports.length > 0 : false">
+    <div class="accordion-item">
+        <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <b>Hinweis: Fehlende Meldungen!</b>
+            </button>
+        </h2>
+        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordion">
+            <div class="accordion-body">
+                <p>
+                    Folgende Meldungen wurden nicht gefunden und werden bei der Erstellung der Rechnungen nicht mit einbenzogen. <br>
+                    Bitte fügen Sie folgende Meldungen noch hinzu, damit der Maximalbetrag korrekt berechnet werden kann:
+                </p>
+                <ul>
+                    <li *ngFor="let missingReport of reportInvoice?.list_of_missing_reports">
+                        {{missingReport}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<button style="float: right; margin-top: 10px;" class="btn btn-warning" (click)="print()"> Drucken </button>

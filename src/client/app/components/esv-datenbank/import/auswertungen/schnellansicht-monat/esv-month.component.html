@@ -1,0 +1,317 @@
+<div id="printMonthRep">
+  <div style="float: left;">
+    <div style="margin-top: 10px; margin-bottom: 20px;">
+      <h4><b>Importe {{getWrittenMonth(this.selectedDate)}} </b></h4>
+    </div>
+
+    <!-- Tabelle links -->
+    <div style="float: left; margin-bottom: 20px;">
+      <table>
+        <!-- EISENDRAHT -->
+        <tr>
+          <th colspan="2">
+            <h5 style="text-align: center;">EINFUHREN</h5>
+          </th>
+          <th style="text-align: center;">Mts.ø <br> {{parseInteger(getWrittenYear(this.selectedDate))-1}} <br> t </th>
+          <th style="text-align: center;">{{getWrittenMonth(this.previousMonthDate)}}<br>{{getWrittenYear(this.previousMonthDate)}} <br> t </th>
+          <th style="text-align: center;">{{getWrittenMonth(this.selectedDate)}}<br>{{getWrittenYear(this.selectedDate)}} <br> t </th>
+        </tr>
+        <tr>
+          <th colspan="2" style="border: 0px; text-align: center;"> Erzeugnisse </th>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td rowspan="3" style="border: 0px">Eisendraht</td>
+          <td style="border-left: 0px">blank</td>
+          <td>{{previousYearAvg? previousYearAvg.eisendraht_blank_avg : ''}}</td>
+          <td>{{previousMonthStats ? previousMonthStats.eisendraht_blank : ''}}</td>
+          <td>{{chosenMonthStats ? chosenMonthStats.eisendraht_blank : ''}}</td>
+        </tr>
+        <tr>
+          <td style="border: 0px">verzinkt</td>
+          <td>{{previousYearAvg? previousYearAvg.eisendraht_verzinkt_avg : ''}}</td>
+          <td>{{previousMonthStats ? previousMonthStats.eisendraht_verzinkt : ''}}</td>
+          <td>{{chosenMonthStats ? chosenMonthStats.eisendraht_verzinkt : ''}}</td>
+        </tr>
+        <tr>
+          <td style="border: 0px">sonstiger <br> inkl. kunstst.</td>
+          <td>{{ addNumbers([previousYearAvg?.eisendraht_sonstiger_avg, previousYearAvg?.eisendraht_kunststoffummantelt_avg]) }}</td>
+          <td>{{previousMonthStats ? previousMonthStats.eisendraht_kunststoffummantelt+previousMonthStats.eisendraht_sonstiger : ''}}</td>
+          <td>{{chosenMonthStats ? chosenMonthStats.eisendraht_kunststoffummantelt+chosenMonthStats.eisendraht_sonstiger : ''}}</td>
+        </tr>
+        <tr>
+          <th colspan="2">Eisendraht gesamt:</th>
+          <th>
+            {{addNumbers([
+              previousYearAvg?.eisendraht_blank_avg, 
+              previousYearAvg?.eisendraht_verzinkt_avg,
+              previousYearAvg?.eisendraht_sonstiger_avg, 
+              previousYearAvg?.eisendraht_kunststoffummantelt_avg              
+              ]) 
+            }}
+          </th>
+          <th> 
+            {{previousMonthStats ? round(previousMonthStats.eisendraht_blank + previousMonthStats.eisendraht_verzinkt
+            + previousMonthStats.eisendraht_sonstiger + previousMonthStats.eisendraht_kunststoffummantelt) : ''}}
+          </th>
+          <th>
+            {{chosenMonthStats ? round(chosenMonthStats.eisendraht_blank + chosenMonthStats.eisendraht_verzinkt
+            + chosenMonthStats.eisendraht_sonstiger + chosenMonthStats.eisendraht_kunststoffummantelt) : ''}}
+          </th>
+        </tr>
+
+        <!-- Stahldraht mit weniger als 0,6% C -->
+        <tr>
+          <td rowspan="3" style="border: 0px">Stahldraht <br> mit weniger <br> als 0,6% C</td>
+          <td style="border: 0px">blank</td>
+          <td>{{previousYearAvg? previousYearAvg.stahldraht_weniger_blank_avg : ''}}</td>
+          <td>{{previousMonthStats ? previousMonthStats.stahldraht_weniger_blank : ''}}</td>
+          <td>{{chosenMonthStats ? chosenMonthStats.stahldraht_weniger_blank : ''}}</td>
+        </tr>
+        <tr>
+          <td style="border: 0px">verzinkt</td>
+          <td>{{previousYearAvg? previousYearAvg.stahldraht_weniger_verzinkt_avg : ''}}</td>
+          <td>{{previousMonthStats ? previousMonthStats.stahldraht_weniger_verzinkt : ''}}</td>
+          <td>{{chosenMonthStats ? chosenMonthStats.stahldraht_weniger_verzinkt : ''}}</td>
+        </tr>
+        <tr>
+          <td style="border: 0px">sonstiger</td>
+          <td>{{previousYearAvg? previousYearAvg.stahldraht_weniger_sonstiger_avg : ''}}</td>
+          <td>{{previousMonthStats ? previousMonthStats.stahldraht_weniger_sonstiger : ''}}</td>
+          <td>{{chosenMonthStats ? chosenMonthStats.stahldraht_weniger_sonstiger : ''}}</td>
+        </tr>
+        <tr>
+          <td colspan="2" style="border: 1px solid black">Zw.-Summe:</td>
+          <th>
+            {{ addNumbers([
+              previousYearAvg?.stahldraht_weniger_blank_avg, 
+              previousYearAvg?.stahldraht_weniger_verzinkt_avg,
+              previousYearAvg?.stahldraht_weniger_sonstiger_avg
+              ]) }}
+          </th>
+          <th> 
+            {{previousMonthStats ? round(previousMonthStats.stahldraht_weniger_blank + previousMonthStats.stahldraht_weniger_verzinkt
+            + previousMonthStats.stahldraht_weniger_sonstiger) : ''}}
+          </th>
+          <th>
+            {{chosenMonthStats ? round(chosenMonthStats.stahldraht_weniger_blank + chosenMonthStats.stahldraht_weniger_verzinkt
+            + chosenMonthStats.stahldraht_weniger_sonstiger) : ''}}
+          </th>
+        </tr>
+
+        <!-- Stahldraht mit 0,6% C und mehr -->
+        <tr>
+          <td rowspan="3" style="border: 0px">Stahldraht <br> mit 0,6% C <br> und mehr </td>
+          <td style="border: 0px">blank</td>
+          <td>{{previousYearAvg? previousYearAvg.stahldraht_mehr_blank_avg : ''}}</td>
+          <td>{{previousMonthStats ? previousMonthStats.stahldraht_mehr_blank : ''}}</td>
+          <td>{{chosenMonthStats ? chosenMonthStats.stahldraht_mehr_blank : ''}}</td>
+        </tr>
+        <tr>
+          <td style="border: 0px">verzinkt</td>
+          <td>{{previousYearAvg? previousYearAvg.stahldraht_mehr_verzinkt_avg : ''}}</td>
+          <td>{{previousMonthStats ? previousMonthStats.stahldraht_mehr_verzinkt : ''}}</td>
+          <td>{{chosenMonthStats ? chosenMonthStats.stahldraht_mehr_verzinkt : ''}}</td>
+        </tr>
+        <tr>
+          <td style="border: 0px">sonstiger</td>
+          <td>{{previousYearAvg? previousYearAvg.stahldraht_mehr_sonstiger_avg : ''}}</td>
+          <td>{{previousMonthStats ? previousMonthStats.stahldraht_mehr_sonstiger : ''}}</td>
+          <td>{{chosenMonthStats ? chosenMonthStats.stahldraht_mehr_sonstiger : ''}}</td>
+        </tr>
+        <tr>
+          <td colspan="2" style="border: 1px solid black">Zw.-Summe:</td>
+          <th>
+            {{ addNumbers([
+              previousYearAvg?.stahldraht_mehr_blank_avg, 
+              previousYearAvg?.stahldraht_mehr_verzinkt_avg, 
+              previousYearAvg?.stahldraht_mehr_sonstiger_avg
+              ])
+            }}
+          </th>
+          <th>
+            {{previousMonthStats ? round(previousMonthStats.stahldraht_mehr_blank + previousMonthStats.stahldraht_mehr_verzinkt
+              + previousMonthStats.stahldraht_mehr_sonstiger) : ''}}
+          </th>
+          <th>
+            {{chosenMonthStats ? round(chosenMonthStats.stahldraht_mehr_blank + chosenMonthStats.stahldraht_mehr_verzinkt
+            + chosenMonthStats.stahldraht_mehr_sonstiger) : ''}}
+          </th>
+        </tr>
+        <tr>
+          <th colspan="2">Stahldraht gesamt:</th>
+          <th>
+            {{ addNumbers([
+              previousYearAvg?.stahldraht_weniger_blank_avg, 
+              previousYearAvg?.stahldraht_weniger_verzinkt_avg,
+              previousYearAvg?.stahldraht_weniger_sonstiger_avg,
+              previousYearAvg?.stahldraht_mehr_blank_avg, 
+              previousYearAvg?.stahldraht_mehr_verzinkt_avg, 
+              previousYearAvg?.stahldraht_mehr_sonstiger_avg
+              ])
+            }}
+          </th>
+          <th>
+            {{previousMonthStats ? round(previousMonthStats.stahldraht_mehr_blank + previousMonthStats.stahldraht_mehr_verzinkt
+            + previousMonthStats.stahldraht_mehr_sonstiger + previousMonthStats.stahldraht_weniger_blank
+            + previousMonthStats.stahldraht_weniger_verzinkt + previousMonthStats.stahldraht_weniger_sonstiger) : ''}}
+          </th>
+          <th>
+            {{chosenMonthStats ? round(chosenMonthStats.stahldraht_mehr_blank + chosenMonthStats.stahldraht_mehr_verzinkt
+            + chosenMonthStats.stahldraht_mehr_sonstiger + chosenMonthStats.stahldraht_weniger_blank
+            + chosenMonthStats.stahldraht_weniger_verzinkt + chosenMonthStats.stahldraht_weniger_sonstiger) : ''}}
+          </th>
+        </tr>
+        <tr>
+          <th colspan="2">Drähte insgesamt:</th>
+          <th>
+            {{ addNumbers([
+              previousYearAvg?.eisendraht_blank_avg, 
+              previousYearAvg?.eisendraht_verzinkt_avg,
+              previousYearAvg?.eisendraht_sonstiger_avg, 
+              previousYearAvg?.eisendraht_kunststoffummantelt_avg,
+              previousYearAvg?.stahldraht_weniger_blank_avg, 
+              previousYearAvg?.stahldraht_weniger_verzinkt_avg,
+              previousYearAvg?.stahldraht_weniger_sonstiger_avg,
+              previousYearAvg?.stahldraht_mehr_blank_avg, 
+              previousYearAvg?.stahldraht_mehr_verzinkt_avg, 
+              previousYearAvg?.stahldraht_mehr_sonstiger_avg
+              ])
+            }}
+          </th>
+          <th>
+            {{ previousMonthStats ? round(previousMonthStats.eisendraht_blank + previousMonthStats.eisendraht_verzinkt
+            + previousMonthStats.eisendraht_sonstiger + previousMonthStats.eisendraht_kunststoffummantelt
+            + previousMonthStats.stahldraht_mehr_blank + previousMonthStats.stahldraht_mehr_verzinkt
+            + previousMonthStats.stahldraht_mehr_sonstiger + previousMonthStats.stahldraht_weniger_blank
+            + previousMonthStats.stahldraht_weniger_verzinkt + previousMonthStats.stahldraht_weniger_sonstiger) : ''}}
+          </th>
+          <th>
+            {{ chosenMonthStats ? round(chosenMonthStats.eisendraht_blank + chosenMonthStats.eisendraht_verzinkt
+            + chosenMonthStats.eisendraht_sonstiger + chosenMonthStats.eisendraht_kunststoffummantelt
+            + chosenMonthStats.stahldraht_mehr_blank + chosenMonthStats.stahldraht_mehr_verzinkt
+            + chosenMonthStats.stahldraht_mehr_sonstiger + chosenMonthStats.stahldraht_weniger_blank
+            + chosenMonthStats.stahldraht_weniger_verzinkt + chosenMonthStats.stahldraht_weniger_sonstiger) : ''}}
+          </th>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Tabelle rechts -->
+    <div style="float:left; margin-left: 20px; " class="withoutBorders">
+      <table>
+        <tr>
+          <th colspan="3" style="text-align: center;">EINFUHREN</th>
+        </tr>
+
+        <!-- EISENDRAHT-->
+        <tr>
+          <th colspan="3">EISENDRAHT</th>
+        </tr>
+        <tr>
+          <td>blank</td>
+          <td>72171010<br>72171039</td>
+          <td>{{chosenMonthStats ? chosenMonthStats.eisendraht_blank : '    '}}</td>
+        </tr>
+        <tr>
+          <td>verzinkt</td>
+          <td>72172010<br>72172030</td>
+          <td>{{chosenMonthStats ? chosenMonthStats.eisendraht_verzinkt : '    '}}</td>
+        </tr>
+        <tr>
+          <td>sontiger</td>
+          <td>72173041<br>72173049</td>
+          <td>{{chosenMonthStats ? chosenMonthStats.eisendraht_sonstiger : '    '}}</td>
+        </tr>
+        <tr>
+          <td>kunststoffummantelt</td>
+          <td>72179020</td>
+          <td>{{chosenMonthStats ? chosenMonthStats.eisendraht_kunststoffummantelt : '    '}}</td>
+        </tr>
+        <tr>
+          <th colspan="2">Eisendraht gesamt: </th>
+          <th style="border-top: 1px solid black;">
+            {{chosenMonthStats ? round(chosenMonthStats.eisendraht_blank + chosenMonthStats.eisendraht_verzinkt
+            + chosenMonthStats.eisendraht_sonstiger + chosenMonthStats.eisendraht_kunststoffummantelt) : '    '}}
+          </th>
+        </tr>
+
+        <!-- STAHLDRAHT MIT WENIGER ALS 0,6% C -->
+        <tr>
+          <th colspan="3">STAHLDRAHT MIT WENIGER ALS 0,6% C</th>
+        </tr>
+        <tr>
+          <td>blank</td>
+          <td>72171050</td>
+          <td>{{chosenMonthStats ? chosenMonthStats.stahldraht_weniger_blank : '    '}}</td>
+        </tr>
+        <tr>
+          <td>verzinkt</td>
+          <td>72172050</td>
+          <td>{{chosenMonthStats ? chosenMonthStats.stahldraht_weniger_verzinkt : '    '}}</td>
+        </tr>
+        <tr>
+          <td>sontiger</td>
+          <td>72179050</td>
+          <td>{{chosenMonthStats ? chosenMonthStats.stahldraht_weniger_sonstiger : '    '}}</td>
+        </tr>
+        <tr>
+          <th colspan="2">Stahldraht mit weniger als 0,6% C gesamt: </th>
+          <th style="border-top: 1px solid black;">
+            {{chosenMonthStats ? addNumbers([chosenMonthStats.stahldraht_weniger_blank, chosenMonthStats.stahldraht_weniger_verzinkt,
+            chosenMonthStats.stahldraht_weniger_sonstiger]) : '    '}}
+          </th>
+        </tr>
+
+        <!-- STAHLDRAHT MIT 0,6% C und mehr -->
+        <tr>
+          <th colspan="3"> STAHLDRAHT MIT 0,6% C und mehr </th>
+        </tr>
+        <tr>
+          <td>blank</td>
+          <td>72171090</td>
+          <td>{{chosenMonthStats ? chosenMonthStats.stahldraht_mehr_blank : ''}}</td>
+        </tr>
+        <tr>
+          <td>verzinkt</td>
+          <td>72172090</td>
+          <td>{{chosenMonthStats ? chosenMonthStats.stahldraht_mehr_verzinkt : ''}}</td>
+        </tr>
+        <tr>
+          <td>sontiger</td>
+          <td>72173090<br>72179090</td>
+          <td>{{chosenMonthStats ? chosenMonthStats.stahldraht_mehr_sonstiger : ''}}</td>
+        </tr>
+        <tr>
+          <th colspan="2">Stahldraht mit 0,6% C und mehr gesamt: </th>
+          <th style="border-top: 1px solid black;">
+            {{chosenMonthStats ? addNumbers([chosenMonthStats.stahldraht_mehr_blank, chosenMonthStats.stahldraht_mehr_verzinkt,
+            chosenMonthStats.stahldraht_mehr_sonstiger]) : ''}}
+          </th>
+        </tr>
+
+        <tr>
+          <th colspan="2">Drähte gesamt: </th>
+          <th style="border-bottom: 3px double black; vertical-align: bottom;">
+            {{ chosenMonthStats ? addNumbers([chosenMonthStats.eisendraht_blank, chosenMonthStats.eisendraht_verzinkt, 
+              chosenMonthStats.eisendraht_sonstiger, chosenMonthStats.eisendraht_kunststoffummantelt, 
+              chosenMonthStats.stahldraht_mehr_blank, chosenMonthStats.stahldraht_mehr_verzinkt,
+              chosenMonthStats.stahldraht_mehr_sonstiger, chosenMonthStats.stahldraht_weniger_blank,
+              chosenMonthStats.stahldraht_weniger_verzinkt, chosenMonthStats.stahldraht_weniger_sonstiger]) : ''}}
+          </th>
+        </tr>
+
+      </table>
+    </div>
+  </div>
+</div>
+<!-- addNumbers([sortedMonthStats[i]?.eisendraht_blank, sortedMonthStats[i]?.eisendraht_verzinkt, 
+              sortedMonthStats[i]?.eisendraht_sonstiger, sortedMonthStats[i]?.eisendraht_kunststoffummantelt] ) -->
+
+<!-- Dateiende -->
+<div style="margin-top: 20px; float: left; min-width: 100%;">
+  <hr>
+  <button style="float: right" class="btn btn-warning" (click)="print()"> Drucken </button>
+</div>

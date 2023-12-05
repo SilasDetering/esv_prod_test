@@ -1,0 +1,207 @@
+<div id="printIronDivergenzMonth" style="margin-top: 20px;">
+
+    <h4>Erzeugnisart-Statistik Eisendraht</h4>
+
+    <!-- ======================================== MONAT ========================================-->
+
+    <table>
+        <thead>
+            <tr>
+                <th rowspan="2">Erzeugnisse <br><br><br> 1. Gezogene Drähte </th>
+                <th colspan="3">{{getWrittenMonth(selectedDate) + " " + getWrittenYear(selectedDate)}}</th>
+                <th colspan="3">{{getWrittenMonth(selectedDate) + " " + getWrittenLastYear(selectedDate)}}</th>
+                <th colspan="3">Veränderung<br>+/-</th>
+            </tr>
+            <tr>
+                <td class="top_lable"><b>Inland</b><br> Versand <br> <b>t</b> </td>
+                <td class="top_lable"><b>Ausland</b><br> Versand <br> <b>t</b> </td>
+                <td class="top_lable"><b>Gesamt</b><br> Versand <br> <b>t</b> </td>
+                <td class="top_lable"><b>Inland</b><br> Versand <br> <b>t</b> </td>
+                <td class="top_lable"><b>Ausland</b><br> Versand <br> <b>t</b> </td>
+                <td class="top_lable"><b>Gesamt</b><br> Versand <br> <b>t</b> </td>
+                <td class="top_lable"><b>Inland</b><br> Versand <br> <b>%</b> </td>
+                <td class="top_lable"><b>Ausland</b><br> Versand <br> <b>%</b> </td>
+                <td class="top_lable"><b>Gesamt</b><br> Versand <br> <b>%</b> </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="left_lable">Eisendrähte / blank, verkupfert</td>
+                <td>{{ironReportMonthSum[0]?.ed_blank_verkupfert_inland}}</td>
+                <td>{{ironReportMonthSum[0]?.ed_blank_verkupfert_export}}</td>
+                <td>{{ironReportMonthSum[0]?.ed_blank_verkupfert_sum}}</td>
+                <td>{{ironReportMonthSum[1]?.ed_blank_verkupfert_inland}}</td>
+                <td>{{ironReportMonthSum[1]?.ed_blank_verkupfert_export}}</td>
+                <td>{{ironReportMonthSum[1]?.ed_blank_verkupfert_sum}}</td>
+                <td>{{ironReportMonthSum[2]?.ed_blank_verkupfert_inland}}</td>
+                <td>{{ironReportMonthSum[2]?.ed_blank_verkupfert_export}}</td>
+                <td>{{ironReportMonthSum[2]?.ed_blank_verkupfert_sum}}</td>
+            </tr>
+            <tr>
+                <td class="left_lable">Eisendrähte / geglüht</td>
+                <td>{{ironReportMonthSum[0]?.ed_geglueht_inland}}</td>
+                <td>{{ironReportMonthSum[0]?.ed_geglueht_export}}</td>
+                <td>{{ironReportMonthSum[0]?.ed_geglueht_sum}}</td>
+                <td>{{ironReportMonthSum[1]?.ed_geglueht_inland}}</td>
+                <td>{{ironReportMonthSum[1]?.ed_geglueht_export}}</td>
+                <td>{{ironReportMonthSum[1]?.ed_geglueht_sum}}</td>
+                <td>{{ironReportMonthSum[2]?.ed_geglueht_inland}}</td>
+                <td>{{ironReportMonthSum[2]?.ed_geglueht_export}}</td>
+                <td>{{ironReportMonthSum[2]?.ed_geglueht_sum}}</td>
+            </tr>
+            <tr>
+                <td class="left_lable">Eisendrähte / verzinkt</td>
+                <td>{{ironReportMonthSum[0]?.ed_verzinkt_inland}}</td>
+                <td>{{ironReportMonthSum[0]?.ed_verzinkt_export}}</td>
+                <td>{{ironReportMonthSum[0]?.ed_verzinkt_sum}}</td>
+                <td>{{ironReportMonthSum[1]?.ed_verzinkt_inland}}</td>
+                <td>{{ironReportMonthSum[1]?.ed_verzinkt_export}}</td>
+                <td>{{ironReportMonthSum[1]?.ed_verzinkt_sum}}</td>
+                <td>{{ironReportMonthSum[2]?.ed_verzinkt_inland}}</td>
+                <td>{{ironReportMonthSum[2]?.ed_verzinkt_export}}</td>
+                <td>{{ironReportMonthSum[2]?.ed_verzinkt_sum}}</td>
+            </tr>
+            <tr>
+                <td class="left_lable">Schraubendraht DIN EN 10.263 Teil 1 - 4</td>
+                <td>{{ironReportMonthSum[0]?.ed_verzinnt_inland}}</td>
+                <td>{{ironReportMonthSum[0]?.ed_verzinnt_export}}</td>
+                <td>{{ironReportMonthSum[0]?.ed_verzinnt_sum}}</td>
+                <td>{{ironReportMonthSum[1]?.ed_verzinnt_inland}}</td>
+                <td>{{ironReportMonthSum[1]?.ed_verzinnt_export}}</td>
+                <td>{{ironReportMonthSum[1]?.ed_verzinnt_sum}}</td>
+                <td>{{ironReportMonthSum[2]?.ed_verzinnt_inland}}</td>
+                <td>{{ironReportMonthSum[2]?.ed_verzinnt_export}}</td>
+                <td>{{ironReportMonthSum[2]?.ed_verzinnt_sum}}</td>
+            </tr>
+            <tr>
+                <td class="left_lable">Sonstige Eisendrähte</td>
+                <td>{{ironReportMonthSum[0]?.ed_blank_verkupfert_inland}}</td>
+                <td>{{ironReportMonthSum[0]?.ed_blank_verkupfert_export}}</td>
+                <td>{{ironReportMonthSum[0]?.ed_blank_verkupfert_sum}}</td>
+                <td>{{ironReportMonthSum[1]?.ed_blank_verkupfert_inland}}</td>
+                <td>{{ironReportMonthSum[1]?.ed_blank_verkupfert_export}}</td>
+                <td>{{ironReportMonthSum[1]?.ed_blank_verkupfert_sum}}</td>
+                <td>{{ironReportMonthSum[2]?.ed_blank_verkupfert_inland}}</td>
+                <td>{{ironReportMonthSum[2]?.ed_blank_verkupfert_export}}</td>
+                <td>{{ironReportMonthSum[2]?.ed_blank_verkupfert_sum}}</td>
+            </tr>
+            <tr class="sum">
+                <th class="left_lable">Gezogene Drähte insgesamt:</th>
+                <td>{{ironReportMonthSum[0]?.iron_inland_sum}}</td>
+                <td>{{ironReportMonthSum[0]?.iron_export_sum}}</td>
+                <td>{{ironReportMonthSum[0]?.iron_sum}}</td>
+                <td>{{ironReportMonthSum[1]?.iron_inland_sum}}</td>
+                <td>{{ironReportMonthSum[1]?.iron_export_sum}}</td>
+                <td>{{ironReportMonthSum[1]?.iron_sum}}</td>
+                <td>{{ironReportMonthSum[2]?.iron_inland_sum}}</td>
+                <td>{{ironReportMonthSum[2]?.iron_export_sum}}</td>
+                <td>{{ironReportMonthSum[2]?.iron_sum}}</td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+    <!-- ========================================= JAHR =========================================-->
+
+    <table style="margin-top: 20px;">
+        <thead>
+            <tr>
+                <th rowspan="2">Erzeugnisse <br><br><br> 1. Gezogene Drähte </th>
+                <th colspan="3">{{"Januar - " + getWrittenMonth(selectedDate) + " " + getWrittenYear(selectedDate)}}</th>
+                <th colspan="3">{{"Januar - " + getWrittenMonth(selectedDate) + " " + getWrittenLastYear(selectedDate)}}</th>
+                <th colspan="3">Veränderung <br> +/- </th>
+            </tr>
+            <tr>
+                <td class="top_lable"><b>Inland</b><br> Versand <br> <b>t</b> </td>
+                <td class="top_lable"><b>Ausland</b><br> Versand <br> <b>t</b> </td>
+                <td class="top_lable"><b>Gesamt</b><br> Versand <br> <b>t</b> </td>
+                <td class="top_lable"><b>Inland</b><br> Versand <br> <b>t</b> </td>
+                <td class="top_lable"><b>Ausland</b><br> Versand <br> <b>t</b> </td>
+                <td class="top_lable"><b>Gesamt</b><br> Versand <br> <b>t</b> </td>
+                <td class="top_lable"><b>Inland</b><br> Versand <br> <b>%</b> </td>
+                <td class="top_lable"><b>Ausland</b><br> Versand <br> <b>%</b> </td>
+                <td class="top_lable"><b>Gesamt</b><br> Versand <br> <b>%</b> </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="left_lable">Eisendrähte / blank, verkupfert</td>
+                <td>{{ironReportYearSum[0]?.ed_blank_verkupfert_inland}}</td>
+                <td>{{ironReportYearSum[0]?.ed_blank_verkupfert_export}}</td>
+                <td>{{ironReportYearSum[0]?.ed_blank_verkupfert_sum}}</td>
+                <td>{{ironReportYearSum[1]?.ed_blank_verkupfert_inland}}</td>
+                <td>{{ironReportYearSum[1]?.ed_blank_verkupfert_export}}</td>
+                <td>{{ironReportYearSum[1]?.ed_blank_verkupfert_sum}}</td>
+                <td>{{ironReportYearSum[2]?.ed_blank_verkupfert_inland}}</td>
+                <td>{{ironReportYearSum[2]?.ed_blank_verkupfert_export}}</td>
+                <td>{{ironReportYearSum[2]?.ed_blank_verkupfert_sum}}</td>
+            </tr>
+            <tr>
+                <td class="left_lable">Eisendrähte / geglüht</td>
+                <td>{{ironReportYearSum[0]?.ed_geglueht_inland}}</td>
+                <td>{{ironReportYearSum[0]?.ed_geglueht_export}}</td>
+                <td>{{ironReportYearSum[0]?.ed_geglueht_sum}}</td>
+                <td>{{ironReportYearSum[1]?.ed_geglueht_inland}}</td>
+                <td>{{ironReportYearSum[1]?.ed_geglueht_export}}</td>
+                <td>{{ironReportYearSum[1]?.ed_geglueht_sum}}</td>
+                <td>{{ironReportYearSum[2]?.ed_geglueht_inland}}</td>
+                <td>{{ironReportYearSum[2]?.ed_geglueht_export}}</td>
+                <td>{{ironReportYearSum[2]?.ed_geglueht_sum}}</td>
+            </tr>
+            <tr>
+                <td class="left_lable">Eisendrähte / verzinkt</td>
+                <td>{{ironReportYearSum[0]?.ed_verzinkt_inland}}</td>
+                <td>{{ironReportYearSum[0]?.ed_verzinkt_export}}</td>
+                <td>{{ironReportYearSum[0]?.ed_verzinkt_sum}}</td>
+                <td>{{ironReportYearSum[1]?.ed_verzinkt_inland}}</td>
+                <td>{{ironReportYearSum[1]?.ed_verzinkt_export}}</td>
+                <td>{{ironReportYearSum[1]?.ed_verzinkt_sum}}</td>
+                <td>{{ironReportYearSum[2]?.ed_verzinkt_inland}}</td>
+                <td>{{ironReportYearSum[2]?.ed_verzinkt_export}}</td>
+                <td>{{ironReportYearSum[2]?.ed_verzinkt_sum}}</td>
+            </tr>
+            <tr>
+                <td class="left_lable">Schraubendraht DIN EN 10.263 Teil 1 - 4</td>
+                <td>{{ironReportYearSum[0]?.ed_verzinnt_inland}}</td>
+                <td>{{ironReportYearSum[0]?.ed_verzinnt_export}}</td>
+                <td>{{ironReportYearSum[0]?.ed_verzinnt_sum}}</td>
+                <td>{{ironReportYearSum[1]?.ed_verzinnt_inland}}</td>
+                <td>{{ironReportYearSum[1]?.ed_verzinnt_export}}</td>
+                <td>{{ironReportYearSum[1]?.ed_verzinnt_sum}}</td>
+                <td>{{ironReportYearSum[2]?.ed_verzinnt_inland}}</td>
+                <td>{{ironReportYearSum[2]?.ed_verzinnt_export}}</td>
+                <td>{{ironReportYearSum[2]?.ed_verzinnt_sum}}</td>
+            </tr>
+            <tr>
+                <td class="left_lable">Sonstige Eisendrähte</td>
+                <td>{{ironReportYearSum[0]?.ed_blank_verkupfert_inland}}</td>
+                <td>{{ironReportYearSum[0]?.ed_blank_verkupfert_export}}</td>
+                <td>{{ironReportYearSum[0]?.ed_blank_verkupfert_sum}}</td>
+                <td>{{ironReportYearSum[1]?.ed_blank_verkupfert_inland}}</td>
+                <td>{{ironReportYearSum[1]?.ed_blank_verkupfert_export}}</td>
+                <td>{{ironReportYearSum[1]?.ed_blank_verkupfert_sum}}</td>
+                <td>{{ironReportYearSum[2]?.ed_blank_verkupfert_inland}}</td>
+                <td>{{ironReportYearSum[2]?.ed_blank_verkupfert_export}}</td>
+                <td>{{ironReportYearSum[2]?.ed_blank_verkupfert_sum}}</td>
+            </tr>
+            <tr class="sum">
+                <th class="left_lable">Gezogene Drähte insgesamt:</th>
+                <td>{{ironReportYearSum[0]?.iron_inland_sum}}</td>
+                <td>{{ironReportYearSum[0]?.iron_export_sum}}</td>
+                <td>{{ironReportYearSum[0]?.iron_sum}}</td>
+                <td>{{ironReportYearSum[1]?.iron_inland_sum}}</td>
+                <td>{{ironReportYearSum[1]?.iron_export_sum}}</td>
+                <td>{{ironReportYearSum[1]?.iron_sum}}</td>
+                <td>{{ironReportYearSum[2]?.iron_inland_sum}}</td>
+                <td>{{ironReportYearSum[2]?.iron_export_sum}}</td>
+                <td>{{ironReportYearSum[2]?.iron_sum}}</td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+</div>
+
+<!-- Dateiende -->
+<hr>
+<button style="float: right" class="btn btn-warning" (click)="print()"> Drucken </button>

@@ -1,0 +1,59 @@
+<h2 class="page-header">Benutzer bearbeiten</h2>
+
+<form (submit)="onEditSubmit()">
+    
+    <div class="form-group" style="margin-top: 10px;">
+        <label>Vorname</label>
+        <input type="text" class="form-control" [(ngModel)]="firstName" name="firstName" id="vorname" oninput="praefix_Username.value = vorname.value" [disabled]="!bearbeiten">
+    </div>
+    <div class="form-group" style="margin-top: 10px;">
+        <label>Nachname</label>
+        <input type="text" class="form-control"[(ngModel)]="lastName" name="lastName"  id="nachname" oninput="suffix_Username.value = nachname.value" [disabled]="!bearbeiten">
+    </div>
+    <div class="form-group" style="margin-top: 10px;">
+        <label>Username</label>
+        <table>
+            <th> <input type="text" class="form-control" style="text-transform:lowercase" placeholder="vorname" id="praefix_Username" readonly disabled> </th>
+            .
+            <th> <input type="text" class="form-control" style="text-transform:lowercase" placeholder="nachname" id="suffix_Username" readonly disabled> </th>
+        </table>
+    </div>
+    <div class="form-group" style="margin-top: 10px;">
+        <label>Email</label>
+        <input type="text" class="form-control" [(ngModel)]="email" name="email" [disabled]="!bearbeiten">
+    </div>
+    <div class="form-check form-switch" style="margin-top: 10px;">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="isAdmin" name="isAdmin" *ngIf="isAdmin" id="flexSwitchCheckDefault" [checked]="isAdmin" [disabled]="!bearbeiten">
+        <input type="checkbox" class="form-check-input" [(ngModel)]="isAdmin" name="isAdmin" *ngIf="!isAdmin" id="flexSwitchCheckDefault" [disabled]="!bearbeiten">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Administratorrechte (für die Benutzerverwaltung)</label>
+    </div>
+
+    <button class="btn btn-primary" *ngIf="!bearbeiten" (click)="bearbeiten = true" style="float:right">bearbeiten</button>
+    <button class="btn btn-outline-warning" *ngIf="bearbeiten" (click)="bearbeiten = false; changePW = false; resetForm();" style="float:right">abbrechen</button>
+    <input class="btn btn-primary" *ngIf="bearbeiten" type="submit" value="speichern" style="margin-right: 5px; float: right;">
+</form>
+
+<hr style="margin-top: 60px;">
+
+<Form class="form-group has-danger" (submit)="onPasswordSubmit($event)">
+    <label style="margin-top: 10px;">Passwort</label>
+    <input type="password" class="form-control" [(ngModel)]="password" name="password" [disabled]="!changePW" id="passwordForm">
+
+    <div class="card border-danger mb-3" style="max-width: 30rem; margin-top: 10px; margin-left: 20px;" *ngIf="showPwRequirements && changePW">
+        <div class="card-body">
+          <h5 class="card-title"> Ungültiges Passwort <br></h5>
+          - 8 bis 20 Zeichen<br/>
+          - groß und klein Buchstaben<br/>
+          - Mindestens eine Zahl<br/>
+          - Mindestens ein Sonderzeichen<br/>
+        </div>
+    </div>
+
+    <button class="btn btn-primary" style="float: right; margin-top: 10px;" (click)="changePW = !changePW" *ngIf="!changePW">Passwort ändern</button>
+    <button class="btn btn-outline-warning" style="float: right; margin-top: 10px;" (click)="changePW = !changePW" *ngIf="changePW">abbrechen</button>
+    <input class="btn btn-primary" *ngIf="changePW" type="submit" value="speichern" style="margin-right: 5px; float: right; margin-top: 10px;">
+</Form>
+
+<hr style="margin-top: 70px;">
+
+<button class="btn btn-outline-dark" type="button" [routerLink]="['/useradministration']" style="margin-top: 10px; float:left">Zurück</button>
