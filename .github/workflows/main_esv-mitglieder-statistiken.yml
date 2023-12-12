@@ -21,6 +21,9 @@ jobs:
         with:
           node-version: '20.x'
 
+      - name: Update npm
+        run: npm install -g npm@10.2.5
+
       - name: npm install, build, and test
         run: |
           npm install
