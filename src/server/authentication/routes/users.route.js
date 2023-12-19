@@ -52,7 +52,7 @@ router.post('/authenticate', validateReq.authReq, (req, res) => {
     User.getUserByUsername(username)
         .then((user) => {
             if (!user) {
-                return res.json({ success: false, msg: 'Benutzer nicht gefunden' });
+                return res.json({ success: false, msg: 'Benutzer nicht gefunden: '+ username });
             }
             
             // Passwort des Users prüfen
