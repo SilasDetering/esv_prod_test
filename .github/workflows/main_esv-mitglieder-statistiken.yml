@@ -68,19 +68,15 @@ jobs:
     needs: build
     
     steps:
-      # Install Angular CLI
-      - name: Install Global Angular CLI
-        run: npm install -g @angular/cli@17.0.3
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
 
-      # Checkout the repository
-      - name: Debugging Output
+      # Install dependencies and build Angular project
+      - name: Install Angular dependencies and build
         run: |
-          echo "Current directory: $(pwd)"
-          echo "Contents of current directory: $(ls)"
-
-      # Build the Angular frontend
-      - name: Build Angular frontend
-        run: ng build
+          npm install
+          npm run build
   
       # Zip the Angular frontend
       - name: Zip Angular frontend
