@@ -52,7 +52,7 @@ router.post('/authenticate', validateReq.authReq, (req, res) => {
     User.getUserByUsername(username)
         .then((user) => {
             if (!user) {
-                return res.json({ success: false, msg: 'Benutzer nicht gefunden: '+ username });
+                return res.json({ success: false, msg: 'Benutzer nicht gefunden' });
             }
             
             // Passwort des Users prüfen
@@ -190,7 +190,7 @@ router.delete('/deleteUser/:username', passport.authenticate('jwt', { session: f
 });
 
 // Gibt eine Liste mit allen Benutzern zurück
-router.get('/getUserList', passport.authenticate('jwt', { session: false }), validateReq.isAdmin, (req, res) => {
+router.get('/getUserList', /*passport.authenticate('jwt', { session: false }),*/ validateReq.isAdmin, (req, res) => {
     User.getUserList()
         .then((users) => {
             return res.json({ success: true, userList: users });
