@@ -85,7 +85,8 @@ app.use('/reports/steel', esvReportRoutesSteel);
 
 // Index Route
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'src', 'client', 'index.html'));
+    console.log("__dirname: ", __dirname);
+    res.sendFile(path.join(__dirname, '../client/index.html'));
 });
 
 app.get('/angular', (req, res) => {
