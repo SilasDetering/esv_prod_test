@@ -84,9 +84,10 @@ app.use('/reports/iron', esvReportRoutesIron);
 app.use('/reports/steel', esvReportRoutesSteel);
 
 // Index Route
-app.get('/', (req, res) => {
-    res.send('Invalid Endpoint');
+app.get('/', (req,res) => {
+    res.sendFile(process.cwd()+"/esv_prod_test/dist/esv_webapp_v2/browser/index.html")
 });
+
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
 });

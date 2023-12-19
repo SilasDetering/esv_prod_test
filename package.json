@@ -8,7 +8,7 @@
     "start_client":"ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "private": true,
   "dependencies": {
