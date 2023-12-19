@@ -72,6 +72,10 @@ jobs:
       - name: Install Global Angular CLI
         run: npm install -g @angular/cli@17.0.3
 
+      # DEBUG
+      - name: Show current file and current path
+        run: ls && pwd
+
       # Build the Angular frontend
       - name: Build Angular frontend
         run: ng build
