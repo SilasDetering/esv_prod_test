@@ -69,7 +69,7 @@ jobs:
     
     steps:
       # Install Angular CLI
-      - name: Install Angular CLI
+      - name: Install Global Angular CLI
         run: npm install -g @angular/cli@17.0.3
 
       # Build the Angular frontend
