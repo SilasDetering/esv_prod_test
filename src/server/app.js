@@ -55,7 +55,7 @@ console.log("Server PORT: " + process.env.BACKEND_PORT + " or " + 3000);
 app.use(cors());
 
 // Set Static Folder
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'wwwroot')));
 
 // BodyParser Middleware (BodyParser parses incomming request bodies so you can grab the data)
 app.use(bodyParser.json());
@@ -85,7 +85,11 @@ app.use('/reports/steel', esvReportRoutesSteel);
 
 // Index Route
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/index.html'));
+    res.sendFile(path.join(__dirname, 'wwwroot', 'esv_prod_test', 'dist', 'esv_webapp_v2', 'browser', 'index.html'));
+});
+
+app.get('/angular', (req, res) => {
+    res.sendFile(path.join(__dirname, 'wwwroot/public/index.html'));
 });
 
 app.get('*', (req, res) => {
