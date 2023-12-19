@@ -62,31 +62,4 @@ jobs:
           slot-name: 'Production'
           package: .
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BC52F9F5A9CA4DE3A16320DAE4B922BC }}
-
-  deploy-client:
-    runs-on: ubuntu-latest
-    needs: build
-    
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          submodules: recursive
-
-      # Install dependencies and build Angular project
-      - name: Install Angular dependencies and build
-        run: |
-          npm install
-          npm run build
-  
-      # Zip the Angular frontend
-      - name: Zip Angular frontend
-        run: zip -r angular-frontend.zip dist
-  
-      # Upload Angular frontend package to Azure App Service
-      - name: Deploy Angular frontend to Azure App Service
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'ESV-Mitglieder-Statistiken'
-          slot-name: 'Production'
-          package: './angular-frontend.zip'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_BC52F9F5A9CA4DE3A16320DAE4B922BC }}
+          
