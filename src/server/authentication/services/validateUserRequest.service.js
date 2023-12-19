@@ -45,7 +45,7 @@ module.exports.authReq = function(req, res, next) {
 
   if (
     validateName(username) === null ||
-    validatePassword(password) === null
+    validateAuthPw(password) === null
   ) {
     return res.status(400).json({ success: false, error: "Ungültiger Request Body" });
   }
@@ -114,10 +114,14 @@ function validateEmail(email) {
 
 function validatePassword(password) {
   if(password == undefined) return false;
-  console.log(password)
   var requirement = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,20}$/;
-  console.log(password.match(requirement))
   return password.match(requirement);
+}
+
+function validateAuthPw(password) {
+  if(password == undefined) return false;
+  if(typeof password !== "string") return false;
+  return true;
 }
 
 function validateName(name) {
